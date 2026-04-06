@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-center md:text-left">
-            <h3 className="text-xl font-bold text-white mb-2 font-heading">Penn Wrestling Mentorship</h3>
+            <h3 className="text-xl font-bold text-white mb-2 font-heading">Next Level Wrestling Mentorship</h3>
             <p className="text-sm">Empowering the next generation of student-athletes.</p>
           </div>
           
@@ -16,7 +16,7 @@ export default function Footer() {
         </div>
         
         <div className="mt-12 text-center text-sm border-t border-gray-800 pt-8">
-          <p>&copy; {new Date().getFullYear()} Penn Wrestling Mentorship. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Next Level Wrestling Mentorship. All rights reserved.</p>
           <p className="mt-2 text-xs text-gray-500">Not officially affiliated with the University of Pennsylvania.</p>
         </div>
       </div>

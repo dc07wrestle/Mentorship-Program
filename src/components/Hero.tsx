@@ -22,7 +22,7 @@ export default function Hero() {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block py-1 px-3 rounded-full bg-brand-red/20 text-red-300 text-sm font-semibold tracking-wider uppercase mb-6 border border-brand-red/30">
-              Penn Wrestling Mentorship Program
+              Next Level Wrestling Mentorship
             </span>
           </motion.div>
           
@@ -32,7 +32,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            Elite Wrestling Mentorship from Student-Athletes Who Excel <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">On and Off the Mat</span>
+            Learn from University of Pennsylvania <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">student-athletes</span>
           </motion.h1>
           
           <motion.p 
