@@ -22,7 +22,7 @@ export default function Navbar() {
               P
             </div>
             <span className="text-white font-bold text-xl tracking-tight hidden sm:block font-heading">
-              Penn Mentorship
+              Penn Wrestling Mentorship Program
             </span>
           </a>
 
