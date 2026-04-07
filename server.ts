@@ -14,8 +14,20 @@ async function startServer() {
 
   app.use(express.json());
 
+  // Health check endpoint
+  app.get("/api/health", (req, res) => {
+    res.json({ 
+      status: "ok", 
+      env: {
+        hasResendKey: !!process.env.RESEND_API_KEY,
+        hasOwnerEmail: !!process.env.OWNER_EMAIL
+      }
+    });
+  });
+
   // API routes
   app.post("/api/request-appointment", async (req, res) => {
+    console.log("[API] Received POST /api/request-appointment");
     try {
       const {
         parentName,
@@ -30,22 +42,22 @@ async function startServer() {
         honeypot
       } = req.body;
 
-      console.log("Received appointment request for:", studentName);
+      console.log(`[API] Request for student: ${studentName}, parent: ${parentEmail}`);
 
       // Basic honeypot protection
       if (honeypot) {
-        console.log("Spam detected via honeypot.");
+        console.log("[API] Honeypot triggered - ignoring request.");
         return res.status(200).json({ success: true, message: "Spam detected." });
       }
 
       // Validate required fields
       if (!parentName || !studentName || !parentEmail) {
-        console.log("Validation failed: Missing required fields.");
+        console.log("[API] Validation failed - missing fields.");
         return res.status(400).json({ success: false, message: "Missing required fields." });
       }
 
       if (!process.env.RESEND_API_KEY) {
-        console.error("RESEND_API_KEY is not set in environment variables.");
+        console.error("[API] Error: RESEND_API_KEY is missing.");
         return res.status(500).json({ 
           success: false, 
           message: "Email service not configured. Please add your RESEND_API_KEY in the settings." 
@@ -55,9 +67,9 @@ async function startServer() {
       // Send email to owner
       try {
         const ownerEmail = process.env.OWNER_EMAIL || "dc07wrestle@gmail.com";
-        console.log("Sending email to owner:", ownerEmail);
+        console.log(`[API] Sending notification to owner: ${ownerEmail}`);
         
-        await resend.emails.send({
+        const ownerResult = await resend.emails.send({
           from: "Mat Mentors Requests <onboarding@resend.dev>",
           to: ownerEmail,
           subject: `New Mentorship Request: ${studentName}`,
@@ -74,19 +86,16 @@ async function startServer() {
             <p><strong>Additional Notes:</strong> ${additionalNotes}</p>
           `,
         });
-        console.log("Owner email sent successfully.");
+        console.log("[API] Owner email result:", ownerResult);
       } catch (ownerEmailError) {
-        console.error("Failed to send email to owner:", ownerEmailError);
-        throw ownerEmailError; // Re-throw to trigger the main catch block
+        console.error("[API] Failed to send email to owner:", ownerEmailError);
+        throw ownerEmailError;
       }
 
       // Send confirmation email to parent
-      // We wrap this in a separate try-catch because Resend's free tier 
-      // often blocks sending to unverified emails. We don't want the 
-      // whole request to fail just because the auto-reply couldn't be sent.
       try {
-        console.log("Sending confirmation email to parent:", parentEmail);
-        await resend.emails.send({
+        console.log(`[API] Sending confirmation to parent: ${parentEmail}`);
+        const parentResult = await resend.emails.send({
           from: "Mat Mentors <onboarding@resend.dev>",
           to: parentEmail,
           subject: "We received your mentorship request!",
@@ -96,15 +105,15 @@ async function startServer() {
             <p>Best regards,<br/>The Mat Mentors Team</p>
           `,
         });
-        console.log("Parent confirmation email sent successfully.");
+        console.log("[API] Parent email result:", parentResult);
       } catch (parentEmailError) {
-        console.warn("Failed to send confirmation email to parent (this is common on Resend's free tier):", parentEmailError);
-        // We don't throw here so the user still sees a success message
+        console.warn("[API] Failed to send confirmation email to parent (non-critical):", parentEmailError);
       }
 
+      console.log("[API] Request processed successfully.");
       res.status(200).json({ success: true });
     } catch (error) {
-      console.error("Error in /api/request-appointment:", error);
+      console.error("[API] Unhandled error:", error);
       res.status(500).json({ 
         success: false, 
         message: error instanceof Error ? error.message : "Failed to send request." 
@@ -128,7 +137,10 @@ async function startServer() {
   }
 
   app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`[SERVER] Mat Mentors server started on port ${PORT}`);
+    console.log(`[SERVER] Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`[SERVER] Resend Key Present: ${!!process.env.RESEND_API_KEY}`);
+    console.log(`[SERVER] Owner Email: ${process.env.OWNER_EMAIL || 'Not set (using fallback)'}`);
   });
 }
 

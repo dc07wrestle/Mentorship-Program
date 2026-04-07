@@ -23,7 +23,17 @@ export default function CTA() {
         body: JSON.stringify(data),
       });
 
-      const result = await response.json();
+      let result;
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        result = await response.json();
+      } else {
+        const errorText = await response.text();
+        console.error("Server returned non-JSON response:", errorText);
+        setStatus('error');
+        setErrorMessage('The server encountered an unexpected error. Please try again later.');
+        return;
+      }
 
       if (response.ok && result.success) {
         setStatus('success');
@@ -32,8 +42,9 @@ export default function CTA() {
         setErrorMessage(result.message || 'There was an error submitting your request. Please try again or contact us directly.');
       }
     } catch (error) {
+      console.error("Fetch error:", error);
       setStatus('error');
-      setErrorMessage('Network error. Please check your connection and try again.');
+      setErrorMessage('Network error. This could be due to a connection issue or the server being temporarily unavailable.');
     }
   };
 
