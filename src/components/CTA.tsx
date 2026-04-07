@@ -4,10 +4,12 @@ import { ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export default function CTA() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('submitting');
+    setErrorMessage('');
 
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
@@ -21,13 +23,17 @@ export default function CTA() {
         body: JSON.stringify(data),
       });
 
-      if (response.ok) {
+      const result = await response.json();
+
+      if (response.ok && result.success) {
         setStatus('success');
       } else {
         setStatus('error');
+        setErrorMessage(result.message || 'There was an error submitting your request. Please try again or contact us directly.');
       }
     } catch (error) {
       setStatus('error');
+      setErrorMessage('Network error. Please check your connection and try again.');
     }
   };
 
@@ -144,7 +150,7 @@ export default function CTA() {
 
               {status === 'error' && (
                 <div className="p-4 bg-red-50 text-red-600 rounded-lg text-sm font-medium">
-                  There was an error submitting your request. Please try again or contact us directly.
+                  {errorMessage}
                 </div>
               )}
 

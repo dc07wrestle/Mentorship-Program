@@ -25,20 +25,20 @@ export default function Solution() {
               <img 
                 src="https://upload.wikimedia.org/wikipedia/commons/4/41/Jordan_Burroughs_at_2017_Men%27s_freestyle_Wrestling_World_Cup%2C_Kermanshah.jpg" 
                 alt="Jordan Burroughs Wrestling" 
-                className="w-full h-[500px] object-cover object-top"
+                className="w-full h-[500px] object-cover object-center"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-brand-blue/80 to-transparent mix-blend-multiply" />
             </div>
             
             {/* Floating badge */}
-            <div className="absolute -bottom-8 -right-8 bg-white p-6 rounded-xl shadow-xl max-w-xs hidden md:block">
-              <div className="flex items-center gap-4 mb-2">
-                <div className="w-12 h-12 bg-brand-red rounded-full flex items-center justify-center text-white font-bold text-xl">
+            <div className="absolute -bottom-8 -right-8 bg-white p-6 rounded-xl shadow-xl max-w-xs hidden md:block border border-gray-100">
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 bg-brand-red rounded-full flex items-center justify-center text-white font-bold text-lg shadow-inner">
                   100%
                 </div>
                 <div className="text-sm font-bold text-gray-900 leading-tight">
-                  Ivy League<br/>Mentors
+                  Ivy League<br/>Members
                 </div>
               </div>
             </div>

@@ -22,7 +22,7 @@ export default function Navbar() {
               P
             </div>
             <span className="text-white font-bold text-xl tracking-tight hidden sm:block font-heading">
-              Next Level Wrestling Mentorship
+              Mat Mentors
             </span>
           </a>
 

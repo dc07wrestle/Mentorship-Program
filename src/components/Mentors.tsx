@@ -52,11 +52,11 @@ export default function Mentors() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
             >
-              <div className="h-80 overflow-hidden">
+              <div className="h-96 overflow-hidden bg-gray-200">
                 <img 
                   src={mentor.image} 
                   alt={mentor.name} 
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   referrerPolicy="no-referrer"
                 />
               </div>

@@ -22,7 +22,7 @@ export default function Hero() {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block py-1 px-3 rounded-full bg-brand-red/20 text-red-300 text-sm font-semibold tracking-wider uppercase mb-6 border border-brand-red/30">
-              Next Level Wrestling Mentorship
+              Mat Mentors
             </span>
           </motion.div>
           
