@@ -11,13 +11,14 @@ export default function Footer() {
           <div className="flex gap-6 text-sm">
             <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="mailto:contact@example.com" className="hover:text-white transition-colors">Contact Us</a>
+            <a href="mailto:dc07wrestle@gmail.com" className="hover:text-white transition-colors">Contact Us</a>
           </div>
         </div>
         
         <div className="mt-12 text-center text-sm border-t border-gray-800 pt-8">
           <p>&copy; {new Date().getFullYear()} Mat Mentors. All rights reserved.</p>
           <p className="mt-2 text-xs text-gray-500">Not officially affiliated with the University of Pennsylvania.</p>
+          <p className="mt-4 text-xs text-gray-600">Made with ❤️ for the wrestling community.</p>
         </div>
       </div>
     </footer>
