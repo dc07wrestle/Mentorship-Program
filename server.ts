@@ -1,5 +1,4 @@
 import express from "express";
-import { createServer as createViteServer } from "vite";
 import { Resend } from "resend";
 import dotenv from "dotenv";
 import path from "path";
@@ -124,13 +123,16 @@ app.post("/api/request-appointment", async (req, res) => {
 
 // Vite middleware for development / Static serving for production
 async function startServer() {
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
+    // Dynamically import Vite only in development to avoid crashes on Vercel
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
     });
     app.use(vite.middlewares);
-  } else {
+  } else if (!process.env.VERCEL) {
+    // This part only runs in local production mode, not on Vercel
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
@@ -143,9 +145,6 @@ async function startServer() {
     const PORT = 3000;
     app.listen(PORT, "0.0.0.0", () => {
       console.log(`[SERVER] Mat Mentors server started on port ${PORT}`);
-      console.log(`[SERVER] Environment: ${process.env.NODE_ENV || 'development'}`);
-      console.log(`[SERVER] Resend Key Present: ${!!process.env.RESEND_API_KEY}`);
-      console.log(`[SERVER] Owner Email: ${process.env.OWNER_EMAIL || 'Not set (using fallback)'}`);
     });
   }
 }
