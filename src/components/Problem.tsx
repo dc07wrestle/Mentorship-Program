@@ -40,7 +40,7 @@ export default function Problem() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            Wrestling builds character, but without the right guidance, many young athletes struggle to translate that discipline into academic and life success.
+            Wrestling builds character, but without the right guidance, many young athletes struggle to reach their full potential on the mat or translate that discipline into academic and life success. Our focus is helping you dominate in the circle and achieve your full potential.
           </motion.p>
         </div>
 

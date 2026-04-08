@@ -6,14 +6,23 @@ export default function Mentors() {
       name: "Davis Motyka",
       image: "https://pennathletics.com/images/2025/9/2/DavisMotyka.jpg",
       major: "Economics Major",
-      achievements: "NCAA Qualifier, NWCA Scholar All-American",
+      achievements: [
+        "NCAA Qualifier",
+        "World Team Member",
+        "Ironman Champion",
+        "NWCA Scholar All-American"
+      ],
       gpa: "3.7 GPA"
     },
     {
       name: "Deven Casey",
       image: "https://pennathletics.com/images/2025/9/2/DevenCasey.jpg",
       major: "Economics Major",
-      achievements: "2x State Champion",
+      achievements: [
+        "2x State Champion",
+        "Fargo All-American",
+        "NWCA Scholar All-American"
+      ],
       gpa: "3.6 GPA"
     }
   ];
@@ -65,10 +74,12 @@ export default function Mentors() {
                 <p className="text-brand-red font-semibold mb-4">{mentor.major}</p>
                 
                 <div className="space-y-2 text-gray-600">
-                  <p className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
-                    {mentor.achievements}
-                  </p>
+                  {mentor.achievements.map((achievement, idx) => (
+                    <p key={idx} className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
+                      {achievement}
+                    </p>
+                  ))}
                   <p className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
                     {mentor.gpa}

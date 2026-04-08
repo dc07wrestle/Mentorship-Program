@@ -19,7 +19,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           <a href="#" className="flex items-center gap-3">
             <img 
-              src="https://storage.googleapis.com/static-assets-public/ais-pre-kbxpbwmfzecagsgvxw66em-270079114150.us-east1.run.app/attachments/9796033a-1279-42b7-8f52-870094776100.png" 
+              src="https://i.postimg.cc/g06cJB6D/7771C723-F9AE-4E58-AD55-CD8A92B9A7A6.png" 
               alt="Mat Mentors Logo" 
               className="w-10 h-10 object-contain rounded-full bg-white p-0.5"
             />

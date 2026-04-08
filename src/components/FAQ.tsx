@@ -10,11 +10,11 @@ export default function FAQ() {
     },
     {
       question: "Are the sessions virtual or in-person?",
-      answer: "All of our mentorship sessions are 1-on-1 and conducted 100% virtually. This allows us to work with student-athletes anywhere in the country and easily review match film together via screen share."
+      answer: "All of our mentorship sessions are 1-on-1 and conducted 100% virtually. This allows us to work with student-athletes anywhere in the country and easily review match film together via screen share or sent through email/message."
     },
     {
       question: "What is the time commitment?",
-      answer: "We recommend at least one 45-60 minute session per week to maintain consistency and build a strong mentor-mentee relationship. However, the schedule is flexible and can be tailored to fit your student's busy athletic and academic calendar."
+      answer: "We recommend at least one 20-30 minute session per week to maintain consistency and build a strong mentor-mentee relationship. However, the schedule is flexible and can be tailored to fit your student's busy athletic and academic calendar."
     },
     {
       question: "How are mentors vetted for safety?",

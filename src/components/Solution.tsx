@@ -23,7 +23,7 @@ export default function Solution() {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-white p-8 flex items-center justify-center">
               <img 
-                src="https://storage.googleapis.com/static-assets-public/ais-pre-kbxpbwmfzecagsgvxw66em-270079114150.us-east1.run.app/attachments/9796033a-1279-42b7-8f52-870094776100.png" 
+                src="https://i.postimg.cc/g06cJB6D/7771C723-F9AE-4E58-AD55-CD8A92B9A7A6.png" 
                 alt="Mat Mentors Logo" 
                 className="w-full h-auto max-h-[400px] object-contain"
               />
