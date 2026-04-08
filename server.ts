@@ -2,6 +2,7 @@ import express from "express";
 import { Resend } from "resend";
 import dotenv from "dotenv";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from 'url';
 import twilio from 'twilio';
 
@@ -30,8 +31,22 @@ function getEnvVar(prefix: string): string | undefined {
 
 function getTwilioClient() {
   if (!twilioClient) {
-    const accountSid = getEnvVar('TWILIO_ACCOUNT_SID');
-    const authToken = getEnvVar('TWILIO_AUTH_TOKEN');
+    let accountSid = getEnvVar('TWILIO_ACCOUNT_SID');
+    let authToken = getEnvVar('TWILIO_AUTH_TOKEN');
+
+    // Fallback to twilio-config.json
+    try {
+      const configPath = path.join(process.cwd(), 'twilio-config.json');
+      if (fs.existsSync(configPath)) {
+        const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+        accountSid = accountSid || config.accountSid;
+        authToken = authToken || config.authToken;
+        console.log("[DEBUG] Found twilio-config.json fallback");
+      }
+    } catch (e) {
+      console.error("[DEBUG] Error reading twilio-config.json:", e);
+    }
+
     console.log("[DEBUG] Twilio Init:", { hasSid: !!accountSid, hasToken: !!authToken });
     if (accountSid && authToken) {
       twilioClient = twilio(accountSid, authToken);
@@ -42,17 +57,12 @@ function getTwilioClient() {
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
-  const keys = Object.keys(process.env);
   res.json({ 
     status: "ok", 
-    allKeys: keys.sort(),
-    twilioKeysFound: keys.filter(k => k.toUpperCase().includes('TWILIO')),
     env: {
       hasResendKey: !!process.env.RESEND_API_KEY,
       hasOwnerEmail: !!process.env.OWNER_EMAIL,
-      hasTwilioSid: !!getEnvVar('TWILIO_ACCOUNT_SID'),
-      hasTwilioToken: !!getEnvVar('TWILIO_AUTH_TOKEN'),
-      hasTwilioNumber: !!getEnvVar('TWILIO_PHONE_')
+      hasTwilioConfig: fs.existsSync(path.join(process.cwd(), 'twilio-config.json')) || !!getEnvVar('TWILIO_ACCOUNT_SID')
     }
   });
 });
@@ -134,7 +144,18 @@ app.post("/api/request-appointment", async (req, res) => {
 
     // 3. Send automated SMS via Twilio
     const client = getTwilioClient();
-    const twilioNumber = getEnvVar('TWILIO_PHONE_');
+    let twilioNumber = getEnvVar('TWILIO_PHONE_');
+
+    // Fallback to twilio-config.json for number
+    if (!twilioNumber) {
+      try {
+        const configPath = path.join(process.cwd(), 'twilio-config.json');
+        if (fs.existsSync(configPath)) {
+          const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+          twilioNumber = config.phoneNumber;
+        }
+      } catch (e) {}
+    }
     
     // Improved phone number sanitization
     const sanitizePhone = (phone: string) => {
@@ -170,13 +191,14 @@ app.post("/api/request-appointment", async (req, res) => {
         console.error("[API] Twilio Error Details:", smsErrorDetails);
       }
     } else {
-      const allKeys = Object.keys(process.env);
-      const twilioKeys = allKeys.filter(k => k.toUpperCase().includes('TWILIO'));
+      const configPath = path.join(process.cwd(), 'twilio-config.json');
+      const configFileExists = fs.existsSync(configPath);
+      
       smsErrorDetails = { 
-        message: `Configuration missing. Found Twilio-related keys: ${twilioKeys.join(', ') || 'None'}. (Total keys in system: ${allKeys.length}). Need SID, Token, and Phone Number.`,
-        allKeys: allKeys.sort()
+        message: `Twilio configuration not found. Please ensure twilio-config.json is present or environment variables are set.`,
+        configExists: configFileExists
       };
-      console.log("[API] Skipping SMS. Found keys:", twilioKeys);
+      console.log("[API] Skipping SMS. Twilio config missing.");
     }
 
     console.log("[API] Request processed successfully.");

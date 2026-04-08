@@ -38,8 +38,7 @@ export default function CTA() {
       if (response.ok && result.success) {
         if (result.smsStatus === 'failed') {
           setStatus('error');
-          const debugInfo = result.smsError?.allKeys ? `\n\nSystem Keys: ${result.smsError.allKeys.join(', ')}` : '';
-          setErrorMessage(`Request received, but the automated text failed: ${result.smsError?.message || 'Unknown Twilio error'}.${debugInfo} Please check your Twilio settings.`);
+          setErrorMessage(`Request received, but the automated text failed: ${result.smsError?.message || 'Unknown Twilio error'}. Please check your Twilio settings.`);
         } else {
           setStatus('success');
         }
