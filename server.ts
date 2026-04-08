@@ -17,10 +17,17 @@ const resend = new Resend(process.env.RESEND_API_KEY || "dummy_key");
 
 // Twilio Client (Lazy initialization)
 let twilioClient: any = null;
+
+function getEnvVar(prefix: string): string | undefined {
+  const keys = Object.keys(process.env);
+  const match = keys.find(k => k.toUpperCase().startsWith(prefix.toUpperCase()));
+  return match ? process.env[match] : undefined;
+}
+
 function getTwilioClient() {
   if (!twilioClient) {
-    const accountSid = process.env.TWILIO_ACCOUNT_SID;
-    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    const accountSid = getEnvVar('TWILIO_ACCOUNT_SID');
+    const authToken = getEnvVar('TWILIO_AUTH_TOKEN');
     if (accountSid && authToken) {
       twilioClient = twilio(accountSid, authToken);
     }
@@ -30,14 +37,16 @@ function getTwilioClient() {
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
+  const keys = Object.keys(process.env);
   res.json({ 
     status: "ok", 
+    twilioKeysFound: keys.filter(k => k.startsWith('TWILIO_')),
     env: {
       hasResendKey: !!process.env.RESEND_API_KEY,
       hasOwnerEmail: !!process.env.OWNER_EMAIL,
-      hasTwilioSid: !!process.env.TWILIO_ACCOUNT_SID,
-      hasTwilioToken: !!process.env.TWILIO_AUTH_TOKEN,
-      hasTwilioNumber: !!process.env.TWILIO_PHONE_NUMBER
+      hasTwilioSid: !!getEnvVar('TWILIO_ACCOUNT_SID'),
+      hasTwilioToken: !!getEnvVar('TWILIO_AUTH_TOKEN'),
+      hasTwilioNumber: !!getEnvVar('TWILIO_PHONE_')
     }
   });
 });
@@ -119,20 +128,15 @@ app.post("/api/request-appointment", async (req, res) => {
 
     // 3. Send automated SMS via Twilio
     const client = getTwilioClient();
-    // Fallback for potential typo in secret name (TWILIO_PHONE_NUMBI)
-    let twilioNumber = process.env.TWILIO_PHONE_NUMBER || (process.env as any).TWILIO_PHONE_NUMBI;
+    const twilioNumber = getEnvVar('TWILIO_PHONE_');
     
     // Improved phone number sanitization
     const sanitizePhone = (phone: string) => {
       if (!phone) return "";
       const cleaned = phone.replace(/\D/g, '');
-      // If 10 digits, assume US (+1)
       if (cleaned.length === 10) return `+1${cleaned}`;
-      // If 11 digits and starts with 1, it's already US with country code
       if (cleaned.length === 11 && cleaned.startsWith('1')) return `+${cleaned}`;
-      // Otherwise, if it started with +, keep the + and the digits
       if (phone.trim().startsWith('+')) return `+${cleaned}`;
-      // Default fallback: just add + to whatever digits we have
       return `+${cleaned}`;
     };
 
@@ -160,15 +164,11 @@ app.post("/api/request-appointment", async (req, res) => {
         console.error("[API] Twilio Error Details:", smsErrorDetails);
       }
     } else {
-      const missing = {
-        hasClient: !!client,
-        hasTwilioNumber: !!twilioNumber,
-        hasParentPhone: !!parentPhone
+      const keys = Object.keys(process.env).filter(k => k.startsWith('TWILIO_'));
+      smsErrorDetails = { 
+        message: `Configuration missing. Found keys: ${keys.join(', ') || 'None'}. Need SID, Token, and Phone Number.` 
       };
-      console.log("[API] Skipping SMS. Missing:", missing);
-      if (!client || !twilioNumber) {
-        smsErrorDetails = { message: "Twilio credentials or phone number missing in settings." };
-      }
+      console.log("[API] Skipping SMS. Found keys:", keys);
     }
 
     console.log("[API] Request processed successfully.");
