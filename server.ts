@@ -45,7 +45,8 @@ app.get("/api/health", (req, res) => {
   const keys = Object.keys(process.env);
   res.json({ 
     status: "ok", 
-    twilioKeysFound: keys.filter(k => k.startsWith('TWILIO_')),
+    allKeys: keys.sort(),
+    twilioKeysFound: keys.filter(k => k.toUpperCase().includes('TWILIO')),
     env: {
       hasResendKey: !!process.env.RESEND_API_KEY,
       hasOwnerEmail: !!process.env.OWNER_EMAIL,
@@ -172,7 +173,8 @@ app.post("/api/request-appointment", async (req, res) => {
       const allKeys = Object.keys(process.env);
       const twilioKeys = allKeys.filter(k => k.toUpperCase().includes('TWILIO'));
       smsErrorDetails = { 
-        message: `Configuration missing. Found Twilio-related keys: ${twilioKeys.join(', ') || 'None'}. (Total keys in system: ${allKeys.length}). Need SID, Token, and Phone Number.` 
+        message: `Configuration missing. Found Twilio-related keys: ${twilioKeys.join(', ') || 'None'}. (Total keys in system: ${allKeys.length}). Need SID, Token, and Phone Number.`,
+        allKeys: allKeys.sort()
       };
       console.log("[API] Skipping SMS. Found keys:", twilioKeys);
     }
