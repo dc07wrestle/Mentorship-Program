@@ -119,13 +119,24 @@ app.post("/api/request-appointment", async (req, res) => {
 
     // 3. Send automated SMS via Twilio
     const client = getTwilioClient();
-    let twilioNumber = process.env.TWILIO_PHONE_NUMBER;
+    // Fallback for potential typo in secret name (TWILIO_PHONE_NUMBI)
+    let twilioNumber = process.env.TWILIO_PHONE_NUMBER || (process.env as any).TWILIO_PHONE_NUMBI;
     
-    // Sanitize phone numbers (remove spaces, dashes, parentheses)
+    // Improved phone number sanitization
     const sanitizePhone = (phone: string) => {
+      if (!phone) return "";
       const cleaned = phone.replace(/\D/g, '');
-      return phone.startsWith('+') ? `+${cleaned}` : `+1${cleaned}`; // Default to US if no +
+      // If 10 digits, assume US (+1)
+      if (cleaned.length === 10) return `+1${cleaned}`;
+      // If 11 digits and starts with 1, it's already US with country code
+      if (cleaned.length === 11 && cleaned.startsWith('1')) return `+${cleaned}`;
+      // Otherwise, if it started with +, keep the + and the digits
+      if (phone.trim().startsWith('+')) return `+${cleaned}`;
+      // Default fallback: just add + to whatever digits we have
+      return `+${cleaned}`;
     };
+
+    let smsErrorDetails = null;
 
     if (client && twilioNumber && parentPhone) {
       try {
@@ -141,22 +152,31 @@ app.post("/api/request-appointment", async (req, res) => {
         });
         console.log("[API] Twilio SMS sent successfully. SID:", message.sid);
       } catch (smsError: any) {
-        console.error("[API] Twilio Error Details:", {
+        smsErrorDetails = {
           message: smsError.message,
           code: smsError.code,
           status: smsError.status
-        });
+        };
+        console.error("[API] Twilio Error Details:", smsErrorDetails);
       }
     } else {
-      console.log("[API] Skipping SMS. Missing:", {
+      const missing = {
         hasClient: !!client,
         hasTwilioNumber: !!twilioNumber,
         hasParentPhone: !!parentPhone
-      });
+      };
+      console.log("[API] Skipping SMS. Missing:", missing);
+      if (!client || !twilioNumber) {
+        smsErrorDetails = { message: "Twilio credentials or phone number missing in settings." };
+      }
     }
 
     console.log("[API] Request processed successfully.");
-    res.status(200).json({ success: true });
+    res.status(200).json({ 
+      success: true, 
+      smsStatus: smsErrorDetails ? "failed" : "sent",
+      smsError: smsErrorDetails
+    });
   } catch (error) {
     console.error("[API] Unhandled error:", error);
     res.status(500).json({ 

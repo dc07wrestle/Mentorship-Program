@@ -36,7 +36,12 @@ export default function CTA() {
       }
 
       if (response.ok && result.success) {
-        setStatus('success');
+        if (result.smsStatus === 'failed') {
+          setStatus('error');
+          setErrorMessage(`Request received, but the automated text failed: ${result.smsError?.message || 'Unknown Twilio error'}. Please check your Twilio settings.`);
+        } else {
+          setStatus('success');
+        }
       } else {
         setStatus('error');
         setErrorMessage(result.message || 'There was an error submitting your request. Please try again or contact us directly.');
