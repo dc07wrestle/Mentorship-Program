@@ -119,22 +119,40 @@ app.post("/api/request-appointment", async (req, res) => {
 
     // 3. Send automated SMS via Twilio
     const client = getTwilioClient();
-    const twilioNumber = process.env.TWILIO_PHONE_NUMBER;
+    let twilioNumber = process.env.TWILIO_PHONE_NUMBER;
     
+    // Sanitize phone numbers (remove spaces, dashes, parentheses)
+    const sanitizePhone = (phone: string) => {
+      const cleaned = phone.replace(/\D/g, '');
+      return phone.startsWith('+') ? `+${cleaned}` : `+1${cleaned}`; // Default to US if no +
+    };
+
     if (client && twilioNumber && parentPhone) {
       try {
-        console.log(`[API] Sending automated SMS to ${parentPhone}`);
+        const cleanTo = sanitizePhone(parentPhone);
+        const cleanFrom = sanitizePhone(twilioNumber);
+        
+        console.log(`[API] Attempting to send SMS from ${cleanFrom} to ${cleanTo}`);
+        
         const message = await client.messages.create({
           body: `This is Mat Mentors. Thanks for reaching out! Feel free to set up your first session through this text thread or email us at dc07wrestle@gmail.com. We’re excited to help you take your wrestling to the next level.\n\nElite Wrestling. Elite Minds.`,
-          from: twilioNumber,
-          to: parentPhone
+          from: cleanFrom,
+          to: cleanTo
         });
-        console.log("[API] Twilio SMS sent:", message.sid);
-      } catch (smsError) {
-        console.error("[API] Failed to send Twilio SMS:", smsError);
+        console.log("[API] Twilio SMS sent successfully. SID:", message.sid);
+      } catch (smsError: any) {
+        console.error("[API] Twilio Error Details:", {
+          message: smsError.message,
+          code: smsError.code,
+          status: smsError.status
+        });
       }
     } else {
-      console.log("[API] Skipping SMS: Twilio not configured or phone missing.");
+      console.log("[API] Skipping SMS. Missing:", {
+        hasClient: !!client,
+        hasTwilioNumber: !!twilioNumber,
+        hasParentPhone: !!parentPhone
+      });
     }
 
     console.log("[API] Request processed successfully.");
