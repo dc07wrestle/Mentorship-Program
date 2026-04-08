@@ -119,7 +119,7 @@ export default function CTA() {
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="parentPhone" className="block text-sm font-semibold text-gray-700">Parent Phone Number</label>
-                  <input type="tel" id="parentPhone" name="parentPhone" className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-red focus:border-transparent" />
+                  <input type="tel" id="parentPhone" name="parentPhone" placeholder="(555) 000-0000" className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-red focus:border-transparent" />
                 </div>
               </div>
 

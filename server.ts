@@ -3,6 +3,7 @@ import { Resend } from "resend";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from 'url';
+import twilio from 'twilio';
 
 dotenv.config();
 
@@ -14,13 +15,29 @@ app.use(express.json());
 
 const resend = new Resend(process.env.RESEND_API_KEY || "dummy_key");
 
+// Twilio Client (Lazy initialization)
+let twilioClient: any = null;
+function getTwilioClient() {
+  if (!twilioClient) {
+    const accountSid = process.env.TWILIO_ACCOUNT_SID;
+    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    if (accountSid && authToken) {
+      twilioClient = twilio(accountSid, authToken);
+    }
+  }
+  return twilioClient;
+}
+
 // Health check endpoint
 app.get("/api/health", (req, res) => {
   res.json({ 
     status: "ok", 
     env: {
       hasResendKey: !!process.env.RESEND_API_KEY,
-      hasOwnerEmail: !!process.env.OWNER_EMAIL
+      hasOwnerEmail: !!process.env.OWNER_EMAIL,
+      hasTwilioSid: !!process.env.TWILIO_ACCOUNT_SID,
+      hasTwilioToken: !!process.env.TWILIO_AUTH_TOKEN,
+      hasTwilioNumber: !!process.env.TWILIO_PHONE_NUMBER
     }
   });
 });
@@ -56,58 +73,68 @@ app.post("/api/request-appointment", async (req, res) => {
       return res.status(400).json({ success: false, message: "Missing required fields." });
     }
 
-    if (!process.env.RESEND_API_KEY) {
-      console.error("[API] Error: RESEND_API_KEY is missing.");
-      return res.status(500).json({ 
-        success: false, 
-        message: "Email service not configured. Please add your RESEND_API_KEY in the settings." 
-      });
+    // 1. Send email to owner
+    if (process.env.RESEND_API_KEY) {
+      try {
+        const ownerEmail = process.env.OWNER_EMAIL || "dc07wrestle@gmail.com";
+        await resend.emails.send({
+          from: "Mat Mentors Requests <onboarding@resend.dev>",
+          to: ownerEmail,
+          subject: `New Mentorship Request: ${studentName}`,
+          html: `
+            <h2>New Mentorship Request</h2>
+            <p><strong>Parent Name:</strong> ${parentName}</p>
+            <p><strong>Student Name:</strong> ${studentName}</p>
+            <p><strong>Student Grade:</strong> ${studentGrade}</p>
+            <p><strong>Parent Email:</strong> ${parentEmail}</p>
+            <p><strong>Parent Phone:</strong> ${parentPhone}</p>
+            <p><strong>Wrestling Experience:</strong> ${experienceLevel}</p>
+            <p><strong>Needs Help With:</strong> ${helpWith}</p>
+            <p><strong>Preferred Times:</strong> ${preferredTimes}</p>
+            <p><strong>Additional Notes:</strong> ${additionalNotes}</p>
+          `,
+        });
+      } catch (e) {
+        console.error("[API] Failed to send email to owner:", e);
+      }
     }
 
-    // Send email to owner
-    try {
-      const ownerEmail = process.env.OWNER_EMAIL || "dc07wrestle@gmail.com";
-      console.log(`[API] Sending notification to owner: ${ownerEmail}`);
-      
-      const ownerResult = await resend.emails.send({
-        from: "Mat Mentors Requests <onboarding@resend.dev>",
-        to: ownerEmail,
-        subject: `New Mentorship Request: ${studentName}`,
-        html: `
-          <h2>New Mentorship Request</h2>
-          <p><strong>Parent Name:</strong> ${parentName}</p>
-          <p><strong>Student Name:</strong> ${studentName}</p>
-          <p><strong>Student Grade:</strong> ${studentGrade}</p>
-          <p><strong>Parent Email:</strong> ${parentEmail}</p>
-          <p><strong>Parent Phone:</strong> ${parentPhone}</p>
-          <p><strong>Wrestling Experience:</strong> ${experienceLevel}</p>
-          <p><strong>Needs Help With:</strong> ${helpWith}</p>
-          <p><strong>Preferred Times:</strong> ${preferredTimes}</p>
-          <p><strong>Additional Notes:</strong> ${additionalNotes}</p>
-        `,
-      });
-      console.log("[API] Owner email result:", ownerResult);
-    } catch (ownerEmailError) {
-      console.error("[API] Failed to send email to owner:", ownerEmailError);
-      throw ownerEmailError;
+    // 2. Send confirmation email to parent
+    if (process.env.RESEND_API_KEY) {
+      try {
+        await resend.emails.send({
+          from: "Mat Mentors <onboarding@resend.dev>",
+          to: parentEmail,
+          subject: "We received your mentorship request!",
+          html: `
+            <h2>Hi ${parentName},</h2>
+            <p>Thank you for requesting an appointment for ${studentName}. We have received your information and will reach out within 24 hours to confirm your mentorship appointment.</p>
+            <p>Best regards,<br/>The Mat Mentors Team</p>
+          `,
+        });
+      } catch (e) {
+        console.warn("[API] Failed to send confirmation email to parent:", e);
+      }
     }
 
-    // Send confirmation email to parent
-    try {
-      console.log(`[API] Sending confirmation to parent: ${parentEmail}`);
-      const parentResult = await resend.emails.send({
-        from: "Mat Mentors <onboarding@resend.dev>",
-        to: parentEmail,
-        subject: "We received your mentorship request!",
-        html: `
-          <h2>Hi ${parentName},</h2>
-          <p>Thank you for requesting an appointment for ${studentName}. We have received your information and will reach out within 24 hours to confirm your mentorship appointment.</p>
-          <p>Best regards,<br/>The Mat Mentors Team</p>
-        `,
-      });
-      console.log("[API] Parent email result:", parentResult);
-    } catch (parentEmailError) {
-      console.warn("[API] Failed to send confirmation email to parent (non-critical):", parentEmailError);
+    // 3. Send automated SMS via Twilio
+    const client = getTwilioClient();
+    const twilioNumber = process.env.TWILIO_PHONE_NUMBER;
+    
+    if (client && twilioNumber && parentPhone) {
+      try {
+        console.log(`[API] Sending automated SMS to ${parentPhone}`);
+        const message = await client.messages.create({
+          body: `This is Mat Mentors. Thanks for reaching out! Feel free to set up your first session through this text thread or email us at dc07wrestle@gmail.com. We’re excited to help you take your wrestling to the next level.\n\nElite Wrestling. Elite Minds.`,
+          from: twilioNumber,
+          to: parentPhone
+        });
+        console.log("[API] Twilio SMS sent:", message.sid);
+      } catch (smsError) {
+        console.error("[API] Failed to send Twilio SMS:", smsError);
+      }
+    } else {
+      console.log("[API] Skipping SMS: Twilio not configured or phone missing.");
     }
 
     console.log("[API] Request processed successfully.");
