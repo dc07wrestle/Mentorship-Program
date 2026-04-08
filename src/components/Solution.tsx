@@ -21,14 +21,12 @@ export default function Solution() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-white p-8 flex items-center justify-center">
               <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/4/41/Jordan_Burroughs_at_2017_Men%27s_freestyle_Wrestling_World_Cup%2C_Kermanshah.jpg" 
-                alt="Jordan Burroughs Wrestling" 
-                className="w-full h-[500px] object-cover object-center"
-                referrerPolicy="no-referrer"
+                src="https://storage.googleapis.com/static-assets-public/ais-pre-kbxpbwmfzecagsgvxw66em-270079114150.us-east1.run.app/attachments/9796033a-1279-42b7-8f52-870094776100.png" 
+                alt="Mat Mentors Logo" 
+                className="w-full h-auto max-h-[400px] object-contain"
               />
-              <div className="absolute inset-0 bg-gradient-to-tr from-brand-blue/80 to-transparent mix-blend-multiply" />
             </div>
             
             {/* Floating badge */}
