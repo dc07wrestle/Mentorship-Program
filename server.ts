@@ -20,7 +20,11 @@ let twilioClient: any = null;
 
 function getEnvVar(prefix: string): string | undefined {
   const keys = Object.keys(process.env);
-  const match = keys.find(k => k.toUpperCase().startsWith(prefix.toUpperCase()));
+  console.log("[DEBUG] All Env Keys:", keys);
+  // Try exact match first
+  if (process.env[prefix]) return process.env[prefix];
+  // Try case-insensitive prefix match
+  const match = keys.find(k => k.toUpperCase().includes(prefix.toUpperCase()));
   return match ? process.env[match] : undefined;
 }
 
@@ -28,6 +32,7 @@ function getTwilioClient() {
   if (!twilioClient) {
     const accountSid = getEnvVar('TWILIO_ACCOUNT_SID');
     const authToken = getEnvVar('TWILIO_AUTH_TOKEN');
+    console.log("[DEBUG] Twilio Init:", { hasSid: !!accountSid, hasToken: !!authToken });
     if (accountSid && authToken) {
       twilioClient = twilio(accountSid, authToken);
     }
@@ -164,11 +169,12 @@ app.post("/api/request-appointment", async (req, res) => {
         console.error("[API] Twilio Error Details:", smsErrorDetails);
       }
     } else {
-      const keys = Object.keys(process.env).filter(k => k.startsWith('TWILIO_'));
+      const allKeys = Object.keys(process.env);
+      const twilioKeys = allKeys.filter(k => k.toUpperCase().includes('TWILIO'));
       smsErrorDetails = { 
-        message: `Configuration missing. Found keys: ${keys.join(', ') || 'None'}. Need SID, Token, and Phone Number.` 
+        message: `Configuration missing. Found Twilio-related keys: ${twilioKeys.join(', ') || 'None'}. (Total keys in system: ${allKeys.length}). Need SID, Token, and Phone Number.` 
       };
-      console.log("[API] Skipping SMS. Found keys:", keys);
+      console.log("[API] Skipping SMS. Found keys:", twilioKeys);
     }
 
     console.log("[API] Request processed successfully.");
