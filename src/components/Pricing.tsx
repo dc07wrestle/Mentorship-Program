@@ -82,6 +82,36 @@ export default function Pricing() {
           </motion.p>
         </div>
 
+        <motion.div 
+          className="mb-16 max-w-2xl mx-auto bg-gray-50 rounded-2xl p-8 border border-gray-100"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <h3 className="text-xl font-bold text-brand-blue mb-4 text-center">Mentor Availability</h3>
+          <p className="text-center text-sm text-gray-600 mb-8 max-w-lg mx-auto">
+            Check our hours below. For 5 and 10-session packs, you only need to book your <span className="font-bold text-brand-red">first session</span> initially—we'll coordinate your recurring weekly schedule during our first call.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+            <div className="p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+              <p className="font-bold text-brand-red mb-1">Sunday</p>
+              <p className="text-sm text-gray-600">9:00 AM – 10:00 PM</p>
+            </div>
+            <div className="p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+              <p className="font-bold text-brand-red mb-1">Mon – Thu</p>
+              <p className="text-sm text-gray-600">2:00 PM – 10:00 PM</p>
+            </div>
+            <div className="p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+              <p className="font-bold text-brand-red mb-1">Fri – Sat</p>
+              <p className="text-sm text-gray-600">12:00 PM – 10:00 PM</p>
+            </div>
+          </div>
+          <p className="mt-6 text-center text-xs text-gray-400 italic">
+            * All times in EST. Specific session times are selected after booking is confirmed.
+          </p>
+        </motion.div>
+
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {plans.map((plan, index) => (
             <motion.div
@@ -141,39 +171,12 @@ export default function Pricing() {
                   {plan.buttonText}
                 </button>
                 <p className={`text-[10px] text-center uppercase tracking-wider font-semibold ${plan.highlight ? 'text-blue-300' : 'text-gray-400'}`}>
-                  Select your time after payment
+                  {plan.id === 'single' ? 'Select your time after payment' : 'Book your first session after payment'}
                 </p>
               </div>
             </motion.div>
           ))}
         </div>
-
-        <motion.div 
-          className="mt-16 max-w-2xl mx-auto bg-gray-50 rounded-2xl p-8 border border-gray-100"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <h3 className="text-xl font-bold text-brand-blue mb-6 text-center">Mentor Availability</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-            <div className="p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-              <p className="font-bold text-brand-red mb-1">Sunday</p>
-              <p className="text-sm text-gray-600">9:00 AM – 10:00 PM</p>
-            </div>
-            <div className="p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-              <p className="font-bold text-brand-red mb-1">Mon – Thu</p>
-              <p className="text-sm text-gray-600">2:00 PM – 10:00 PM</p>
-            </div>
-            <div className="p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-              <p className="font-bold text-brand-red mb-1">Fri – Sat</p>
-              <p className="text-sm text-gray-600">12:00 PM – 10:00 PM</p>
-            </div>
-          </div>
-          <p className="mt-6 text-center text-xs text-gray-400 italic">
-            * All times in EST. Specific session times are selected after booking is confirmed.
-          </p>
-        </motion.div>
 
         <motion.p 
           className="mt-16 text-center text-sm text-gray-500 max-w-2xl mx-auto italic"

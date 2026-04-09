@@ -87,15 +87,22 @@ export default function Success() {
           />
         </div>
 
-        <div className="mt-10 text-center space-y-6">
-          <div className="flex flex-col items-center gap-2 text-gray-500">
+        <div className="mt-10 text-center space-y-8">
+          <div className="bg-brand-blue/5 border border-brand-blue/10 rounded-2xl p-6 max-w-2xl mx-auto">
+            <p className="text-brand-blue font-bold mb-2 flex items-center justify-center gap-2">
+              <CheckCircle className="w-5 h-5 text-brand-red" />
+              For 5 and 10-Session Packs
+            </p>
+            <p className="text-gray-700 text-sm leading-relaxed">
+              Please book your <span className="font-bold text-brand-red underline">first session</span> using the calendar above. During our first call, we will discuss and lock in your future recurring times (e.g., every Tuesday at 4:00 PM) to ensure consistent growth.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center gap-4 text-gray-500">
             <div className="flex items-center gap-2 text-sm">
               <Mail className="w-4 h-4" />
-              <span>Need help scheduling? Email <a href="mailto:dc07wrestle@gmail.com" className="text-brand-red font-semibold hover:underline">dc07wrestle@gmail.com</a></span>
+              <span>Need help? Email <a href="mailto:dc07wrestle@gmail.com" className="text-brand-red font-semibold hover:underline">dc07wrestle@gmail.com</a></span>
             </div>
-            <p className="text-xs italic">
-              * For 5 and 10-session packs: Book your first session above. Remaining sessions will be scheduled with your mentor afterward.
-            </p>
           </div>
 
           <div className="pt-6 border-t border-gray-100">
