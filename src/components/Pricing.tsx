@@ -8,7 +8,7 @@ export default function Pricing() {
       id: "single",
       title: "Single Session",
       price: "30",
-      description: "20–30 minute 1-on-1 mentorship session",
+      description: "30 minute 1-on-1 mentorship session",
       features: [
         "Personalized guidance",
         "Flexible scheduling",
@@ -129,19 +129,51 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <button
-                onClick={() => handleCheckout(plan.link)}
-                className={`w-full py-4 rounded-xl font-bold text-center transition-all flex items-center justify-center gap-2 ${
-                  plan.highlight
-                    ? 'bg-brand-red hover:bg-red-700 text-white shadow-lg shadow-red-900/40'
-                    : 'bg-brand-blue hover:bg-blue-900 text-white'
-                }`}
-              >
-                {plan.buttonText}
-              </button>
+              <div className="space-y-3">
+                <button
+                  onClick={() => handleCheckout(plan.link)}
+                  className={`w-full py-4 rounded-xl font-bold text-center transition-all flex items-center justify-center gap-2 ${
+                    plan.highlight
+                      ? 'bg-brand-red hover:bg-red-700 text-white shadow-lg shadow-red-900/40'
+                      : 'bg-brand-blue hover:bg-blue-900 text-white'
+                  }`}
+                >
+                  {plan.buttonText}
+                </button>
+                <p className={`text-[10px] text-center uppercase tracking-wider font-semibold ${plan.highlight ? 'text-blue-300' : 'text-gray-400'}`}>
+                  Select your time after payment
+                </p>
+              </div>
             </motion.div>
           ))}
         </div>
+
+        <motion.div 
+          className="mt-16 max-w-2xl mx-auto bg-gray-50 rounded-2xl p-8 border border-gray-100"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <h3 className="text-xl font-bold text-brand-blue mb-6 text-center">Mentor Availability</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+            <div className="p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+              <p className="font-bold text-brand-red mb-1">Sunday</p>
+              <p className="text-sm text-gray-600">9:00 AM – 10:00 PM</p>
+            </div>
+            <div className="p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+              <p className="font-bold text-brand-red mb-1">Mon – Thu</p>
+              <p className="text-sm text-gray-600">2:00 PM – 10:00 PM</p>
+            </div>
+            <div className="p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+              <p className="font-bold text-brand-red mb-1">Fri – Sat</p>
+              <p className="text-sm text-gray-600">12:00 PM – 10:00 PM</p>
+            </div>
+          </div>
+          <p className="mt-6 text-center text-xs text-gray-400 italic">
+            * All times in EST. Specific session times are selected after booking is confirmed.
+          </p>
+        </motion.div>
 
         <motion.p 
           className="mt-16 text-center text-sm text-gray-500 max-w-2xl mx-auto italic"
@@ -150,7 +182,7 @@ export default function Pricing() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          All sessions are 20–30 minutes and designed to support growth in wrestling, discipline, confidence, and life off the mat.
+          All sessions are 30 minutes and designed to support growth in wrestling, discipline, confidence, and life off the mat.
         </motion.p>
       </div>
     </section>

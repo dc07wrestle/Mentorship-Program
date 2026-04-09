@@ -14,7 +14,7 @@ export default function FAQ() {
     },
     {
       question: "What is the time commitment?",
-      answer: "We recommend at least one 20-30 minute session per week to maintain consistency and build a strong mentor-mentee relationship. However, the schedule is flexible and can be tailored to fit your student's busy athletic and academic calendar."
+      answer: "We recommend at least one 30 minute session per week to maintain consistency and build a strong mentor-mentee relationship. However, the schedule is flexible and can be tailored to fit your student's busy athletic and academic calendar."
     },
     {
       question: "How are mentors vetted for safety?",
