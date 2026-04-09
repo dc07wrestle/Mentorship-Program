@@ -1,11 +1,48 @@
 import { motion } from 'motion/react';
-import { CheckCircle, ArrowRight } from 'lucide-react';
+import { CheckCircle, ArrowRight, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 export default function Success() {
+  useEffect(() => {
+    // Cal.com embed script initialization
+    const script = document.createElement('script');
+    script.innerHTML = `
+      (function (C, A, L) {
+        let p = function (a, ar) { a.q.push(ar); };
+        let d = C.document;
+        C.Cal = C.Cal || function () {
+          let cal = C.Cal;
+          let ar = arguments;
+          if (!cal.loaded) {
+            cal.q = cal.q || [];
+            cal.loaded = true;
+          }
+          if (ar[0] === L) {
+            const api = function () { p(api, arguments); };
+            const cand = d.createElement("script");
+            cand.src = "https://app.cal.com/embed/embed.js";
+            d.head.appendChild(cand);
+            return api;
+          }
+          p(cal, ar);
+        };
+      })(window, "https://app.cal.com/embed/embed.js", "init");
+
+      Cal("init", {origin:"https://cal.com"});
+      Cal("ui", {"theme":"light","styles":{"branding":{"brandColor":"#002147"}},"hideEventTypeDetails":false,"layout":"month_view"});
+    `;
+    document.head.appendChild(script);
+
+    return () => {
+      // Cleanup if necessary, though usually not needed for this script
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-brand-blue flex items-center justify-center px-6 py-12">
-      <div className="absolute inset-0 z-0 opacity-10">
+    <div className="min-h-screen bg-brand-blue flex flex-col items-center justify-start px-6 py-12 md:py-20 overflow-x-hidden">
+      {/* Background Image */}
+      <div className="fixed inset-0 z-0 opacity-10 pointer-events-none">
         <img 
           src="https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?q=80&w=2070&auto=format&fit=crop" 
           alt="Wrestling background" 
@@ -15,37 +52,67 @@ export default function Success() {
       </div>
 
       <motion.div 
-        className="relative z-10 max-w-md w-full bg-white rounded-3xl p-8 md:p-12 text-center shadow-2xl"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
+        className="relative z-10 max-w-4xl w-full bg-white rounded-3xl p-8 md:p-12 shadow-2xl mb-12"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8">
-          <CheckCircle className="w-12 h-12 text-green-600" />
-        </div>
+        <div className="text-center mb-10">
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle className="w-10 h-10 text-green-600" />
+          </div>
 
-        <h1 className="text-3xl font-extrabold text-brand-blue mb-4 font-heading">
-          Payment Successful!
-        </h1>
-        
-        <p className="text-gray-600 mb-8 leading-relaxed">
-          Thank you for choosing Mat Mentors. Your session pack is booked. We will follow up via text and email shortly to schedule your first session.
-        </p>
-
-        <div className="space-y-4">
-          <Link 
-            to="/" 
-            className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-red hover:bg-red-800 text-white rounded-xl font-bold transition-all shadow-lg shadow-red-900/20"
-          >
-            Back to Home
-            <ArrowRight className="w-5 h-5" />
-          </Link>
+          <h1 className="text-3xl md:text-4xl font-extrabold text-brand-blue mb-4 font-heading">
+            Payment Received
+          </h1>
           
-          <p className="text-xs text-gray-400">
-            Elite Wrestling. Elite Minds.
+          <p className="text-xl font-bold text-brand-red mb-2">
+            Your session is almost locked in.
+          </p>
+          
+          <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Choose your 30-minute mentorship time below. Please select the time that works best for you. Once booked, you'll receive confirmation details for your session.
           </p>
         </div>
+
+        {/* Cal.com Embed Container */}
+        <div className="bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden shadow-inner min-h-[600px]">
+          <iframe
+            src="https://cal.com/mat-mentors/30min?embed=true"
+            title="Schedule your session"
+            width="100%"
+            height="600"
+            frameBorder="0"
+            className="w-full"
+          />
+        </div>
+
+        <div className="mt-10 text-center space-y-6">
+          <div className="flex flex-col items-center gap-2 text-gray-500">
+            <div className="flex items-center gap-2 text-sm">
+              <Mail className="w-4 h-4" />
+              <span>Need help scheduling? Email <a href="mailto:dc07wrestle@gmail.com" className="text-brand-red font-semibold hover:underline">dc07wrestle@gmail.com</a></span>
+            </div>
+            <p className="text-xs italic">
+              * For 5 and 10-session packs: Book your first session above. Remaining sessions will be scheduled with your mentor afterward.
+            </p>
+          </div>
+
+          <div className="pt-6 border-t border-gray-100">
+            <Link 
+              to="/" 
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-blue hover:bg-blue-900 text-white rounded-xl font-bold transition-all shadow-lg"
+            >
+              Back to Home
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
+        </div>
       </motion.div>
+
+      <p className="relative z-10 text-white/60 text-sm font-medium">
+        Elite Wrestling. Elite Minds.
+      </p>
     </div>
   );
 }
