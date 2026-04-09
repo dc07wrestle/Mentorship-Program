@@ -51,10 +51,10 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <a 
-              href="#apply" 
+              href="#pricing" 
               className="w-full sm:w-auto px-8 py-4 bg-brand-red hover:bg-red-800 text-white rounded-lg font-bold text-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-red-900/50"
             >
-              Apply for Mentorship
+              Book Mentorship
               <ArrowRight className="w-5 h-5" />
             </a>
             <a 

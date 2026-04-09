@@ -31,8 +31,9 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             <a href="#how-it-works" className="text-blue-100 hover:text-white font-medium transition-colors">How It Works</a>
-            <a href="#apply" className="px-6 py-2.5 bg-brand-red hover:bg-red-800 text-white rounded-lg font-bold transition-all shadow-md">
-              Apply Now
+            <a href="#pricing" className="text-blue-100 hover:text-white font-medium transition-colors">Pricing</a>
+            <a href="#pricing" className="px-6 py-2.5 bg-brand-red hover:bg-red-800 text-white rounded-lg font-bold transition-all shadow-md">
+              Book Now
             </a>
           </div>
 
@@ -58,11 +59,18 @@ export default function Navbar() {
               How It Works
             </a>
             <a 
-              href="#apply" 
+              href="#pricing" 
+              className="text-white font-medium py-2"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Pricing
+            </a>
+            <a 
+              href="#pricing" 
               className="w-full px-6 py-3 bg-brand-red text-white text-center rounded-lg font-bold"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Apply Now
+              Book Now
             </a>
           </div>
         </div>

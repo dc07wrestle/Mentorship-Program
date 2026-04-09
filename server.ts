@@ -1,10 +1,8 @@
 import express from "express";
-import { Resend } from "resend";
 import dotenv from "dotenv";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from 'url';
-import twilio from 'twilio';
 
 dotenv.config();
 
@@ -14,208 +12,17 @@ const __dirname = path.dirname(__filename);
 const app = express();
 app.use(express.json());
 
-const resend = new Resend(process.env.RESEND_API_KEY || "dummy_key");
-
-// Twilio Client (Lazy initialization)
-let twilioClient: any = null;
-
-function getEnvVar(prefix: string): string | undefined {
-  const keys = Object.keys(process.env);
-  console.log("[DEBUG] All Env Keys:", keys);
-  // Try exact match first
-  if (process.env[prefix]) return process.env[prefix];
-  // Try case-insensitive prefix match
-  const match = keys.find(k => k.toUpperCase().includes(prefix.toUpperCase()));
-  return match ? process.env[match] : undefined;
-}
-
-function getTwilioClient() {
-  if (!twilioClient) {
-    let accountSid = getEnvVar('TWILIO_ACCOUNT_SID');
-    let authToken = getEnvVar('TWILIO_AUTH_TOKEN');
-
-    // Fallback to twilio-config.json
-    try {
-      const configPath = path.join(process.cwd(), 'twilio-config.json');
-      if (fs.existsSync(configPath)) {
-        const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-        accountSid = accountSid || config.accountSid;
-        authToken = authToken || config.authToken;
-        console.log("[DEBUG] Found twilio-config.json fallback");
-      }
-    } catch (e) {
-      console.error("[DEBUG] Error reading twilio-config.json:", e);
-    }
-
-    console.log("[DEBUG] Twilio Init:", { hasSid: !!accountSid, hasToken: !!authToken });
-    if (accountSid && authToken) {
-      twilioClient = twilio(accountSid, authToken);
-    }
-  }
-  return twilioClient;
-}
-
 // Health check endpoint
 app.get("/api/health", (req, res) => {
   res.json({ 
     status: "ok", 
     env: {
-      hasResendKey: !!process.env.RESEND_API_KEY,
-      hasOwnerEmail: !!process.env.OWNER_EMAIL,
-      hasTwilioConfig: fs.existsSync(path.join(process.cwd(), 'twilio-config.json')) || !!getEnvVar('TWILIO_ACCOUNT_SID')
+      hasStripeKey: !!process.env.STRIPE_SECRET_KEY
     }
   });
 });
 
 // API routes
-app.post("/api/request-appointment", async (req, res) => {
-  console.log("[API] Received POST /api/request-appointment");
-  try {
-    const {
-      parentName,
-      studentName,
-      studentGrade,
-      parentEmail,
-      parentPhone,
-      experienceLevel,
-      helpWith,
-      preferredTimes,
-      additionalNotes,
-      honeypot
-    } = req.body;
-
-    console.log(`[API] Request for student: ${studentName}, parent: ${parentEmail}`);
-
-    // Basic honeypot protection
-    if (honeypot) {
-      console.log("[API] Honeypot triggered - ignoring request.");
-      return res.status(200).json({ success: true, message: "Spam detected." });
-    }
-
-    // Validate required fields
-    if (!parentName || !studentName || !parentEmail) {
-      console.log("[API] Validation failed - missing fields.");
-      return res.status(400).json({ success: false, message: "Missing required fields." });
-    }
-
-    // 1. Send email to owner
-    if (process.env.RESEND_API_KEY) {
-      try {
-        const ownerEmail = process.env.OWNER_EMAIL || "dc07wrestle@gmail.com";
-        await resend.emails.send({
-          from: "Mat Mentors Requests <onboarding@resend.dev>",
-          to: ownerEmail,
-          subject: `New Mentorship Request: ${studentName}`,
-          html: `
-            <h2>New Mentorship Request</h2>
-            <p><strong>Parent Name:</strong> ${parentName}</p>
-            <p><strong>Student Name:</strong> ${studentName}</p>
-            <p><strong>Student Grade:</strong> ${studentGrade}</p>
-            <p><strong>Parent Email:</strong> ${parentEmail}</p>
-            <p><strong>Parent Phone:</strong> ${parentPhone}</p>
-            <p><strong>Wrestling Experience:</strong> ${experienceLevel}</p>
-            <p><strong>Needs Help With:</strong> ${helpWith}</p>
-            <p><strong>Preferred Times:</strong> ${preferredTimes}</p>
-            <p><strong>Additional Notes:</strong> ${additionalNotes}</p>
-          `,
-        });
-      } catch (e) {
-        console.error("[API] Failed to send email to owner:", e);
-      }
-    }
-
-    // 2. Send confirmation email to parent
-    if (process.env.RESEND_API_KEY) {
-      try {
-        await resend.emails.send({
-          from: "Mat Mentors <onboarding@resend.dev>",
-          to: parentEmail,
-          subject: "We received your mentorship request!",
-          html: `
-            <h2>Hi ${parentName},</h2>
-            <p>Thank you for requesting an appointment for ${studentName}. We have received your information and will reach out within 24 hours to confirm your mentorship appointment.</p>
-            <p>Best regards,<br/>The Mat Mentors Team</p>
-          `,
-        });
-      } catch (e) {
-        console.warn("[API] Failed to send confirmation email to parent:", e);
-      }
-    }
-
-    // 3. Send automated SMS via Twilio
-    const client = getTwilioClient();
-    let twilioNumber = getEnvVar('TWILIO_PHONE_');
-
-    // Fallback to twilio-config.json for number
-    if (!twilioNumber) {
-      try {
-        const configPath = path.join(process.cwd(), 'twilio-config.json');
-        if (fs.existsSync(configPath)) {
-          const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-          twilioNumber = config.phoneNumber;
-        }
-      } catch (e) {}
-    }
-    
-    // Improved phone number sanitization
-    const sanitizePhone = (phone: string) => {
-      if (!phone) return "";
-      const cleaned = phone.replace(/\D/g, '');
-      if (cleaned.length === 10) return `+1${cleaned}`;
-      if (cleaned.length === 11 && cleaned.startsWith('1')) return `+${cleaned}`;
-      if (phone.trim().startsWith('+')) return `+${cleaned}`;
-      return `+${cleaned}`;
-    };
-
-    let smsErrorDetails = null;
-
-    if (client && twilioNumber && parentPhone) {
-      try {
-        const cleanTo = sanitizePhone(parentPhone);
-        const cleanFrom = sanitizePhone(twilioNumber);
-        
-        console.log(`[API] Attempting to send SMS from ${cleanFrom} to ${cleanTo}`);
-        
-        const message = await client.messages.create({
-          body: `This is Mat Mentors. Thanks for reaching out! Feel free to set up your first session through this text thread or email us at dc07wrestle@gmail.com. We’re excited to help you take your wrestling to the next level.\n\nElite Wrestling. Elite Minds.`,
-          from: cleanFrom,
-          to: cleanTo
-        });
-        console.log("[API] Twilio SMS sent successfully. SID:", message.sid);
-      } catch (smsError: any) {
-        smsErrorDetails = {
-          message: smsError.message,
-          code: smsError.code,
-          status: smsError.status
-        };
-        console.error("[API] Twilio Error Details:", smsErrorDetails);
-      }
-    } else {
-      const configPath = path.join(process.cwd(), 'twilio-config.json');
-      const configFileExists = fs.existsSync(configPath);
-      
-      smsErrorDetails = { 
-        message: `Twilio configuration not found. Please ensure twilio-config.json is present or environment variables are set.`,
-        configExists: configFileExists
-      };
-      console.log("[API] Skipping SMS. Twilio config missing.");
-    }
-
-    console.log("[API] Request processed successfully.");
-    res.status(200).json({ 
-      success: true, 
-      smsStatus: smsErrorDetails ? "failed" : "sent",
-      smsError: smsErrorDetails
-    });
-  } catch (error) {
-    console.error("[API] Unhandled error:", error);
-    res.status(500).json({ 
-      success: false, 
-      message: error instanceof Error ? error.message : "Failed to send request." 
-    });
-  }
-});
-
 // Vite middleware for development / Static serving for production
 async function startServer() {
   if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {

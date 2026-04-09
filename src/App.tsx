@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Problem from './components/Problem';
@@ -10,14 +11,15 @@ import Solution from './components/Solution';
 import Differentiator from './components/Differentiator';
 import Benefits from './components/Benefits';
 import HowItWorks from './components/HowItWorks';
+import Pricing from './components/Pricing';
 import Mentors from './components/Mentors';
 import FAQ from './components/FAQ';
-import CTA from './components/CTA';
 import Footer from './components/Footer';
+import Success from './components/Success';
 
-export default function App() {
+function HomePage() {
   return (
-    <main className="min-h-screen bg-gray-50 font-sans selection:bg-brand-red selection:text-white">
+    <>
       <Navbar />
       <Hero />
       <Problem />
@@ -27,8 +29,21 @@ export default function App() {
       <HowItWorks />
       <Mentors />
       <FAQ />
-      <CTA />
+      <Pricing />
       <Footer />
-    </main>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <main className="min-h-screen bg-gray-50 font-sans selection:bg-brand-red selection:text-white">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/success" element={<Success />} />
+        </Routes>
+      </main>
+    </Router>
   );
 }

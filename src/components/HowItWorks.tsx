@@ -67,10 +67,10 @@ export default function HowItWorks() {
         
         <div className="mt-16 text-center">
           <a 
-            href="#apply" 
+            href="#pricing" 
             className="inline-flex px-8 py-4 bg-brand-red hover:bg-red-800 text-white rounded-lg font-bold text-lg transition-all shadow-lg shadow-red-900/20"
           >
-            Start the Process
+            Choose Your Plan
           </a>
         </div>
       </div>
