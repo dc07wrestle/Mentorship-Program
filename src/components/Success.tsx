@@ -113,6 +113,9 @@ export default function Success() {
               Back to Home
               <ArrowRight className="w-5 h-5" />
             </Link>
+            <p className="mt-6 text-[10px] text-gray-400 max-w-xs mx-auto">
+              By booking a session, you agree to our <Link to="/terms" className="underline hover:text-brand-red">Terms of Service</Link> and <Link to="/refunds" className="underline hover:text-brand-red">Refund Policy</Link>.
+            </p>
           </div>
         </div>
       </motion.div>

@@ -110,6 +110,16 @@ export default function Pricing() {
           <p className="mt-6 text-center text-xs text-gray-400 italic">
             * All times in EST. Specific session times are selected after booking is confirmed.
           </p>
+          <div className="mt-8 pt-6 border-t border-gray-100 text-[10px] text-gray-400 text-center space-y-2">
+            <p>
+              <span className="font-bold uppercase tracking-widest text-gray-500 block mb-1">Refund & Cancellation</span>
+              Sessions must be canceled or rescheduled at least 24 hours in advance. Missed sessions or late cancellations are non-refundable. Session packages must be used within a reasonable time frame.
+            </p>
+            <p>
+              <span className="font-bold uppercase tracking-widest text-gray-500 block mb-1">Disclaimer</span>
+              Mentorship sessions are for educational and guidance purposes only. Mat Mentors does not guarantee specific performance outcomes and is not responsible for injuries or results arising from training or advice.
+            </p>
+          </div>
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">

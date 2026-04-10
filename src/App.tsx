@@ -16,6 +16,7 @@ import Mentors from './components/Mentors';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import Success from './components/Success';
+import Legal from './components/Legal';
 
 function HomePage() {
   return (
@@ -42,6 +43,9 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/success" element={<Success />} />
+          <Route path="/terms" element={<Legal />} />
+          <Route path="/privacy" element={<Legal />} />
+          <Route path="/refunds" element={<Legal />} />
         </Routes>
       </main>
     </Router>
