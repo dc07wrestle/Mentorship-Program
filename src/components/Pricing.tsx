@@ -196,10 +196,10 @@ export default function Pricing() {
             </button>
             <div className="space-y-1">
               <p className={`text-[10px] text-center uppercase tracking-wider font-bold ${plan.highlight ? 'text-red-300' : 'text-brand-red'}`}>
-                After checkout, you'll immediately select your session time.
+                Pay to secure your session, then instantly choose your time.
               </p>
-              <p className={`text-[10px] text-center font-medium ${plan.highlight ? 'text-blue-200' : 'text-gray-500'}`}>
-                Limited availability each week — book early.
+              <p className={`text-[10px] text-center font-bold uppercase tracking-widest ${plan.highlight ? 'text-white' : 'text-brand-red'}`}>
+                Only 10 sessions available per week — book early.
               </p>
               <p className={`text-[10px] text-center font-medium ${plan.highlight ? 'text-blue-200' : 'text-gray-500'}`}>
                 You'll receive a confirmation email with your session link after booking.

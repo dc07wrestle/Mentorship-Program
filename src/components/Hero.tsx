@@ -21,9 +21,14 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block py-1 px-3 rounded-full bg-brand-red/20 text-red-300 text-sm font-semibold tracking-wider uppercase mb-6 border border-brand-red/30">
-              Mat Mentors
-            </span>
+            <div className="flex flex-wrap justify-center gap-3 mb-6">
+              <span className="inline-block py-1 px-3 rounded-full bg-brand-red/20 text-red-300 text-sm font-semibold tracking-wider uppercase border border-brand-red/30">
+                University of Pennsylvania Student-Athletes
+              </span>
+              <span className="inline-block py-1 px-3 rounded-full bg-brand-red/20 text-red-300 text-sm font-semibold tracking-wider uppercase border border-brand-red/30">
+                NCAA Competitors
+              </span>
+            </div>
           </motion.div>
           
           <motion.h1 
@@ -32,7 +37,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            Learn from University of Pennsylvania <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">student-athletes</span>
+            Train with <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Ivy League Wrestlers</span> Who Balance Elite Academics & Athletics
           </motion.h1>
           
           <motion.p 
@@ -41,7 +46,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Learn from University of Pennsylvania student-athletes who are succeeding at the highest level—balancing rigorous Ivy League academics with Division I athletics.
+            Get 1-on-1 mentorship from Division I athletes who know exactly what it takes to succeed on the mat and in the classroom.
           </motion.p>
           
             <div className="flex flex-col items-center gap-3">
@@ -61,7 +66,7 @@ export default function Hero() {
                 </a>
               </div>
               <p className="text-sm text-blue-200 font-medium">
-                After checkout, you'll immediately select your session time.
+                Pay to secure your session, then instantly choose your time.
               </p>
             </div>
         </div>

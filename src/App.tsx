@@ -13,7 +13,9 @@ import Benefits from './components/Benefits';
 import HowItWorks from './components/HowItWorks';
 import Pricing from './components/Pricing';
 import Mentors from './components/Mentors';
+import WhatYouGet from './components/WhatYouGet';
 import FAQ from './components/FAQ';
+import BottomCTA from './components/BottomCTA';
 import Footer from './components/Footer';
 import Success from './components/Success';
 import Legal from './components/Legal';
@@ -27,10 +29,12 @@ function HomePage() {
       <Solution />
       <Differentiator />
       <Benefits />
+      <WhatYouGet />
       <HowItWorks />
       <Mentors />
       <FAQ />
       <Pricing />
+      <BottomCTA />
       <Footer />
     </>
   );

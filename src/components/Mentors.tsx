@@ -85,7 +85,7 @@ export default function Mentors() {
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">{mentor.name}</h3>
                 <p className="text-brand-red font-semibold mb-4">{mentor.major}</p>
                 
-                <div className="space-y-2 text-gray-600">
+                <div className="space-y-2 text-gray-600 mb-8">
                   {mentor.achievements.map((achievement, idx) => (
                     <p key={idx} className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
@@ -97,6 +97,13 @@ export default function Mentors() {
                     {mentor.gpa}
                   </p>
                 </div>
+
+                <a 
+                  href="#book-now" 
+                  className="block w-full py-3 bg-brand-blue hover:bg-blue-900 text-white text-center rounded-xl font-bold transition-all shadow-md"
+                >
+                  Book with {mentor.name.split(' ')[0]}
+                </a>
               </div>
             </motion.div>
           ))}
