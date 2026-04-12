@@ -24,11 +24,12 @@ export default function Pricing() {
       price: "135",
       subtext: "$27 per session",
       badge: "Most Popular",
-      description: "Best for consistent progress and building a mentor relationship",
+      description: "Best for serious athletes who want consistent improvement",
       features: [
         "Save compared to single sessions",
         "Consistent support",
         "Strong accountability",
+        "Track progress over multiple sessions",
         "Ideal for athletes serious about improvement"
       ],
       buttonText: "Book 5 Sessions",
@@ -195,10 +196,13 @@ export default function Pricing() {
             </button>
             <div className="space-y-1">
               <p className={`text-[10px] text-center uppercase tracking-wider font-bold ${plan.highlight ? 'text-red-300' : 'text-brand-red'}`}>
-                After checkout, you'll immediately select your time.
+                After checkout, you'll immediately select your session time.
               </p>
-              <p className={`text-[10px] text-center uppercase tracking-wider font-semibold ${plan.highlight ? 'text-blue-300' : 'text-gray-400'}`}>
-                {plan.id === 'single' ? 'Select your time after payment' : 'Book your first session after payment'}
+              <p className={`text-[10px] text-center font-medium ${plan.highlight ? 'text-blue-200' : 'text-gray-500'}`}>
+                Limited availability each week — book early.
+              </p>
+              <p className={`text-[10px] text-center font-medium ${plan.highlight ? 'text-blue-200' : 'text-gray-500'}`}>
+                You'll receive a confirmation email with your session link after booking.
               </p>
             </div>
           </div>
