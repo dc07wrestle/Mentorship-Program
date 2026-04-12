@@ -24,6 +24,18 @@ export default function Mentors() {
         "Interned coaching youth athletes"
       ],
       gpa: "3.6 GPA"
+    },
+    {
+      name: "Sean Seefeldt",
+      image: "https://pennathletics.com/images/2025/9/2/SeanSeefeldt.jpg",
+      major: "Philosophy, Politics & Economics Major",
+      achievements: [
+        "NCAA Qualifier",
+        "NWCA Scholar All-American",
+        "Team Captain",
+        "Minor in Consumer Psychology"
+      ],
+      gpa: "3.4 GPA"
     }
   ];
 
@@ -51,7 +63,7 @@ export default function Mentors() {
           </motion.p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {mentors.map((mentor, index) => (
             <motion.div 
               key={index}
