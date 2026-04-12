@@ -58,20 +58,28 @@ export default function Success() {
         transition={{ duration: 0.5 }}
       >
         <div className="text-center mb-10">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle className="w-10 h-10 text-green-600" />
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <div className="flex flex-col items-center">
+              <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white mb-2 shadow-lg">
+                <CheckCircle className="w-7 h-7" />
+              </div>
+              <span className="text-xs font-bold text-green-600 uppercase tracking-wider">Step 1: Payment Complete</span>
+            </div>
+            <div className="w-12 h-0.5 bg-gray-200 mb-6" />
+            <div className="flex flex-col items-center">
+              <div className="w-12 h-12 bg-brand-red rounded-full flex items-center justify-center text-white mb-2 shadow-lg animate-pulse">
+                <span className="text-xl font-bold">2</span>
+              </div>
+              <span className="text-xs font-bold text-brand-red uppercase tracking-wider">Step 2: Choose Time Below</span>
+            </div>
           </div>
 
           <h1 className="text-3xl md:text-4xl font-extrabold text-brand-blue mb-4 font-heading">
-            Payment Received
+            Your session is almost locked in!
           </h1>
           
-          <p className="text-xl font-bold text-brand-red mb-2">
-            Your session is almost locked in.
-          </p>
-          
           <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Choose your 30-minute mentorship time below. Please select the time that works best for you. Once booked, you'll receive confirmation details for your session.
+            Please select your 30-minute mentorship time on the calendar below to finalize your booking.
           </p>
         </div>
 
