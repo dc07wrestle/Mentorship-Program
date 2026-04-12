@@ -53,7 +53,7 @@ export default function Solution() {
               The Solution: Mentorship That Bridges the Gap
             </h2>
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              We connect young wrestlers with mentors who have proven their ability to balance both worlds. Our mentors aren't just great athletes—they are current University of Pennsylvania student-athletes who understand the discipline required to succeed everywhere.
+              We connect young wrestlers (K-12) with mentors who have proven their ability to balance both worlds. Our mentors aren't just great athletes—they are current University of Pennsylvania student-athletes who understand the discipline required to succeed everywhere.
             </p>
 
             <ul className="space-y-4 mb-10">

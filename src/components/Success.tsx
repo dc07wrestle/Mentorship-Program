@@ -88,6 +88,19 @@ export default function Success() {
         </div>
 
         <div className="mt-10 text-center space-y-8">
+          <div className="bg-brand-red/5 border border-brand-red/10 rounded-2xl p-6 max-w-2xl mx-auto text-left md:text-center">
+            <h3 className="text-brand-blue font-bold text-lg mb-2">Prepare for Your Session</h3>
+            <p className="text-gray-700 text-sm leading-relaxed mb-4">
+              To get the most out of your mentorship session, we recommend sending any match or practice film ahead of time.
+            </p>
+            <p className="text-gray-700 text-sm">
+              Please email your film to: <a href="mailto:dc07wrestle@gmail.com" className="font-bold text-brand-red hover:underline">dc07wrestle@gmail.com</a>
+            </p>
+            <p className="text-gray-500 text-xs mt-2 italic">
+              Include your name and scheduled session time in the email so we can review it beforehand.
+            </p>
+          </div>
+
           <div className="bg-brand-blue/5 border border-brand-blue/10 rounded-2xl p-6 max-w-2xl mx-auto">
             <p className="text-brand-blue font-bold mb-2 flex items-center justify-center gap-2">
               <CheckCircle className="w-5 h-5 text-brand-red" />

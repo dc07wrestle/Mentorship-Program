@@ -21,7 +21,7 @@ export default function Mentors() {
       achievements: [
         "2x State Champion",
         "Fargo All-American",
-        "NWCA Scholar All-American"
+        "Interned coaching youth athletes"
       ],
       gpa: "3.6 GPA"
     }
@@ -47,7 +47,7 @@ export default function Mentors() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            Current University of Pennsylvania student-athletes who are actively proving that you can succeed at both wrestling and academics at the highest level.
+            Current University of Pennsylvania student-athletes dedicated to mentoring K-12 wrestlers who want to succeed at both wrestling and academics at the highest level.
           </motion.p>
         </div>
 

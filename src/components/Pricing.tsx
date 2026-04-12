@@ -91,8 +91,13 @@ export default function Pricing() {
         >
           <h3 className="text-xl font-bold text-brand-blue mb-4 text-center">Mentor Availability</h3>
           <p className="text-center text-sm text-gray-600 mb-8 max-w-lg mx-auto">
-            Check our hours below. For 5 and 10-session packs, you only need to book your <span className="font-bold text-brand-red">first session</span> initially—we'll coordinate your recurring weekly schedule during our first call.
+            Check our hours below. Our mentorship is specifically designed for <span className="font-bold text-brand-blue">K-12 wrestlers</span>. For 5 and 10-session packs, you only need to book your <span className="font-bold text-brand-red">first session</span> initially—we'll coordinate your recurring weekly schedule during our first call.
           </p>
+          <div className="mb-8 p-4 bg-brand-blue/5 rounded-xl border border-brand-blue/10 text-center">
+            <p className="text-sm text-brand-blue font-medium italic">
+              "Want more personalized feedback? Send us your match film before your session and we'll review it in advance."
+            </p>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
             <div className="p-4 bg-white rounded-xl shadow-sm border border-gray-100">
               <p className="font-bold text-brand-red mb-1">Sunday</p>
@@ -122,7 +127,7 @@ export default function Pricing() {
           </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div id="book-now" className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {plans.map((plan, index) => (
             <motion.div
               key={index}

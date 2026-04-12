@@ -41,7 +41,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Learn from mentors who are succeeding at the highest level—balancing rigorous Ivy League academics with Division I athletics.
+            Learn from University of Pennsylvania student-athletes who are succeeding at the highest level—balancing rigorous Ivy League academics with Division I athletics.
           </motion.p>
           
           <motion.div 
@@ -51,7 +51,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <a 
-              href="#pricing" 
+              href="#book-now" 
               className="w-full sm:w-auto px-8 py-4 bg-brand-red hover:bg-red-800 text-white rounded-lg font-bold text-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-red-900/50"
             >
               Book Mentorship
