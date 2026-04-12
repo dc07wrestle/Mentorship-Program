@@ -78,8 +78,17 @@ export default function Success() {
             Your session is almost locked in!
           </h1>
           
+          <div className="bg-brand-red/10 border-2 border-brand-red rounded-xl p-4 mb-6 animate-pulse">
+            <p className="text-brand-red font-bold text-lg">
+              Step 2: Choose your session time below
+            </p>
+            <p className="text-brand-blue text-sm font-semibold">
+              Your session is NOT booked until you select a time.
+            </p>
+          </div>
+          
           <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Please select your 30-minute mentorship time on the calendar below to finalize your booking.
+            Please select your 30-minute mentorship time on the calendar below to finalize your booking. After booking, you'll receive a confirmation email with your session link and details.
           </p>
         </div>
 
@@ -99,10 +108,7 @@ export default function Success() {
           <div className="bg-brand-red/5 border border-brand-red/10 rounded-2xl p-6 max-w-2xl mx-auto text-left md:text-center">
             <h3 className="text-brand-blue font-bold text-lg mb-2">Prepare for Your Session</h3>
             <p className="text-gray-700 text-sm leading-relaxed mb-4">
-              To get the most out of your mentorship session, we recommend sending any match or practice film ahead of time.
-            </p>
-            <p className="text-gray-700 text-sm">
-              Please email your film to: <a href="mailto:dc07wrestle@gmail.com" className="font-bold text-brand-red hover:underline">dc07wrestle@gmail.com</a>
+              To get the most out of your session, <span className="font-bold text-brand-blue">send match footage ahead of time</span> to <a href="mailto:dc07wrestle@gmail.com" className="font-bold text-brand-red hover:underline">dc07wrestle@gmail.com</a>.
             </p>
             <p className="text-gray-500 text-xs mt-2 italic">
               Include your name and scheduled session time in the email so we can review it beforehand.

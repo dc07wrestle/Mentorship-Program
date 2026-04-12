@@ -44,26 +44,26 @@ export default function Hero() {
             Learn from University of Pennsylvania student-athletes who are succeeding at the highest level—balancing rigorous Ivy League academics with Division I athletics.
           </motion.p>
           
-          <motion.div 
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <a 
-              href="#book-now" 
-              className="w-full sm:w-auto px-8 py-4 bg-brand-red hover:bg-red-800 text-white rounded-lg font-bold text-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-red-900/50"
-            >
-              Book Mentorship
-              <ArrowRight className="w-5 h-5" />
-            </a>
-            <a 
-              href="#how-it-works" 
-              className="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 text-white rounded-lg font-bold text-lg transition-all backdrop-blur-sm"
-            >
-              How It Works
-            </a>
-          </motion.div>
+            <div className="flex flex-col items-center gap-3">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a 
+                  href="#book-now" 
+                  className="w-full sm:w-auto px-8 py-4 bg-brand-red hover:bg-red-800 text-white rounded-lg font-bold text-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-red-900/50"
+                >
+                  Book Mentorship
+                  <ArrowRight className="w-5 h-5" />
+                </a>
+                <a 
+                  href="#how-it-works" 
+                  className="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 text-white rounded-lg font-bold text-lg transition-all backdrop-blur-sm"
+                >
+                  How It Works
+                </a>
+              </div>
+              <p className="text-sm text-blue-200 font-medium">
+                After checkout, you'll immediately select your session time.
+              </p>
+            </div>
         </div>
       </div>
     </section>

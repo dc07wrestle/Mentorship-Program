@@ -72,7 +72,7 @@ export default function Pricing() {
             Pricing
           </motion.h2>
           <motion.p 
-            className="text-lg text-gray-600"
+            className="text-lg text-gray-600 mb-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -80,6 +80,14 @@ export default function Pricing() {
           >
             Choose the mentorship option that fits your goals.
           </motion.p>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="inline-block bg-brand-red/10 text-brand-red px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider border border-brand-red/20"
+          >
+            Best Value: Save with 5 or 10 session packages
+          </motion.div>
         </div>
 
         <motion.div 
@@ -174,27 +182,47 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <div className="space-y-3">
-                <button
-                  onClick={() => handleCheckout(plan.link)}
-                  className={`w-full py-4 rounded-xl font-bold text-center transition-all flex items-center justify-center gap-2 ${
-                    plan.highlight
-                      ? 'bg-brand-red hover:bg-red-700 text-white shadow-lg shadow-red-900/40'
-                      : 'bg-brand-blue hover:bg-blue-900 text-white'
-                  }`}
-                >
-                  {plan.buttonText}
-                </button>
-                <p className={`text-[10px] text-center uppercase tracking-wider font-semibold ${plan.highlight ? 'text-blue-300' : 'text-gray-400'}`}>
-                  {plan.id === 'single' ? 'Select your time after payment' : 'Book your first session after payment'}
-                </p>
-              </div>
+          <div className="space-y-4">
+            <button
+              onClick={() => handleCheckout(plan.link)}
+              className={`w-full py-4 rounded-xl font-bold text-center transition-all flex items-center justify-center gap-2 ${
+                plan.highlight
+                  ? 'bg-brand-red hover:bg-red-700 text-white shadow-lg shadow-red-900/40'
+                  : 'bg-brand-blue hover:bg-blue-900 text-white'
+              }`}
+            >
+              {plan.buttonText}
+            </button>
+            <div className="space-y-1">
+              <p className={`text-[10px] text-center uppercase tracking-wider font-bold ${plan.highlight ? 'text-red-300' : 'text-brand-red'}`}>
+                After checkout, you'll immediately select your time.
+              </p>
+              <p className={`text-[10px] text-center uppercase tracking-wider font-semibold ${plan.highlight ? 'text-blue-300' : 'text-gray-400'}`}>
+                {plan.id === 'single' ? 'Select your time after payment' : 'Book your first session after payment'}
+              </p>
+            </div>
+          </div>
             </motion.div>
           ))}
         </div>
 
+        <div className="mt-12 flex flex-wrap justify-center gap-6 md:gap-12 text-gray-500">
+          <div className="flex items-center gap-2 text-sm font-medium">
+            <Check className="w-5 h-5 text-green-500" />
+            Secure payments powered by Stripe
+          </div>
+          <div className="flex items-center gap-2 text-sm font-medium">
+            <Check className="w-5 h-5 text-green-500" />
+            Private 1-on-1 sessions
+          </div>
+          <div className="flex items-center gap-2 text-sm font-medium">
+            <Check className="w-5 h-5 text-green-500" />
+            Flexible scheduling
+          </div>
+        </div>
+
         <motion.p 
-          className="mt-16 text-center text-sm text-gray-500 max-w-2xl mx-auto italic"
+          className="mt-12 text-center text-sm text-gray-500 max-w-2xl mx-auto italic"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
