@@ -7,6 +7,7 @@ export default function Mentors() {
       image: "https://pennathletics.com/images/2025/9/2/DavisMotyka.jpg",
       major: "Economics Major",
       achievements: [
+        "Wyoming Seminary, PA Alumni",
         "NCAA Qualifier",
         "World Team Member",
         "Ironman Champion",
@@ -19,6 +20,7 @@ export default function Mentors() {
       image: "https://pennathletics.com/images/2025/9/2/DevenCasey.jpg",
       major: "Economics Major",
       achievements: [
+        "Izzy Style, IL Alumni",
         "2x State Champion",
         "Fargo All-American",
         "Interned coaching youth athletes"
