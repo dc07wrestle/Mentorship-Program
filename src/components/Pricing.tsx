@@ -155,8 +155,8 @@ export default function Pricing() {
           </p>
           <div className="mt-8 pt-6 border-t border-gray-100 text-[10px] text-gray-400 text-center space-y-2">
             <p>
-              <span className="font-bold uppercase tracking-widest text-gray-500 block mb-1">Refund & Cancellation</span>
-              Sessions must be canceled or rescheduled at least 24 hours in advance. Missed sessions or late cancellations are non-refundable. Session packages must be used within a reasonable time frame.
+              <span className="font-bold uppercase tracking-widest text-gray-500 block mb-1">Refund Policy</span>
+              Refunds are available within 24 hours after the first session. After that, all sales are final. Sessions must be canceled or rescheduled at least 24 hours in advance.
             </p>
             <p>
               <span className="font-bold uppercase tracking-widest text-gray-500 block mb-1">Disclaimer</span>
@@ -238,6 +238,9 @@ export default function Pricing() {
               </p>
               <p className={`text-[10px] text-center font-medium ${plan.highlight ? 'text-blue-200' : 'text-gray-500'}`}>
                 You'll receive a confirmation email with your session link after booking.
+              </p>
+              <p className={`text-[9px] text-center italic mt-1 ${plan.highlight ? 'text-blue-300' : 'text-gray-400'}`}>
+                Refunds available within 24h of first session.
               </p>
             </div>
           </div>
