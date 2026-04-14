@@ -14,7 +14,7 @@ export default function Footer() {
             <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
             <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link to="/refunds" className="hover:text-white transition-colors">Refund Policy</Link>
-            <a href="mailto:dc07wrestle@gmail.com" className="hover:text-white transition-colors">Contact Us</a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dc07wrestle@gmail.com&su=Inquiry from Mat Mentors Website" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Contact Us</a>
           </div>
         </div>
         

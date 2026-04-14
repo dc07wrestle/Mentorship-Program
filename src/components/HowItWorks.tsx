@@ -65,13 +65,16 @@ export default function HowItWorks() {
           ))}
         </div>
         
-        <div className="mt-16 text-center">
+        <div className="mt-16 text-center space-y-6">
           <a 
             href="#pricing" 
             className="inline-flex px-8 py-4 bg-brand-red hover:bg-red-800 text-white rounded-lg font-bold text-lg transition-all shadow-lg shadow-red-900/20"
           >
             Choose Your Plan
           </a>
+          <p className="text-sm text-gray-500">
+            Have questions? <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dc07wrestle@gmail.com&su=Inquiry from Mat Mentors Website" target="_blank" rel="noopener noreferrer" className="text-brand-red font-bold hover:underline">Contact us</a>
+          </p>
         </div>
       </div>
     </section>

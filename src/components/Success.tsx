@@ -108,7 +108,7 @@ export default function Success() {
           <div className="bg-brand-red/5 border border-brand-red/10 rounded-2xl p-6 max-w-2xl mx-auto text-left md:text-center">
             <h3 className="text-brand-blue font-bold text-lg mb-2">Prepare for Your Session</h3>
             <p className="text-gray-700 text-sm leading-relaxed mb-4">
-              To get the most out of your session, <span className="font-bold text-brand-blue">send match footage ahead of time</span> to <a href="mailto:dc07wrestle@gmail.com" className="font-bold text-brand-red hover:underline">dc07wrestle@gmail.com</a>.
+              To get the most out of your session, <span className="font-bold text-brand-blue">send match footage ahead of time</span> to <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dc07wrestle@gmail.com&su=Match Footage - Mat Mentors" target="_blank" rel="noopener noreferrer" className="font-bold text-brand-red hover:underline">dc07wrestle@gmail.com</a>.
             </p>
             <p className="text-gray-500 text-xs mt-2 italic">
               Include your name and scheduled session time in the email so we can review it beforehand.
@@ -124,14 +124,14 @@ export default function Success() {
               Please book your <span className="font-bold text-brand-red underline">first session</span> using the calendar above. During our first call, we will discuss and lock in your future recurring times (e.g., every Tuesday at 4:00 PM) to ensure consistent growth.
             </p>
             <p className="mt-4 text-xs text-gray-500 italic">
-              Have a specific mentor request? Email us at <a href="mailto:dc07wrestle@gmail.com" className="text-brand-red font-bold hover:underline">dc07wrestle@gmail.com</a>
+              Have a specific mentor request? Email us at <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dc07wrestle@gmail.com&su=Mentor Request - Mat Mentors" target="_blank" rel="noopener noreferrer" className="text-brand-red font-bold hover:underline">dc07wrestle@gmail.com</a>
             </p>
           </div>
 
           <div className="flex flex-col items-center gap-4 text-gray-500">
             <div className="flex items-center gap-2 text-sm">
               <Mail className="w-4 h-4" />
-              <span>Need help? Email <a href="mailto:dc07wrestle@gmail.com" className="text-brand-red font-semibold hover:underline">dc07wrestle@gmail.com</a></span>
+              <span>Need help? Email <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dc07wrestle@gmail.com&su=Help Request - Mat Mentors" target="_blank" rel="noopener noreferrer" className="text-brand-red font-semibold hover:underline">dc07wrestle@gmail.com</a></span>
             </div>
           </div>
 

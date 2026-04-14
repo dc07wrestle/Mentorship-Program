@@ -133,7 +133,7 @@ export default function Pricing() {
               "Want more personalized feedback? Send us your match film before your session and we'll review it in advance."
             </p>
             <p className="text-xs text-gray-600">
-              Have a specific mentor request? Email us at <a href="mailto:dc07wrestle@gmail.com" className="text-brand-red font-bold hover:underline">dc07wrestle@gmail.com</a>
+              Have a specific mentor request? Email us at <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dc07wrestle@gmail.com&su=Mentor Request - Mat Mentors" target="_blank" rel="noopener noreferrer" className="text-brand-red font-bold hover:underline">dc07wrestle@gmail.com</a>
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
