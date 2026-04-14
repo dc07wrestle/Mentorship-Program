@@ -37,7 +37,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            Train with <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Ivy League Wrestlers</span> Who Balance Elite Academics & Athletics
+            Learn from <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">University of Pennsylvania Wrestlers</span>
           </motion.h1>
           
           <motion.p 
