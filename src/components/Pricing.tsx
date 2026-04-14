@@ -5,32 +5,34 @@ export default function Pricing() {
 
   const plans = [
     {
-      id: "single",
-      title: "Single Session",
-      price: "30",
-      description: "30 minute 1-on-1 mentorship session",
+      id: "3pack",
+      title: "3 Session Pack",
+      totalPrice: "60",
+      perSessionPrice: "30",
+      description: "Perfect for a focused technical tune-up",
       features: [
+        "First session free included",
         "Personalized guidance",
         "Flexible scheduling",
-        "Great for first-time athletes"
+        "Great for targeted improvement"
       ],
-      buttonText: "Book 1 Session",
-      link: (import.meta as any).env.VITE_STRIPE_LINK_SINGLE || "https://buy.stripe.com/7sYdRa5xv4rS41q7xSeME01",
+      buttonText: "Book 3 Sessions",
+      link: (import.meta as any).env.VITE_STRIPE_LINK_3PACK || "https://buy.stripe.com/7sYdRa5xv4rS41q7xSeME01",
       highlight: false
     },
     {
       id: "5pack",
       title: "5 Session Pack",
-      price: "135",
-      subtext: "$27 per session",
+      totalPrice: "108",
+      perSessionPrice: "27",
       badge: "Most Popular",
       description: "Best for serious athletes who want consistent improvement",
       features: [
+        "First session free included",
         "Save compared to single sessions",
         "Consistent support",
         "Strong accountability",
-        "Track progress over multiple sessions",
-        "Ideal for athletes serious about improvement"
+        "Track progress over multiple sessions"
       ],
       buttonText: "Book 5 Sessions",
       link: (import.meta as any).env.VITE_STRIPE_LINK_5PACK || "https://buy.stripe.com/aFadRa5xv6A069y8BWeME02",
@@ -39,17 +41,36 @@ export default function Pricing() {
     {
       id: "10pack",
       title: "10 Session Pack",
-      price: "250",
-      subtext: "$25 per session",
+      totalPrice: "225",
+      perSessionPrice: "25",
       description: "Best value for long-term growth on and off the mat",
       features: [
-        "Lowest price per session",
+        "First session free included",
+        "Significant long-term savings",
         "Long-term mentorship",
         "Priority scheduling",
         "Built for committed athletes"
       ],
       buttonText: "Book 10 Sessions",
       link: (import.meta as any).env.VITE_STRIPE_LINK_10PACK || "https://buy.stripe.com/bJe8wQaRP6A08hG5pKeME03",
+      highlight: false
+    },
+    {
+      id: "15pack",
+      title: "15 Session Pack",
+      totalPrice: "322",
+      perSessionPrice: "23",
+      badge: "Best Value",
+      description: "The ultimate commitment to elite performance",
+      features: [
+        "First session free included",
+        "Maximum savings",
+        "Deep mentor relationship",
+        "Comprehensive progress tracking",
+        "Priority support"
+      ],
+      buttonText: "Book 15 Sessions",
+      link: (import.meta as any).env.VITE_STRIPE_LINK_15PACK || "https://buy.stripe.com/bJeeVee41e2s1Tig4oeME04",
       highlight: false
     }
   ];
@@ -85,9 +106,14 @@ export default function Pricing() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-block bg-brand-red/10 text-brand-red px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider border border-brand-red/20"
+            className="flex flex-col items-center gap-3"
           >
-            Best Value: Save with 5 or 10 session packages
+            <div className="inline-block bg-brand-red/10 text-brand-red px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider border border-brand-red/20">
+              Best Value: Save with 5, 10, or 15 session packages
+            </div>
+            <p className="text-brand-red font-bold text-sm animate-pulse">
+              ⚠️ Limited Time: Free first session deal ends July 31st!
+            </p>
           </motion.div>
         </div>
 
@@ -100,11 +126,14 @@ export default function Pricing() {
         >
           <h3 className="text-xl font-bold text-brand-blue mb-4 text-center">Mentor Availability</h3>
           <p className="text-center text-sm text-gray-600 mb-8 max-w-lg mx-auto">
-            Check our hours below. Our mentorship is specifically designed for <span className="font-bold text-brand-blue">K-12 wrestlers</span>. For 5 and 10-session packs, you only need to book your <span className="font-bold text-brand-red">first session</span> initially—we'll coordinate your recurring weekly schedule during our first call.
+            Check our hours below. Our mentorship is specifically designed for <span className="font-bold text-brand-blue">K-12 wrestlers</span>. For all session packs, you only need to book your <span className="font-bold text-brand-red">first session</span> initially—we'll coordinate your recurring weekly schedule during our first call.
           </p>
-          <div className="mb-8 p-4 bg-brand-blue/5 rounded-xl border border-brand-blue/10 text-center">
+          <div className="mb-8 p-4 bg-brand-blue/5 rounded-xl border border-brand-blue/10 text-center space-y-3">
             <p className="text-sm text-brand-blue font-medium italic">
               "Want more personalized feedback? Send us your match film before your session and we'll review it in advance."
+            </p>
+            <p className="text-xs text-gray-600">
+              Have a specific mentor request? Email us at <a href="mailto:dc07wrestle@gmail.com" className="text-brand-red font-bold hover:underline">dc07wrestle@gmail.com</a>
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
@@ -136,7 +165,7 @@ export default function Pricing() {
           </div>
         </motion.div>
 
-        <div id="book-now" className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div id="book-now" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
           {plans.map((plan, index) => (
             <motion.div
               key={index}
@@ -161,14 +190,20 @@ export default function Pricing() {
                 <h3 className={`text-xl font-bold mb-4 ${plan.highlight ? 'text-white' : 'text-brand-blue'}`}>
                   {plan.title}
                 </h3>
-                <div className="flex items-baseline gap-1 mb-2">
-                  <span className="text-4xl font-extrabold">${plan.price}</span>
+                <div className="flex items-baseline gap-1 mb-1">
+                  <span className="text-4xl font-extrabold">${plan.perSessionPrice}</span>
+                  <span className={`text-sm font-medium ${plan.highlight ? 'text-blue-200' : 'text-gray-500'}`}>/session</span>
                 </div>
-                {plan.subtext && (
-                  <p className={`text-sm font-medium ${plan.highlight ? 'text-blue-200' : 'text-brand-red'}`}>
-                    {plan.subtext}
-                  </p>
-                )}
+                <p className={`text-sm font-bold mb-2 ${plan.highlight ? 'text-red-300' : 'text-brand-red'}`}>
+                  First session free included
+                </p>
+                <div className={`text-[10px] font-bold py-1 px-2 rounded uppercase tracking-wider inline-block border ${
+                  plan.highlight 
+                    ? 'bg-white/20 text-white border-white/30' 
+                    : 'bg-brand-blue/5 text-brand-blue border-brand-blue/10'
+                }`}>
+                  Total: ${plan.totalPrice} paid today
+                </div>
                 <p className={`mt-4 text-sm leading-relaxed ${plan.highlight ? 'text-blue-100' : 'text-gray-600'}`}>
                   {plan.description}
                 </p>

@@ -118,10 +118,13 @@ export default function Success() {
           <div className="bg-brand-blue/5 border border-brand-blue/10 rounded-2xl p-6 max-w-2xl mx-auto">
             <p className="text-brand-blue font-bold mb-2 flex items-center justify-center gap-2">
               <CheckCircle className="w-5 h-5 text-brand-red" />
-              For 5 and 10-Session Packs
+              For All Session Packs
             </p>
             <p className="text-gray-700 text-sm leading-relaxed">
               Please book your <span className="font-bold text-brand-red underline">first session</span> using the calendar above. During our first call, we will discuss and lock in your future recurring times (e.g., every Tuesday at 4:00 PM) to ensure consistent growth.
+            </p>
+            <p className="mt-4 text-xs text-gray-500 italic">
+              Have a specific mentor request? Email us at <a href="mailto:dc07wrestle@gmail.com" className="text-brand-red font-bold hover:underline">dc07wrestle@gmail.com</a>
             </p>
           </div>
 

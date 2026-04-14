@@ -73,8 +73,8 @@ export default function Legal() {
                 <p>Missed sessions or late cancellations (less than 24 hours notice) are non-refundable. If a mentor needs to cancel, a full refund or a rescheduled session will be provided.</p>
               </section>
               <section>
-                <h2 className="text-xl font-bold text-brand-blue mb-3">Session Packages</h2>
-                <p>Session packages (5 and 10 packs) are offered at a discount and must be used within a reasonable time frame (typically 1 year from purchase). Unused sessions in a package are non-refundable after 90 days.</p>
+                <h2 className="text-xl font-bold text-brand-blue mb-3">3. Session Packages</h2>
+                <p>Session packages (3, 5, 10, and 15 packs) are offered at a discount and must be used within a reasonable time frame (typically 1 year from purchase). Unused sessions in a package are non-refundable after 90 days.</p>
               </section>
             </div>
           )

@@ -24,18 +24,6 @@ export default function Mentors() {
         "Interned coaching youth athletes"
       ],
       gpa: "3.6 GPA"
-    },
-    {
-      name: "Sean Seefeldt",
-      image: "https://pennathletics.com/images/2025/9/2/SeanSeefeldt.jpg",
-      major: "Philosophy, Politics & Economics Major",
-      achievements: [
-        "NCAA Qualifier",
-        "NWCA Scholar All-American",
-        "Team Captain",
-        "Minor in Consumer Psychology"
-      ],
-      gpa: "3.4 GPA"
     }
   ];
 
@@ -63,7 +51,7 @@ export default function Mentors() {
           </motion.p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {mentors.map((mentor, index) => (
             <motion.div 
               key={index}
@@ -108,6 +96,15 @@ export default function Mentors() {
             </motion.div>
           ))}
         </div>
+        <motion.p 
+          className="mt-12 text-center text-gray-500 text-sm"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          Have a specific request for a mentor? Email us at <a href="mailto:dc07wrestle@gmail.com" className="text-brand-red font-bold hover:underline">dc07wrestle@gmail.com</a>
+        </motion.p>
       </div>
     </section>
   );
