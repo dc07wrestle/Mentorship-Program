@@ -166,7 +166,7 @@ export default function Pricing() {
         </motion.div>
 
         <div id="book-now" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-          {plans.map((plan, index) => (
+            {plans.map((plan, index) => (
             <motion.div
               key={index}
               className={`relative flex flex-col p-8 rounded-2xl transition-all duration-300 ${
