@@ -191,18 +191,18 @@ export default function Pricing() {
                   {plan.title}
                 </h3>
                 <div className="flex items-baseline gap-1 mb-1">
-                  <span className="text-4xl font-extrabold">${plan.perSessionPrice}</span>
-                  <span className={`text-sm font-medium ${plan.highlight ? 'text-blue-200' : 'text-gray-500'}`}>/session</span>
+                  <span className="text-5xl font-extrabold">${plan.totalPrice}</span>
+                  <span className={`text-sm font-medium ${plan.highlight ? 'text-blue-200' : 'text-gray-500'}`}>total</span>
                 </div>
-                <p className={`text-sm font-bold mb-2 ${plan.highlight ? 'text-red-300' : 'text-brand-red'}`}>
+                <p className={`text-sm font-bold mb-4 ${plan.highlight ? 'text-red-300' : 'text-brand-red'}`}>
                   First session free included
                 </p>
-                <div className={`text-[10px] font-bold py-1 px-2 rounded uppercase tracking-wider inline-block border ${
+                <div className={`text-xs font-bold py-1.5 px-3 rounded-lg uppercase tracking-wider inline-block border-2 ${
                   plan.highlight 
                     ? 'bg-white/20 text-white border-white/30' 
-                    : 'bg-brand-blue/5 text-brand-blue border-brand-blue/10'
+                    : 'bg-brand-red/10 text-brand-red border-brand-red/20'
                 }`}>
-                  Total: ${plan.totalPrice} paid today
+                  Valued at ${plan.perSessionPrice}/session
                 </div>
                 <p className={`mt-4 text-sm leading-relaxed ${plan.highlight ? 'text-blue-100' : 'text-gray-600'}`}>
                   {plan.description}
