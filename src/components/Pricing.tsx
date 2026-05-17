@@ -8,6 +8,7 @@ export default function Pricing() {
       id: "3pack",
       title: "3 Session Pack",
       totalPrice: "60",
+      originalPrice: "90",
       perSessionPrice: "30",
       description: "Perfect for a focused technical tune-up",
       features: [
@@ -24,6 +25,7 @@ export default function Pricing() {
       id: "5pack",
       title: "5 Session Pack",
       totalPrice: "108",
+      originalPrice: "135",
       perSessionPrice: "27",
       badge: "Most Popular",
       description: "Best for serious athletes who want consistent improvement",
@@ -42,6 +44,7 @@ export default function Pricing() {
       id: "10pack",
       title: "10 Session Pack",
       totalPrice: "225",
+      originalPrice: "250",
       perSessionPrice: "25",
       description: "Best value for long-term growth on and off the mat",
       features: [
@@ -59,6 +62,7 @@ export default function Pricing() {
       id: "15pack",
       title: "15 Session Pack",
       totalPrice: "322",
+      originalPrice: "345",
       perSessionPrice: "23",
       badge: "Best Value",
       description: "The ultimate commitment to elite performance",
@@ -190,7 +194,10 @@ export default function Pricing() {
                 <h3 className={`text-xl font-bold mb-4 ${plan.highlight ? 'text-white' : 'text-brand-blue'}`}>
                   {plan.title}
                 </h3>
-                <div className="flex items-baseline gap-1 mb-1">
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className={`text-xl font-bold line-through ${plan.highlight ? 'text-blue-200/60' : 'text-gray-400'}`}>
+                    ${plan.originalPrice}
+                  </span>
                   <span className="text-5xl font-extrabold">${plan.totalPrice}</span>
                   <span className={`text-sm font-medium ${plan.highlight ? 'text-blue-200' : 'text-gray-500'}`}>total</span>
                 </div>
