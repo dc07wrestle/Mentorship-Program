@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, X, Mail, Copy, Check } from 'lucide-react';
 
 export default function Navbar() {
@@ -28,7 +29,7 @@ export default function Navbar() {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-brand-blue/95 backdrop-blur-md shadow-lg py-4' : 'bg-transparent py-6'}`}>
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between">
-            <a href="#" className="flex items-center gap-3">
+            <Link to="/" className="flex items-center gap-3">
               <img 
                 src="https://i.postimg.cc/g06cJB6D/7771C723-F9AE-4E58-AD55-CD8A92B9A7A6.png" 
                 alt="Mat Mentors Logo" 
@@ -37,21 +38,28 @@ export default function Navbar() {
               <span className="text-white font-bold text-xl tracking-tight hidden sm:block font-heading">
                 Mat Mentors
               </span>
-            </a>
+            </Link>
 
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-8">
-              <a href="#how-it-works" className="text-blue-100 hover:text-white font-medium transition-colors">How It Works</a>
-              <a href="#pricing" className="text-blue-100 hover:text-white font-medium transition-colors">Pricing</a>
+              <Link to="/#how-it-works" className="text-blue-100 hover:text-white font-medium transition-colors">How It Works</Link>
+              <Link to="/#pricing" className="text-blue-100 hover:text-white font-medium transition-colors">Pricing</Link>
+              <Link 
+                to="/videos" 
+                className="text-white bg-white/10 hover:bg-white/20 px-3.5 py-1.5 rounded-lg font-semibold transition-all flex items-center gap-1.5 border border-white/20 shadow-sm"
+              >
+                <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse"></span>
+                <span>Instructional Videos</span>
+              </Link>
               <button 
                 onClick={() => setIsContactModalOpen(true)}
                 className="text-blue-100 hover:text-white font-medium transition-colors cursor-pointer"
               >
                 Contact
               </button>
-              <a href="#book-now" className="px-6 py-2.5 bg-brand-red hover:bg-red-800 text-white rounded-lg font-bold transition-all shadow-md">
+              <Link to="/#book-now" className="px-6 py-2.5 bg-brand-red hover:bg-red-800 text-white rounded-lg font-bold transition-all shadow-md">
                 Book Now
-              </a>
+              </Link>
             </div>
 
             {/* Mobile Menu Toggle */}
@@ -68,20 +76,28 @@ export default function Navbar() {
         {isMobileMenuOpen && (
           <div className="md:hidden absolute top-full left-0 w-full bg-brand-blue border-t border-white/10 shadow-xl">
             <div className="flex flex-col p-6 gap-4">
-              <a 
-                href="#how-it-works" 
+              <Link 
+                to="/videos" 
+                className="text-white font-bold py-2 bg-white/10 px-4 rounded-lg flex items-center justify-between border border-white/20"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <span>Instructional Videos</span>
+                <span className="text-xs bg-brand-red text-white px-2 py-0.5 rounded font-bold uppercase">New</span>
+              </Link>
+              <Link 
+                to="/#how-it-works" 
                 className="text-white font-medium py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 How It Works
-              </a>
-              <a 
-                href="#pricing" 
+              </Link>
+              <Link 
+                to="/#pricing" 
                 className="text-white font-medium py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Pricing
-              </a>
+              </Link>
               <button 
                 className="text-white font-medium py-2 text-left"
                 onClick={() => {
@@ -91,13 +107,13 @@ export default function Navbar() {
               >
                 Contact
               </button>
-              <a 
-                href="#book-now" 
+              <Link 
+                to="/#book-now" 
                 className="w-full px-6 py-3 bg-brand-red text-white text-center rounded-lg font-bold"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Book Now
-              </a>
+              </Link>
             </div>
           </div>
         )}

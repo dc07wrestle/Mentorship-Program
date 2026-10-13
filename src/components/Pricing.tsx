@@ -116,7 +116,7 @@ export default function Pricing() {
               Best Value: Save with 5, 10, or 15 session packages
             </div>
             <p className="text-brand-red font-bold text-sm animate-pulse">
-              ⚠️ Limited Time: Free first session deal ends July 31st!
+              ⚠️ Limited Time: Free first session deal ends December 1st!
             </p>
           </motion.div>
         </div>
