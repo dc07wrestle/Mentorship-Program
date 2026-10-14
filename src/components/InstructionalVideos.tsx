@@ -320,19 +320,15 @@ export default function InstructionalVideos() {
                   >
                     {/* Thumbnail & Badges */}
                     <div>
-                      <div className="relative aspect-video overflow-hidden bg-gray-950">
+                      <div className="relative aspect-video overflow-hidden bg-gray-900">
                         <img
                           src={video.thumbnail}
                           alt={video.title}
-                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                           referrerPolicy="no-referrer"
-                          onError={(e) => {
-                            (e.currentTarget as HTMLImageElement).src =
-                              'https://img.youtube.com/vi/ArY1nlwN9Vc/maxresdefault.jpg';
-                          }}
                         />
                         {/* Overlay gradient */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
                         {/* Top Badges */}
                         <div className="absolute top-3 left-3 flex items-center gap-2">
@@ -489,12 +485,8 @@ export default function InstructionalVideos() {
               <img
                 src={previewVideo.thumbnail}
                 alt={previewVideo.title}
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src =
-                    'https://img.youtube.com/vi/ArY1nlwN9Vc/maxresdefault.jpg';
-                }}
               />
               <div className="absolute top-4 right-4">
                 <button
