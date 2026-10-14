@@ -61,7 +61,7 @@ export const VIDEO_MEMBERSHIP_CONFIG = {
   title: 'Unlimited All-Access Membership',
   stripePaymentLink:
     (import.meta as any).env?.VITE_STRIPE_VIDEO_MEMBERSHIP_LINK ||
-    'https://buy.stripe.com/placeholder_membership_1299',
+    'https://buy.stripe.com/28E8wQ0db3nO41q9G0eME08',
   features: [
     'Unlimited on-demand access to our full instructional video library',
     '3–5 brand new high-level technique breakdowns added every month',
@@ -101,6 +101,6 @@ export const VIDEO_CATALOG: VideoItem[] = [
     stripePaymentLink:
       (import.meta as any).env?.VITE_STRIPE_VIDEO_SHUCK_BY ||
       (import.meta as any).env?.VITE_STRIPE_VIDEO_SWEEP_SINGLE ||
-      'https://buy.stripe.com/placeholder_video_shuck_by',
+      'https://buy.stripe.com/dRmbJ2gc9e2s1Ti2dyeME07',
   },
 ];
