@@ -12,6 +12,19 @@
  *    or Stripe Customer Portal/Confirmation Email) to send the unlisted YouTube link.
  */
 
+export interface VideoPromotion {
+  enabled: boolean;
+  startDate: string; // ISO string with ET offset e.g. '2026-10-14T00:00:00-04:00'
+  endDate: string; // ISO string with ET offset e.g. '2026-11-14T23:59:59-05:00' (Nov 14, 2026 11:59 PM Eastern Time)
+  badge: string; // 'FREE THIS MONTH'
+  promotionalPriceLabel: string; // 'FREE FOR A LIMITED TIME'
+  buttonLabel: string; // 'WATCH FREE NOW'
+  originalPrice: string; // '$3.99'
+  youtubeVideoId: string; // 'ArY1nlwN9Vc'
+  youtubeUrl: string; // 'https://youtube.com/shorts/ArY1nlwN9Vc?feature=share'
+  embedUrl: string; // 'https://www.youtube.com/embed/ArY1nlwN9Vc'
+}
+
 export interface VideoItem {
   id: string;
   title: string;
@@ -26,6 +39,7 @@ export interface VideoItem {
   badge?: string;
   // Paste your Stripe $3.99 Payment Link here:
   stripePaymentLink: string;
+  promotion?: VideoPromotion;
 }
 
 export type VideoCategory =
@@ -102,5 +116,67 @@ export const VIDEO_CATALOG: VideoItem[] = [
       (import.meta as any).env?.VITE_STRIPE_VIDEO_SHUCK_BY ||
       (import.meta as any).env?.VITE_STRIPE_VIDEO_SWEEP_SINGLE ||
       'https://buy.stripe.com/dRmbJ2gc9e2s1Ti2dyeME07',
+    promotion: {
+      enabled: true,
+      startDate: '2026-10-14T00:00:00-04:00',
+      endDate: '2026-11-14T23:59:59-05:00', // Nov 14, 2026 11:59 PM Eastern Time
+      badge: 'FREE THIS MONTH',
+      promotionalPriceLabel: 'FREE FOR A LIMITED TIME',
+      buttonLabel: 'WATCH FREE NOW',
+      originalPrice: '$3.99',
+      youtubeVideoId: 'ArY1nlwN9Vc',
+      youtubeUrl: 'https://youtube.com/shorts/ArY1nlwN9Vc?feature=share',
+      embedUrl: 'https://www.youtube.com/embed/ArY1nlwN9Vc',
+    },
   },
 ];
+
+/**
+ * Checks whether a video promotion is currently active.
+ * Automatically checks the current time against the Eastern Time promotion window
+ * (Oct 14, 2026 - Nov 14, 2026 11:59:59 PM ET).
+ * Also supports simulated dates or URL parameter testing (?promo=expired or ?promo=free).
+ */
+export function isVideoPromotionActive(
+  video: VideoItem,
+  simulatedTimeMs?: number | null
+): boolean {
+  if (!video.promotion || !video.promotion.enabled) {
+    return false;
+  }
+
+  // URL query parameter check for QA testing / verification:
+  if (typeof window !== 'undefined') {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const promoParam = params.get('promo');
+      if (promoParam === 'expired' || promoParam === 'paid' || promoParam === 'false') {
+        return false;
+      }
+      if (promoParam === 'free' || promoParam === 'active' || promoParam === 'true') {
+        return true;
+      }
+      const testDate = params.get('test_date');
+      if (testDate) {
+        const testTimestamp = new Date(testDate).getTime();
+        if (!isNaN(testTimestamp)) {
+          return (
+            testTimestamp >= new Date(video.promotion.startDate).getTime() &&
+            testTimestamp <= new Date(video.promotion.endDate).getTime()
+          );
+        }
+      }
+    } catch {
+      // Ignore if URLSearchParams not available
+    }
+  }
+
+  const now =
+    simulatedTimeMs !== undefined && simulatedTimeMs !== null
+      ? simulatedTimeMs
+      : Date.now();
+  const start = new Date(video.promotion.startDate).getTime();
+  const end = new Date(video.promotion.endDate).getTime();
+
+  return now >= start && now <= end;
+}
