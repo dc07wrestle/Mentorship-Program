@@ -96,8 +96,7 @@ export const VIDEO_CATALOG: VideoItem[] = [
       'Collar tie hand placement and elbow pull mechanics',
       'Clearing the hips and securing the immediate 2-point takedown',
     ],
-    thumbnail:
-      'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1000&auto=format&fit=crop',
+    thumbnail: '/shuck-by.jpg',
     badge: 'Featured Release',
     stripePaymentLink:
       (import.meta as any).env?.VITE_STRIPE_VIDEO_SHUCK_BY ||
