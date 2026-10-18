@@ -396,15 +396,19 @@ export default function InstructionalVideos() {
                             }
                           }}
                         >
-                          <img
-                            src={video.thumbnail}
-                            alt={video.title}
-                            className="w-full h-full object-cover group-hover:scale-105 group-hover/thumb:scale-105 transition-transform duration-500"
-                            referrerPolicy="no-referrer"
-                            onError={(e) => {
-                              (e.currentTarget as HTMLImageElement).src = '/shuck-by.jpg';
-                            }}
-                          />
+                          <div className={`w-full h-full flex items-center justify-center ${isPortrait ? 'p-1.5 sm:p-2 bg-gradient-to-b from-gray-950 via-slate-900 to-gray-950' : ''}`}>
+                            <img
+                              src={video.thumbnail}
+                              alt={video.title}
+                              className={`w-full h-full ${
+                                isPortrait ? 'object-contain rounded-lg' : 'object-cover'
+                              } group-hover:scale-[1.02] group-hover/thumb:scale-[1.02] transition-transform duration-500`}
+                              referrerPolicy="no-referrer"
+                              onError={(e) => {
+                                (e.currentTarget as HTMLImageElement).src = '/shuck-by.jpg';
+                              }}
+                            />
+                          </div>
                           {/* Overlay gradient */}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
 
@@ -678,15 +682,19 @@ export default function InstructionalVideos() {
                       isModalPortrait ? 'aspect-[9/16] h-[44vh] sm:h-[48vh] max-w-full' : 'aspect-video w-full'
                     } overflow-hidden`}
                   >
-                    <img
-                      src={previewVideo.thumbnail}
-                      alt={previewVideo.title}
-                      className="w-full h-full object-cover"
-                      referrerPolicy="no-referrer"
-                      onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = '/shuck-by.jpg';
-                      }}
-                    />
+                    <div className={`w-full h-full flex items-center justify-center ${isModalPortrait ? 'p-2 sm:p-3 bg-gradient-to-b from-gray-950 via-slate-900 to-gray-950' : ''}`}>
+                      <img
+                        src={previewVideo.thumbnail}
+                        alt={previewVideo.title}
+                        className={`w-full h-full ${
+                          isModalPortrait ? 'object-contain rounded-lg' : 'object-cover'
+                        }`}
+                        referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).src = '/shuck-by.jpg';
+                        }}
+                      />
+                    </div>
 
                     {isVideoPromotionActive(previewVideo) && (
                       <div 

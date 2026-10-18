@@ -137,8 +137,8 @@ export const VIDEO_CATALOG: VideoItem[] = [
     id: 'arm-drag-series',
     title: 'Arm Drag Series',
     category: 'Setups and Finishes',
-    instructor: 'Davis Motyka',
-    instructorRole: 'UPenn D1 • NCAA Qualifier • Wyoming Seminary Alumni',
+    instructor: 'CJ Composto',
+    instructorRole: 'UPenn D1 • 3x All-American • PRTC',
     duration: 'Coming Soon',
     price: '$3.99',
     description:
@@ -158,8 +158,8 @@ export const VIDEO_CATALOG: VideoItem[] = [
     id: 'shin-whizzer-finish',
     title: 'Shin Whizzer Defense & Finish',
     category: 'Takedowns',
-    instructor: 'Davis Motyka',
-    instructorRole: 'UPenn D1 • NCAA Qualifier • Wyoming Seminary Alumni',
+    instructor: 'Darian Cruz',
+    instructorRole: 'Lehigh D1 • NCAA Champion • Olympian / PRTC',
     duration: 'Coming Soon',
     price: '$3.99',
     description:
