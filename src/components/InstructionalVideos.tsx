@@ -42,13 +42,17 @@ export default function InstructionalVideos() {
   const isModalPortrait = previewVideo
     ? previewVideo.aspectRatio === 'portrait' ||
       previewVideo.thumbnail.includes('shuck-by') ||
+      previewVideo.thumbnail.includes('arm-drag') ||
+      previewVideo.thumbnail.includes('shin-whizzer') ||
       previewVideo.promotion?.youtubeUrl?.includes('/shorts/')
     : false;
 
   const isPlayingPortrait = playingVideo
     ? playingVideo.aspectRatio === 'portrait' ||
       playingVideo.promotion?.youtubeUrl?.includes('/shorts/') ||
-      playingVideo.thumbnail.includes('shuck-by')
+      playingVideo.thumbnail.includes('shuck-by') ||
+      playingVideo.thumbnail.includes('arm-drag') ||
+      playingVideo.thumbnail.includes('shin-whizzer')
     : false;
 
   const filteredVideos = VIDEO_CATALOG.filter((video) => {
@@ -337,9 +341,12 @@ export default function InstructionalVideos() {
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 {filteredVideos.map((video) => {
                   const isPromo = isVideoPromotionActive(video);
+                  const isComingSoon = video.status === 'coming-soon';
                   const isPortrait =
                     video.aspectRatio === 'portrait' ||
                     video.thumbnail.includes('shuck-by') ||
+                    video.thumbnail.includes('arm-drag') ||
+                    video.thumbnail.includes('shin-whizzer') ||
                     video.promotion?.youtubeUrl?.includes('/shorts/');
 
                   return (
@@ -352,7 +359,11 @@ export default function InstructionalVideos() {
                       className={`bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border flex flex-col justify-between group ${
                         isPortrait ? 'max-w-md w-full' : ''
                       } ${
-                        isPromo ? 'border-emerald-300 ring-1 ring-emerald-200' : 'border-gray-200'
+                        isPromo
+                          ? 'border-emerald-300 ring-1 ring-emerald-200'
+                          : isComingSoon
+                          ? 'border-amber-200 ring-1 ring-amber-100'
+                          : 'border-gray-200'
                       }`}
                     >
                       {/* Thumbnail & Badges */}
@@ -370,7 +381,13 @@ export default function InstructionalVideos() {
                           } overflow-hidden bg-gray-950 cursor-pointer group/thumb`}
                           role="button"
                           tabIndex={0}
-                          aria-label={isPromo ? `Watch ${video.title} free now` : `Preview ${video.title}`}
+                          aria-label={
+                            isPromo
+                              ? `Watch ${video.title} free now`
+                              : isComingSoon
+                              ? `Preview upcoming release ${video.title}`
+                              : `Preview ${video.title}`
+                          }
                           onKeyDown={(e) => {
                             if (e.key === 'Enter' || e.key === ' ') {
                               e.preventDefault();
@@ -391,16 +408,22 @@ export default function InstructionalVideos() {
                           {/* Overlay gradient */}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
 
-                          {/* Hover Play Icon Overlay */}
+                          {/* Hover Play / Clock Icon Overlay */}
                           <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover/thumb:bg-black/40 transition-all pointer-events-none">
                             <div
                               className={`w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 group-hover/thumb:scale-110 ${
                                 isPromo
                                   ? 'bg-emerald-600/95 text-white shadow-emerald-950/50'
+                                  : isComingSoon
+                                  ? 'bg-amber-500 text-white shadow-amber-950/40'
                                   : 'bg-white/90 text-brand-blue'
                               }`}
                             >
-                              <Play className="w-6 h-6 fill-current ml-0.5" />
+                              {isComingSoon ? (
+                                <Clock className="w-6 h-6 text-white" />
+                              ) : (
+                                <Play className="w-6 h-6 fill-current ml-0.5" />
+                              )}
                             </div>
                           </div>
 
@@ -414,6 +437,11 @@ export default function InstructionalVideos() {
                                 <Sparkles className="w-3 h-3 text-emerald-200" />
                                 <span>{video.promotion?.badge || 'FREE THIS MONTH'}</span>
                               </span>
+                            ) : isComingSoon ? (
+                              <span className="bg-amber-500 text-white text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded shadow flex items-center gap-1">
+                                <Clock className="w-3 h-3 text-amber-100" />
+                                <span>COMING SOON</span>
+                              </span>
                             ) : (
                               video.badge && (
                                 <span className="bg-brand-red text-white text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded shadow">
@@ -423,16 +451,30 @@ export default function InstructionalVideos() {
                             )}
                           </div>
 
-                          {/* Duration pill */}
+                          {/* Duration / Status pill */}
                           <div className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-black/75 backdrop-blur-sm text-white text-xs font-semibold px-2 py-1 rounded z-10">
                             <Clock className="w-3.5 h-3.5 text-gray-300" />
                             <span>{video.duration}</span>
                           </div>
 
-                          {/* Watch pill */}
+                          {/* Bottom-left pill */}
                           <div className="absolute bottom-3 left-3 flex items-center gap-1 text-[11px] font-semibold text-white drop-shadow z-10">
-                            <Play className={`w-3 h-3 ${isPromo ? 'text-emerald-400 fill-emerald-400' : 'text-red-500 fill-red-500'}`} />
-                            <span>{isPromo ? 'Watch Free On-Site' : 'HD Video'}</span>
+                            {isComingSoon ? (
+                              <>
+                                <Clock className="w-3 h-3 text-amber-400" />
+                                <span>Coming Soon</span>
+                              </>
+                            ) : isPromo ? (
+                              <>
+                                <Play className="w-3 h-3 text-emerald-400 fill-emerald-400" />
+                                <span>Watch Free On-Site</span>
+                              </>
+                            ) : (
+                              <>
+                                <Play className="w-3 h-3 text-red-500 fill-red-500" />
+                                <span>HD Video</span>
+                              </>
+                            )}
                           </div>
                         </div>
 
@@ -485,6 +527,15 @@ export default function InstructionalVideos() {
                                   </span>
                                 </div>
                               </div>
+                            ) : isComingSoon ? (
+                              <div>
+                                <div className="text-[11px] text-amber-600 font-bold uppercase tracking-wider">
+                                  Next Release
+                                </div>
+                                <div className="text-xl font-black text-gray-800 font-heading">
+                                  Coming Soon
+                                </div>
+                              </div>
                             ) : (
                               <div>
                                 <div className="text-[11px] text-gray-400 uppercase font-semibold">
@@ -513,6 +564,15 @@ export default function InstructionalVideos() {
                           >
                             <Play className="w-4 h-4 fill-white text-white group-hover/btn:scale-110 transition-transform" />
                             <span>{video.promotion?.buttonLabel || 'WATCH FREE NOW'}</span>
+                          </button>
+                        ) : isComingSoon ? (
+                          <button
+                            type="button"
+                            onClick={() => setPreviewVideo(video)}
+                            className="w-full py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow transition-all text-sm group/btn cursor-pointer"
+                          >
+                            <Clock className="w-4 h-4 text-white" />
+                            <span>Coming Soon • Details</span>
                           </button>
                         ) : (
                           <a
@@ -611,69 +671,87 @@ export default function InstructionalVideos() {
             onClick={(e) => e.stopPropagation()}
           >
                 <div
-                  className={`relative ${
-                    isModalPortrait ? 'aspect-[9/16] max-h-[48vh] mx-auto' : 'aspect-video'
-                  } w-full bg-gray-950 group/modal-thumb shrink-0 overflow-hidden`}
+                  className={`w-full bg-gray-950 flex items-center justify-center overflow-hidden relative group/modal-thumb`}
                 >
-                  <img
-                    src={previewVideo.thumbnail}
-                    alt={previewVideo.title}
-                    className="w-full h-full object-cover"
-                    referrerPolicy="no-referrer"
-                    onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = '/shuck-by.jpg';
-                    }}
-                  />
+                  <div
+                    className={`relative ${
+                      isModalPortrait ? 'aspect-[9/16] h-[44vh] sm:h-[48vh] max-w-full' : 'aspect-video w-full'
+                    } overflow-hidden`}
+                  >
+                    <img
+                      src={previewVideo.thumbnail}
+                      alt={previewVideo.title}
+                      className="w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src = '/shuck-by.jpg';
+                      }}
+                    />
 
-              {isVideoPromotionActive(previewVideo) && (
-                <div 
-                  onClick={() => {
-                    const vid = previewVideo;
-                    setPreviewVideo(null);
-                    setPlayingVideo(vid);
-                  }}
-                  className="absolute inset-0 bg-black/30 hover:bg-black/45 transition-colors flex items-center justify-center cursor-pointer"
-                  title="Click to play video"
-                >
-                  <div className="w-16 h-16 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform">
-                    <Play className="w-7 h-7 fill-white ml-0.5" />
+                    {isVideoPromotionActive(previewVideo) && (
+                      <div 
+                        onClick={() => {
+                          const vid = previewVideo;
+                          setPreviewVideo(null);
+                          setPlayingVideo(vid);
+                        }}
+                        className="absolute inset-0 bg-black/30 hover:bg-black/45 transition-colors flex items-center justify-center cursor-pointer"
+                        title="Click to play video"
+                      >
+                        <div className="w-16 h-16 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform">
+                          <Play className="w-7 h-7 fill-white ml-0.5" />
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="absolute top-4 right-4 z-10">
+                      <button
+                        onClick={() => setPreviewVideo(null)}
+                        className="bg-black/70 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold hover:bg-black transition-colors cursor-pointer"
+                        aria-label="Close dialog"
+                      >
+                        ✕
+                      </button>
+                    </div>
+
+                    <div className="absolute bottom-4 left-4 flex items-center gap-2 z-10">
+                      <div className="bg-brand-blue text-white text-xs font-bold px-3 py-1 rounded">
+                        {previewVideo.category} • {previewVideo.duration}
+                      </div>
+                      {isVideoPromotionActive(previewVideo) ? (
+                        <div className="bg-emerald-600 text-white text-xs font-extrabold px-3 py-1 rounded flex items-center gap-1 shadow">
+                          <Sparkles className="w-3.5 h-3.5" />
+                          <span>FREE THIS MONTH</span>
+                        </div>
+                      ) : previewVideo.status === 'coming-soon' ? (
+                        <div className="bg-amber-500 text-white text-xs font-extrabold px-3 py-1 rounded flex items-center gap-1 shadow">
+                          <Clock className="w-3.5 h-3.5" />
+                          <span>COMING SOON</span>
+                        </div>
+                      ) : null}
+                    </div>
                   </div>
                 </div>
-              )}
 
-              <div className="absolute top-4 right-4 z-10">
-                <button
-                  onClick={() => setPreviewVideo(null)}
-                  className="bg-black/70 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold hover:bg-black transition-colors cursor-pointer"
-                  aria-label="Close dialog"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <div className="absolute bottom-4 left-4 flex items-center gap-2 z-10">
-                <div className="bg-brand-blue text-white text-xs font-bold px-3 py-1 rounded">
-                  {previewVideo.category} • {previewVideo.duration}
-                </div>
-                {isVideoPromotionActive(previewVideo) && (
-                  <div className="bg-emerald-600 text-white text-xs font-extrabold px-3 py-1 rounded flex items-center gap-1 shadow">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>FREE THIS MONTH</span>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="p-6 md:p-8">
+            <div className="p-6 md:p-8 overflow-y-auto">
               <div className="text-xs font-bold text-brand-red mb-1">
                 {previewVideo.instructor} • {previewVideo.instructorRole}
               </div>
               <h3 className="text-xl font-bold text-brand-blue mb-3">
                 {previewVideo.title}
               </h3>
-              <p className="text-sm text-gray-600 mb-6 leading-relaxed">
+              <p className="text-sm text-gray-700 font-medium mb-4 leading-relaxed bg-gray-50 border border-gray-100 p-3 rounded-xl">
                 {previewVideo.description}
               </p>
+
+              {previewVideo.status === 'coming-soon' && (
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 mb-5 flex items-start gap-2.5 text-xs text-amber-900">
+                  <Clock className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <span>
+                    <strong>Coming Soon to Mat Mentors:</strong> This technique breakdown is currently in final editing. It will be released soon for $3.99 individual access and will be included for all Unlimited All-Access Members ($12.99/mo).
+                  </span>
+                </div>
+              )}
 
               <div className="mb-6">
                 <h4 className="text-xs font-bold text-gray-900 uppercase tracking-wider mb-2">
@@ -703,6 +781,16 @@ export default function InstructionalVideos() {
                     <Play className="w-4 h-4 fill-white" />
                     <span>{previewVideo.promotion?.buttonLabel || 'WATCH FREE NOW'}</span>
                   </button>
+                ) : previewVideo.status === 'coming-soon' ? (
+                  <a
+                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=dc07wrestle@gmail.com&su=Notify Me When Released: ${encodeURIComponent(previewVideo.title)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 py-3.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-bold flex items-center justify-center gap-2 text-sm shadow-md"
+                  >
+                    <Clock className="w-4 h-4" />
+                    <span>Notify Me When Released</span>
+                  </a>
                 ) : (
                   <a
                     href={previewVideo.stripePaymentLink}

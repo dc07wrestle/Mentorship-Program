@@ -41,6 +41,7 @@ export interface VideoItem {
   stripePaymentLink: string;
   promotion?: VideoPromotion;
   aspectRatio?: 'portrait' | 'landscape';
+  status?: 'available' | 'coming-soon';
 }
 
 export type VideoCategory =
@@ -92,8 +93,8 @@ export const VIDEO_INSTRUCTIONAL_MEMBERSHIP_CONFIG = VIDEO_MEMBERSHIP_CONFIG;
 
 /**
  * Video Catalog
- * Currently featuring our first launch video: "Shuck-by" by Davis Motyka.
- * Additional videos can be easily appended here as you film and release them.
+ * Currently featuring our first launch video: "Shuck-by" by Davis Motyka,
+ * plus upcoming technique releases.
  */
 export const VIDEO_CATALOG: VideoItem[] = [
   {
@@ -113,6 +114,7 @@ export const VIDEO_CATALOG: VideoItem[] = [
     ],
     thumbnail: '/shuck-by.jpg',
     badge: 'Featured Release',
+    status: 'available',
     stripePaymentLink:
       (import.meta as any).env?.VITE_STRIPE_VIDEO_SHUCK_BY ||
       (import.meta as any).env?.VITE_STRIPE_VIDEO_SWEEP_SINGLE ||
@@ -129,6 +131,48 @@ export const VIDEO_CATALOG: VideoItem[] = [
       youtubeUrl: 'https://youtube.com/shorts/ArY1nlwN9Vc?feature=share',
       embedUrl: 'https://www.youtube.com/embed/ArY1nlwN9Vc',
     },
+    aspectRatio: 'portrait',
+  },
+  {
+    id: 'arm-drag-series',
+    title: 'Arm Drag Series',
+    category: 'Setups and Finishes',
+    instructor: 'Davis Motyka',
+    instructorRole: 'UPenn D1 • NCAA Qualifier • Wyoming Seminary Alumni',
+    duration: 'Coming Soon',
+    price: '$3.99',
+    description:
+      'Pull your opponents arm across your body to transition to the leg or body.',
+    keyPoints: [
+      'Wrist control and tricep grip mechanics to initiate high-speed drag',
+      'Pulling opponent’s arm across the centerline to expose the flank and hips',
+      'Seamless level changes straight into high single, double leg, or go-behind finishes',
+    ],
+    thumbnail: '/arm-drag-series.jpg',
+    badge: 'Coming Soon',
+    status: 'coming-soon',
+    stripePaymentLink: '',
+    aspectRatio: 'portrait',
+  },
+  {
+    id: 'shin-whizzer-finish',
+    title: 'Shin Whizzer Defense & Finish',
+    category: 'Takedowns',
+    instructor: 'Davis Motyka',
+    instructorRole: 'UPenn D1 • NCAA Qualifier • Wyoming Seminary Alumni',
+    duration: 'Coming Soon',
+    price: '$3.99',
+    description:
+      'Learn to finish the single leg when your opponent forces the shin whizzer position.',
+    keyPoints: [
+      'Neutralizing the defensive leverage of opponent’s shin whizzer trap',
+      'Shelving the leg and driving through the center of gravity',
+      'Finishing high-percentage collegiate takedowns into back exposure points',
+    ],
+    thumbnail: '/shin-whizzer.jpg',
+    badge: 'Coming Soon',
+    status: 'coming-soon',
+    stripePaymentLink: '',
     aspectRatio: 'portrait',
   },
 ];
