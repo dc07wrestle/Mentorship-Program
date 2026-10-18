@@ -39,6 +39,18 @@ export default function InstructionalVideos() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  const isModalPortrait = previewVideo
+    ? previewVideo.aspectRatio === 'portrait' ||
+      previewVideo.thumbnail.includes('shuck-by') ||
+      previewVideo.promotion?.youtubeUrl?.includes('/shorts/')
+    : false;
+
+  const isPlayingPortrait = playingVideo
+    ? playingVideo.aspectRatio === 'portrait' ||
+      playingVideo.promotion?.youtubeUrl?.includes('/shorts/') ||
+      playingVideo.thumbnail.includes('shuck-by')
+    : false;
+
   const filteredVideos = VIDEO_CATALOG.filter((video) => {
     const matchesCategory =
       selectedCategory === 'All' || video.category === selectedCategory;
@@ -325,6 +337,10 @@ export default function InstructionalVideos() {
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 {filteredVideos.map((video) => {
                   const isPromo = isVideoPromotionActive(video);
+                  const isPortrait =
+                    video.aspectRatio === 'portrait' ||
+                    video.thumbnail.includes('shuck-by') ||
+                    video.promotion?.youtubeUrl?.includes('/shorts/');
 
                   return (
                     <motion.div
@@ -334,6 +350,8 @@ export default function InstructionalVideos() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3 }}
                       className={`bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border flex flex-col justify-between group ${
+                        isPortrait ? 'max-w-md w-full' : ''
+                      } ${
                         isPromo ? 'border-emerald-300 ring-1 ring-emerald-200' : 'border-gray-200'
                       }`}
                     >
@@ -347,7 +365,9 @@ export default function InstructionalVideos() {
                               setPreviewVideo(video);
                             }
                           }}
-                          className="relative aspect-video overflow-hidden bg-gray-950 cursor-pointer group/thumb"
+                          className={`relative ${
+                            isPortrait ? 'aspect-[9/16]' : 'aspect-video'
+                          } overflow-hidden bg-gray-950 cursor-pointer group/thumb`}
                           role="button"
                           tabIndex={0}
                           aria-label={isPromo ? `Watch ${video.title} free now` : `Preview ${video.title}`}
@@ -362,11 +382,10 @@ export default function InstructionalVideos() {
                           <img
                             src={video.thumbnail}
                             alt={video.title}
-                            className="w-full h-full object-cover object-top group-hover:scale-105 group-hover/thumb:scale-105 transition-transform duration-500"
+                            className="w-full h-full object-cover group-hover:scale-105 group-hover/thumb:scale-105 transition-transform duration-500"
                             referrerPolicy="no-referrer"
                             onError={(e) => {
-                              (e.currentTarget as HTMLImageElement).src =
-                                'https://img.youtube.com/vi/ArY1nlwN9Vc/maxresdefault.jpg';
+                              (e.currentTarget as HTMLImageElement).src = '/shuck-by.jpg';
                             }}
                           />
                           {/* Overlay gradient */}
@@ -586,20 +605,25 @@ export default function InstructionalVideos() {
           onClick={() => setPreviewVideo(null)}
         >
           <div 
-            className="bg-white rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-gray-100"
+            className={`bg-white rounded-3xl ${
+              isModalPortrait ? 'max-w-md' : 'max-w-lg'
+            } w-full overflow-hidden shadow-2xl border border-gray-100 max-h-[92vh] flex flex-col`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative aspect-video bg-black group/modal-thumb">
-              <img
-                src={previewVideo.thumbnail}
-                alt={previewVideo.title}
-                className="w-full h-full object-contain"
-                referrerPolicy="no-referrer"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src =
-                    'https://img.youtube.com/vi/ArY1nlwN9Vc/maxresdefault.jpg';
-                }}
-              />
+                <div
+                  className={`relative ${
+                    isModalPortrait ? 'aspect-[9/16] max-h-[48vh] mx-auto' : 'aspect-video'
+                  } w-full bg-gray-950 group/modal-thumb shrink-0 overflow-hidden`}
+                >
+                  <img
+                    src={previewVideo.thumbnail}
+                    alt={previewVideo.title}
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = '/shuck-by.jpg';
+                    }}
+                  />
 
               {isVideoPromotionActive(previewVideo) && (
                 <div 
@@ -710,40 +734,46 @@ export default function InstructionalVideos() {
           onClick={() => setPlayingVideo(null)}
         >
           <div
-            className="bg-gray-950 text-white rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl border border-gray-800 flex flex-col max-h-[92vh]"
+            className={`bg-gray-950 text-white rounded-3xl ${
+              isPlayingPortrait ? 'max-w-md sm:max-w-lg' : 'max-w-4xl'
+            } w-full overflow-hidden shadow-2xl border border-gray-800 flex flex-col max-h-[92vh]`}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Player Top Bar */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800 bg-gray-900/90">
-              <div className="flex items-center gap-3">
-                <span className="bg-emerald-600 text-white text-xs font-black uppercase tracking-wider px-2.5 py-1 rounded flex items-center gap-1.5 shadow">
-                  <Sparkles className="w-3.5 h-3.5 text-emerald-200" />
-                  <span>{playingVideo.promotion?.badge || 'FREE THIS MONTH'}</span>
-                </span>
-                <h3 className="font-bold text-white text-sm md:text-base truncate max-w-sm md:max-w-lg">
-                  {playingVideo.title} • {playingVideo.instructor}
-                </h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => setPlayingVideo(null)}
-                className="text-gray-400 hover:text-white bg-gray-800 hover:bg-gray-700 w-8 h-8 rounded-full flex items-center justify-center font-bold text-base transition-colors cursor-pointer"
-                aria-label="Close video player"
-              >
-                ✕
-              </button>
-            </div>
+                {/* Player Top Bar */}
+                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800 bg-gray-900/90">
+                  <div className="flex items-center gap-3">
+                    <span className="bg-emerald-600 text-white text-xs font-black uppercase tracking-wider px-2.5 py-1 rounded flex items-center gap-1.5 shadow">
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-200" />
+                      <span>{playingVideo.promotion?.badge || 'FREE THIS MONTH'}</span>
+                    </span>
+                    <h3 className="font-bold text-white text-sm md:text-base truncate max-w-sm md:max-w-lg">
+                      {playingVideo.title} • {playingVideo.instructor}
+                    </h3>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setPlayingVideo(null)}
+                    className="text-gray-400 hover:text-white bg-gray-800 hover:bg-gray-700 w-8 h-8 rounded-full flex items-center justify-center font-bold text-base transition-colors cursor-pointer"
+                    aria-label="Close video player"
+                  >
+                    ✕
+                  </button>
+                </div>
 
-            {/* Embedded YouTube Player */}
-            <div className="relative aspect-video bg-black w-full overflow-hidden">
-              <iframe
-                src={`${playingVideo.promotion?.embedUrl || 'https://www.youtube.com/embed/ArY1nlwN9Vc'}?autoplay=1&rel=0`}
-                title={`${playingVideo.title} - ${playingVideo.instructor}`}
-                className="w-full h-full border-0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
-            </div>
+                {/* Embedded YouTube Player */}
+                <div
+                  className={`relative ${
+                    isPlayingPortrait ? 'aspect-[9/16] max-h-[66vh] mx-auto' : 'aspect-video'
+                  } bg-black w-full overflow-hidden`}
+                >
+                  <iframe
+                    src={`${playingVideo.promotion?.embedUrl || 'https://www.youtube.com/embed/ArY1nlwN9Vc'}?autoplay=1&rel=0`}
+                    title={`${playingVideo.title} - ${playingVideo.instructor}`}
+                    className="w-full h-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
 
             {/* Video Details & Promotion Notice */}
             <div className="p-6 md:p-8 overflow-y-auto space-y-6">

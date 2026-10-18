@@ -40,6 +40,7 @@ export interface VideoItem {
   // Paste your Stripe $3.99 Payment Link here:
   stripePaymentLink: string;
   promotion?: VideoPromotion;
+  aspectRatio?: 'portrait' | 'landscape';
 }
 
 export type VideoCategory =
@@ -128,6 +129,7 @@ export const VIDEO_CATALOG: VideoItem[] = [
       youtubeUrl: 'https://youtube.com/shorts/ArY1nlwN9Vc?feature=share',
       embedUrl: 'https://www.youtube.com/embed/ArY1nlwN9Vc',
     },
+    aspectRatio: 'portrait',
   },
 ];
 
