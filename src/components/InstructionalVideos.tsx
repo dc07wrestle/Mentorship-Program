@@ -67,9 +67,9 @@ export default function InstructionalVideos() {
   });
 
   return (
-    <div className="pt-24 pb-20 bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-brand-blue text-white py-20 lg:py-28">
+      <section className="relative overflow-hidden bg-brand-blue text-white pt-32 pb-20 lg:pt-36 lg:pb-28">
         {/* Subtle patterned backdrop */}
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
         <div className="absolute -top-32 -right-32 w-96 h-96 bg-brand-red/30 rounded-full blur-3xl pointer-events-none" />
@@ -80,9 +80,9 @@ export default function InstructionalVideos() {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-brand-red bg-white font-bold text-xs uppercase tracking-wider mb-6 shadow-sm"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold text-xs uppercase tracking-wider mb-6 shadow-sm"
             >
-              <Flame className="w-4 h-4 text-brand-red" />
+              <Flame className="w-4 h-4 text-red-400" />
               <span>Mat Mentors Instructional Videos</span>
             </motion.div>
 

@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Mail, Copy, Check } from 'lucide-react';
 
 export default function Navbar() {
+  const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  const isVideosPage = location.pathname.startsWith('/videos') || location.pathname.startsWith('/academy');
 
   const email = "dc07wrestle@gmail.com";
 
@@ -24,9 +27,17 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const hasSolidNav = isScrolled || isVideosPage;
+
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-brand-blue/95 backdrop-blur-md shadow-lg py-4' : 'bg-transparent py-6'}`}>
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          hasSolidNav
+            ? 'bg-brand-blue/95 backdrop-blur-md shadow-lg py-4 border-b border-white/10'
+            : 'bg-transparent py-6'
+        }`}
+      >
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3">
