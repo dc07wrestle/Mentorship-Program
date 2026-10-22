@@ -17,9 +17,59 @@ app.get("/api/health", (req, res) => {
   res.json({ 
     status: "ok", 
     env: {
-      hasStripeKey: !!process.env.STRIPE_SECRET_KEY
+      hasStripeKey: !!process.env.STRIPE_SECRET_KEY,
+      hasCalKey: !!process.env.CAL_API_KEY
     }
   });
+});
+
+// Secure, Read-Only Cal.com Availability Proxy
+app.get("/api/availability", async (req, res) => {
+  try {
+    const apiKey = process.env.CAL_API_KEY || "cal_live_8f955f0e3459172f221b0b45ba89e60e";
+    const eventTypeId = process.env.CAL_EVENT_TYPE_ID || "5303258";
+
+    // Date range: from now until 35 days out
+    const now = new Date();
+    const startTime = (req.query.startTime as string) || now.toISOString();
+    
+    const futureDate = new Date();
+    futureDate.setDate(now.getDate() + 35);
+    const endTime = (req.query.endTime as string) || futureDate.toISOString();
+    const timeZone = (req.query.timeZone as string) || "America/New_York";
+
+    const calUrl = `https://api.cal.com/v2/slots/available?startTime=${encodeURIComponent(startTime)}&endTime=${encodeURIComponent(endTime)}&eventTypeId=${eventTypeId}&timeZone=${encodeURIComponent(timeZone)}`;
+
+    const calResponse = await fetch(calUrl, {
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "cal-api-version": "2024-08-13",
+        "Accept": "application/json"
+      }
+    });
+
+    if (!calResponse.ok) {
+      const errText = await calResponse.text();
+      console.error("[CAL_API_ERROR]", calResponse.status, errText);
+      return res.status(calResponse.status).json({
+        status: "error",
+        message: "Failed to fetch Cal.com availability",
+        details: errText
+      });
+    }
+
+    const data = await calResponse.json();
+    return res.json({
+      status: "success",
+      slots: data?.data?.slots || {}
+    });
+  } catch (error: any) {
+    console.error("[CAL_PROXY_EXCEPTION]", error);
+    return res.status(500).json({
+      status: "error",
+      message: error?.message || "Internal server error fetching availability"
+    });
+  }
 });
 
 // API routes

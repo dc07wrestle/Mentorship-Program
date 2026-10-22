@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { motion } from 'motion/react';
-import { Check } from 'lucide-react';
+import { Check, Calendar } from 'lucide-react';
+import AvailabilityModal from './AvailabilityModal';
 
 export default function Pricing() {
+  const [isAvailabilityOpen, setIsAvailabilityOpen] = useState(false);
 
   const plans = [
     {
@@ -154,7 +157,23 @@ export default function Pricing() {
               <p className="text-sm text-gray-600">12:00 PM – 10:00 PM</p>
             </div>
           </div>
-          <p className="mt-6 text-center text-xs text-gray-400 italic">
+
+          {/* Interactive Check Live Availability Trigger */}
+          <div className="mt-6 flex flex-col items-center justify-center gap-2">
+            <button
+              type="button"
+              onClick={() => setIsAvailabilityOpen(true)}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-brand-blue hover:bg-blue-900 text-white rounded-xl font-bold text-sm shadow-md transition-all cursor-pointer group"
+            >
+              <Calendar className="w-4 h-4 text-red-400 group-hover:scale-110 transition-transform" />
+              <span>Check Live Cal.com Openings</span>
+            </button>
+            <p className="text-xs text-gray-400">
+              Browse real-time 30-minute open slots before securing your session.
+            </p>
+          </div>
+
+          <p className="mt-4 text-center text-xs text-gray-400 italic">
             * All times in EST. Specific session times are selected after booking is confirmed.
           </p>
           <div className="mt-8 pt-6 border-t border-gray-100 text-[10px] text-gray-400 text-center space-y-2">
@@ -280,6 +299,12 @@ export default function Pricing() {
           All sessions are 30 minutes and designed to support growth in wrestling, discipline, confidence, and life off the mat.
         </motion.p>
       </div>
+
+      {/* Real-time Cal.com Availability Modal */}
+      <AvailabilityModal
+        isOpen={isAvailabilityOpen}
+        onClose={() => setIsAvailabilityOpen(false)}
+      />
     </section>
   );
 }

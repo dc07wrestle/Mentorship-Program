@@ -1,76 +1,96 @@
+import { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Calendar } from 'lucide-react';
+import AvailabilityModal from './AvailabilityModal';
 
 export default function Hero() {
-  return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-brand-blue text-white">
-      <div className="absolute inset-0 z-0">
-        <img 
-          src="https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?q=80&w=2070&auto=format&fit=crop" 
-          alt="Wrestling match" 
-          className="w-full h-full object-cover opacity-20"
-          referrerPolicy="no-referrer"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-blue via-brand-blue/80 to-transparent" />
-      </div>
+  const [isAvailabilityOpen, setIsAvailabilityOpen] = useState(false);
 
-      <div className="container mx-auto px-6 relative z-10 pt-20 pb-16">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="flex flex-wrap justify-center gap-3 mb-6">
-              <span className="inline-block py-1 px-3 rounded-full bg-brand-red/20 text-red-300 text-sm font-semibold tracking-wider uppercase border border-brand-red/30">
-                University of Pennsylvania Student-Athletes
-              </span>
-              <span className="inline-block py-1 px-3 rounded-full bg-brand-red/20 text-red-300 text-sm font-semibold tracking-wider uppercase border border-brand-red/30">
-                NCAA Competitors
-              </span>
-            </div>
-          </motion.div>
-          
-          <motion.h1 
-            className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            Learn from <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">University of Pennsylvania Wrestlers</span>
-          </motion.h1>
-          
-          <motion.p 
-            className="text-xl md:text-2xl text-blue-100 mb-10 max-w-2xl mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            Get 1-on-1 mentorship from Division I athletes who know exactly what it takes to succeed on the mat and in the classroom.
-          </motion.p>
-          
-            <div className="flex flex-col items-center gap-3">
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a 
-                  href="#book-now" 
-                  className="w-full sm:w-auto px-8 py-4 bg-brand-red hover:bg-red-800 text-white rounded-lg font-bold text-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-red-900/50"
-                >
-                  Book Mentorship
-                  <ArrowRight className="w-5 h-5" />
-                </a>
-                <a 
-                  href="#how-it-works" 
-                  className="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 text-white rounded-lg font-bold text-lg transition-all backdrop-blur-sm"
-                >
-                  How It Works
-                </a>
-              </div>
-              <p className="text-sm text-blue-200 font-medium">
-                Pay to secure your session, then instantly choose your time.
-              </p>
-            </div>
+  return (
+    <>
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-brand-blue text-white">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?q=80&w=2070&auto=format&fit=crop" 
+            alt="Wrestling match" 
+            className="w-full h-full object-cover opacity-20"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-blue via-brand-blue/80 to-transparent" />
         </div>
-      </div>
-    </section>
+
+        <div className="container mx-auto px-6 relative z-10 pt-20 pb-16">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="flex flex-wrap justify-center gap-3 mb-6">
+                <span className="inline-block py-1 px-3 rounded-full bg-brand-red/20 text-red-300 text-sm font-semibold tracking-wider uppercase border border-brand-red/30">
+                  University of Pennsylvania Student-Athletes
+                </span>
+                <span className="inline-block py-1 px-3 rounded-full bg-brand-red/20 text-red-300 text-sm font-semibold tracking-wider uppercase border border-brand-red/30">
+                  NCAA Competitors
+                </span>
+              </div>
+            </motion.div>
+            
+            <motion.h1 
+              className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-tight"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              Learn from <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">University of Pennsylvania Wrestlers</span>
+            </motion.h1>
+            
+            <motion.p 
+              className="text-xl md:text-2xl text-blue-100 mb-10 max-w-2xl mx-auto leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              Get 1-on-1 mentorship from Division I athletes who know exactly what it takes to succeed on the mat and in the classroom.
+            </motion.p>
+            
+              <div className="flex flex-col items-center gap-3">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+                  <a 
+                    href="#book-now" 
+                    className="w-full sm:w-auto px-8 py-4 bg-brand-red hover:bg-red-800 text-white rounded-lg font-bold text-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-red-900/50"
+                  >
+                    Book Mentorship
+                    <ArrowRight className="w-5 h-5" />
+                  </a>
+                  <button 
+                    type="button"
+                    onClick={() => setIsAvailabilityOpen(true)}
+                    className="w-full sm:w-auto px-7 py-4 bg-white/10 hover:bg-white/20 text-white rounded-lg font-bold text-lg transition-all backdrop-blur-sm border border-white/20 flex items-center justify-center gap-2 cursor-pointer shadow-md hover:border-white/40"
+                  >
+                    <Calendar className="w-5 h-5 text-red-400" />
+                    <span>Check Availability</span>
+                  </button>
+                  <a 
+                    href="#how-it-works" 
+                    className="w-full sm:w-auto px-6 py-4 bg-transparent hover:bg-white/5 text-blue-200 hover:text-white rounded-lg font-semibold text-base transition-all"
+                  >
+                    How It Works
+                  </a>
+                </div>
+                <p className="text-sm text-blue-200 font-medium">
+                  Pay to secure your session, then instantly choose your time.
+                </p>
+              </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Read-Only Availability Popup Modal */}
+      <AvailabilityModal 
+        isOpen={isAvailabilityOpen} 
+        onClose={() => setIsAvailabilityOpen(false)} 
+      />
+    </>
   );
 }
