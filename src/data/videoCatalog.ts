@@ -135,7 +135,7 @@ export const VIDEO_CATALOG: VideoItem[] = [
   },
   {
     id: 'arm-drag-series',
-    title: 'Arm Drag Series',
+    title: 'Arm Drag',
     category: 'Setups and Finishes',
     instructor: 'CJ Composto',
     instructorRole: 'UPenn D1 • 3x All-American • PRTC',
