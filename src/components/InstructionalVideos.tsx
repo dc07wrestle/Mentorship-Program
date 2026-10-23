@@ -48,11 +48,11 @@ export default function InstructionalVideos() {
     : false;
 
   const isPlayingPortrait = playingVideo
-    ? playingVideo.aspectRatio === 'portrait' ||
-      playingVideo.promotion?.youtubeUrl?.includes('/shorts/') ||
-      playingVideo.thumbnail.includes('shuck-by') ||
-      playingVideo.thumbnail.includes('arm-drag') ||
-      playingVideo.thumbnail.includes('shin-whizzer')
+    ? playingVideo.videoOrientation === 'portrait' ||
+      (!playingVideo.videoOrientation && (
+        playingVideo.thumbnail.includes('arm-drag') ||
+        playingVideo.thumbnail.includes('shin-whizzer')
+      ))
     : false;
 
   const filteredVideos = VIDEO_CATALOG.filter((video) => {
@@ -826,30 +826,30 @@ export default function InstructionalVideos() {
       {/* Direct YouTube Video Access Modal (Embedded Player) */}
       {playingVideo && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+          className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 bg-black/90 backdrop-blur-md"
           onClick={() => setPlayingVideo(null)}
         >
           <div
-            className={`bg-gray-950 text-white rounded-3xl ${
+            className={`bg-gray-950 text-white rounded-none sm:rounded-3xl ${
               isPlayingPortrait ? 'max-w-md sm:max-w-lg' : 'max-w-4xl'
-            } w-full overflow-hidden shadow-2xl border border-gray-800 flex flex-col max-h-[92vh]`}
+            } w-full overflow-hidden shadow-2xl border-0 sm:border sm:border-gray-800 flex flex-col h-full sm:h-auto sm:max-h-[92vh]`}
             onClick={(e) => e.stopPropagation()}
           >
                 {/* Player Top Bar */}
-                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-800 bg-gray-900/90">
-                  <div className="flex items-center gap-3">
-                    <span className="bg-emerald-600 text-white text-xs font-black uppercase tracking-wider px-2.5 py-1 rounded flex items-center gap-1.5 shadow">
-                      <Sparkles className="w-3.5 h-3.5 text-emerald-200" />
+                <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-800 bg-gray-900/95 sticky top-0 z-20">
+                  <div className="flex items-center gap-2 sm:gap-3 min-w-0 pr-2">
+                    <span className="bg-emerald-600 text-white text-[10px] sm:text-xs font-black uppercase tracking-wider px-2 sm:px-2.5 py-0.5 sm:py-1 rounded flex items-center gap-1 shadow shrink-0">
+                      <Sparkles className="w-3 h-3 text-emerald-200" />
                       <span>{playingVideo.promotion?.badge || 'FREE THIS MONTH'}</span>
                     </span>
-                    <h3 className="font-bold text-white text-sm md:text-base truncate max-w-sm md:max-w-lg">
+                    <h3 className="font-bold text-white text-xs sm:text-base truncate">
                       {playingVideo.title} • {playingVideo.instructor}
                     </h3>
                   </div>
                   <button
                     type="button"
                     onClick={() => setPlayingVideo(null)}
-                    className="text-gray-400 hover:text-white bg-gray-800 hover:bg-gray-700 w-8 h-8 rounded-full flex items-center justify-center font-bold text-base transition-colors cursor-pointer"
+                    className="text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 w-8 h-8 rounded-full flex items-center justify-center font-bold text-base transition-colors cursor-pointer shrink-0"
                     aria-label="Close video player"
                   >
                     ✕
@@ -859,36 +859,38 @@ export default function InstructionalVideos() {
                 {/* Embedded YouTube Player */}
                 <div
                   className={`relative ${
-                    isPlayingPortrait ? 'aspect-[9/16] max-h-[66vh] mx-auto' : 'aspect-video'
-                  } bg-black w-full overflow-hidden`}
+                    isPlayingPortrait 
+                      ? 'aspect-[9/16] max-h-[55vh] sm:max-h-[66vh] mx-auto' 
+                      : 'aspect-video w-full'
+                  } bg-black w-full overflow-hidden shrink-0 flex items-center justify-center`}
                 >
                   <iframe
-                    src={`${playingVideo.promotion?.embedUrl || 'https://www.youtube.com/embed/ArY1nlwN9Vc'}?autoplay=1&rel=0`}
+                    src={`${playingVideo.promotion?.embedUrl || 'https://www.youtube.com/embed/ArY1nlwN9Vc'}?autoplay=1&rel=0&playsinline=1`}
                     title={`${playingVideo.title} - ${playingVideo.instructor}`}
                     className="w-full h-full border-0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                     allowFullScreen
                   />
                 </div>
 
             {/* Video Details & Promotion Notice */}
-            <div className="p-6 md:p-8 overflow-y-auto space-y-6">
-              <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+            <div className="p-4 sm:p-6 md:p-8 overflow-y-auto space-y-4 sm:space-y-6">
+              <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 sm:gap-4">
                 <div>
                   <div className="text-xs font-bold text-red-400 mb-1">
                     {playingVideo.instructor} • {playingVideo.instructorRole}
                   </div>
-                  <h2 className="text-2xl font-bold text-white font-heading">
+                  <h2 className="text-xl sm:text-2xl font-bold text-white font-heading">
                     {playingVideo.title}
                   </h2>
-                  <p className="text-sm text-gray-300 mt-2 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-gray-300 mt-1.5 leading-relaxed">
                     {playingVideo.description}
                   </p>
                 </div>
-                <div className="shrink-0 bg-emerald-950/80 border border-emerald-700/60 rounded-2xl p-4 text-left md:text-right">
-                  <div className="text-[11px] font-extrabold uppercase text-emerald-400 tracking-wider">Limited-Time Promotion</div>
-                  <div className="text-xl font-black text-white">100% Free Access</div>
-                  <div className="text-xs text-gray-400 mt-1">Free until Nov 14, 2026 at 11:59 PM ET</div>
+                <div className="shrink-0 bg-emerald-950/80 border border-emerald-700/60 rounded-xl sm:rounded-2xl p-3 sm:p-4 text-left md:text-right">
+                  <div className="text-[10px] sm:text-[11px] font-extrabold uppercase text-emerald-400 tracking-wider">Limited-Time Promotion</div>
+                  <div className="text-lg sm:text-xl font-black text-white">100% Free Access</div>
+                  <div className="text-[11px] text-gray-400 mt-0.5">Free until Nov 14, 2026 at 11:59 PM ET</div>
                 </div>
               </div>
 

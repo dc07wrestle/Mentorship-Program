@@ -41,6 +41,7 @@ export interface VideoItem {
   stripePaymentLink: string;
   promotion?: VideoPromotion;
   aspectRatio?: 'portrait' | 'landscape';
+  videoOrientation?: 'landscape' | 'portrait';
   status?: 'available' | 'coming-soon';
 }
 
@@ -132,6 +133,7 @@ export const VIDEO_CATALOG: VideoItem[] = [
       embedUrl: 'https://www.youtube.com/embed/ArY1nlwN9Vc',
     },
     aspectRatio: 'portrait',
+    videoOrientation: 'landscape',
   },
   {
     id: 'arm-drag-series',
@@ -166,6 +168,7 @@ export const VIDEO_CATALOG: VideoItem[] = [
       embedUrl: 'https://www.youtube.com/embed/o7JqC9qxegA',
     },
     aspectRatio: 'portrait',
+    videoOrientation: 'portrait',
   },
   {
     id: 'shin-whizzer-finish',
