@@ -21,6 +21,7 @@ export default function Mentors() {
       major: "Economics Major",
       achievements: [
         "Izzy Style, IL Alumni",
+        "U23 All-American",
         "2x State Champion",
         "Fargo All-American",
         "Interned coaching youth athletes"
