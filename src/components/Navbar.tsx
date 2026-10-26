@@ -11,7 +11,7 @@ export default function Navbar() {
 
   const isVideosPage = location.pathname.startsWith('/videos') || location.pathname.startsWith('/academy');
 
-  const email = "dc07wrestle@gmail.com";
+  const email = "matmentorspenn@gmail.com";
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(email);

@@ -73,7 +73,7 @@ export default function HowItWorks() {
             Choose Your Plan
           </a>
           <p className="text-sm text-gray-500">
-            Have questions? <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dc07wrestle@gmail.com&su=Inquiry from Mat Mentors Website" target="_blank" rel="noopener noreferrer" className="text-brand-red font-bold hover:underline">Contact us</a>
+            Have questions? <a href="https://mail.google.com/mail/?view=cm&fs=1&to=matmentorspenn@gmail.com&su=Inquiry from Mat Mentors Website" target="_blank" rel="noopener noreferrer" className="text-brand-red font-bold hover:underline">Contact us</a>
           </p>
         </div>
       </div>

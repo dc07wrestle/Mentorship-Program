@@ -105,7 +105,7 @@ export default function Mentors() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          Have a specific request for a mentor? Email us at <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dc07wrestle@gmail.com&su=Mentor Request - Mat Mentors" target="_blank" rel="noopener noreferrer" className="text-brand-red font-bold hover:underline">dc07wrestle@gmail.com</a>
+          Have a specific request for a mentor? Email us at <a href="https://mail.google.com/mail/?view=cm&fs=1&to=matmentorspenn@gmail.com&su=Mentor Request - Mat Mentors" target="_blank" rel="noopener noreferrer" className="text-brand-red font-bold hover:underline">matmentorspenn@gmail.com</a>
         </motion.p>
       </div>
     </section>

@@ -649,12 +649,12 @@ export default function InstructionalVideos() {
             <div className="text-xs md:text-sm text-gray-700 leading-relaxed">
               <strong>Need help with your purchase or link?</strong> All video purchases are backed by Mat Mentors. If you ever misplace your link or need help, contact Davis and Deven at{' '}
               <a
-                href="https://mail.google.com/mail/?view=cm&fs=1&to=dc07wrestle@gmail.com&su=Instructional Videos Access Question"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=matmentorspenn@gmail.com&su=Instructional Videos Access Question"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-brand-red font-bold hover:underline"
               >
-                dc07wrestle@gmail.com
+                matmentorspenn@gmail.com
               </a>{' '}
               and we'll resend it right away.
             </div>
@@ -791,7 +791,7 @@ export default function InstructionalVideos() {
                   </button>
                 ) : previewVideo.status === 'coming-soon' ? (
                   <a
-                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=dc07wrestle@gmail.com&su=Notify Me When Released: ${encodeURIComponent(previewVideo.title)}`}
+                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=matmentorspenn@gmail.com&su=Notify Me When Released: ${encodeURIComponent(previewVideo.title)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 py-3.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-bold flex items-center justify-center gap-2 text-sm shadow-md"
