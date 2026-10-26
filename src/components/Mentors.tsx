@@ -26,7 +26,7 @@ export default function Mentors() {
         "Fargo All-American",
         "Interned coaching youth athletes"
       ],
-      gpa: "3.6 GPA"
+      gpa: "3.8 GPA"
     }
   ];
 
