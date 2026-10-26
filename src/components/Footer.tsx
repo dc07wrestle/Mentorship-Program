@@ -21,7 +21,9 @@ export default function Footer() {
         
         <div className="mt-12 text-center text-sm border-t border-gray-800 pt-8">
           <p>&copy; {new Date().getFullYear()} Mat Mentors. All rights reserved.</p>
-          <p className="mt-2 text-xs text-gray-500">Not officially affiliated with the University of Pennsylvania.</p>
+          <p className="mt-2 text-xs text-gray-500">
+            Both mentors are SafeSport certified. Not officially affiliated with the University of Pennsylvania.
+          </p>
           <p className="mt-4 text-xs text-gray-600">Made with ❤️ for the wrestling community.</p>
         </div>
       </div>

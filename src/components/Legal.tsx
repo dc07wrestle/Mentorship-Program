@@ -29,11 +29,15 @@ export default function Legal() {
                 <p>Mat Mentors provides 1-on-1 virtual mentorship sessions for student-athletes, focusing on wrestling development, film analysis, and academic guidance.</p>
               </section>
               <section>
-                <h2 className="text-xl font-bold text-brand-blue mb-3">3. Disclaimer</h2>
+                <h2 className="text-xl font-bold text-brand-blue mb-3">3. Athlete Safety & SafeSport Certification</h2>
+                <p>The safety and well-being of student-athletes is our highest priority. Both mentors are SafeSport certified and comply with all applicable athlete protection guidelines and safety standards.</p>
+              </section>
+              <section>
+                <h2 className="text-xl font-bold text-brand-blue mb-3">4. Disclaimer</h2>
                 <p>Mentorship sessions are for educational and guidance purposes only. Mat Mentors does not guarantee specific performance outcomes and is not responsible for injuries or results arising from training or advice.</p>
               </section>
               <section>
-                <h2 className="text-xl font-bold text-brand-blue mb-3">4. User Responsibilities</h2>
+                <h2 className="text-xl font-bold text-brand-blue mb-3">5. User Responsibilities</h2>
                 <p>Users are responsible for providing accurate information and maintaining a respectful environment during mentorship sessions.</p>
               </section>
             </div>

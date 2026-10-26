@@ -178,6 +178,10 @@ export default function Pricing() {
           </p>
           <div className="mt-8 pt-6 border-t border-gray-100 text-[10px] text-gray-400 text-center space-y-2">
             <p>
+              <span className="font-bold uppercase tracking-widest text-emerald-600 block mb-1">Athlete Safety & Standards</span>
+              Both mentors are SafeSport certified and background-checked to ensure a safe, professional, and positive learning environment for all K-12 student-athletes.
+            </p>
+            <p>
               <span className="font-bold uppercase tracking-widest text-gray-500 block mb-1">Refund Policy</span>
               Refunds are available within 24 hours after the first session. After that, all sales are final. Sessions must be canceled or rescheduled at least 24 hours in advance.
             </p>
