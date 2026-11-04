@@ -44,6 +44,7 @@ export default function InstructionalVideos() {
       previewVideo.thumbnail.includes('shuck-by') ||
       previewVideo.thumbnail.includes('arm-drag') ||
       previewVideo.thumbnail.includes('shin-whizzer') ||
+      previewVideo.thumbnail.includes('ankle-pick') ||
       previewVideo.promotion?.youtubeUrl?.includes('/shorts/')
     : false;
 
@@ -51,7 +52,8 @@ export default function InstructionalVideos() {
     ? playingVideo.videoOrientation === 'portrait' ||
       (!playingVideo.videoOrientation && (
         playingVideo.thumbnail.includes('arm-drag') ||
-        playingVideo.thumbnail.includes('shin-whizzer')
+        playingVideo.thumbnail.includes('shin-whizzer') ||
+        playingVideo.thumbnail.includes('ankle-pick')
       ))
     : false;
 
@@ -347,6 +349,7 @@ export default function InstructionalVideos() {
                     video.thumbnail.includes('shuck-by') ||
                     video.thumbnail.includes('arm-drag') ||
                     video.thumbnail.includes('shin-whizzer') ||
+                    video.thumbnail.includes('ankle-pick') ||
                     video.promotion?.youtubeUrl?.includes('/shorts/');
 
                   return (

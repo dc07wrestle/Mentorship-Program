@@ -206,6 +206,41 @@ export const VIDEO_CATALOG: VideoItem[] = [
     aspectRatio: 'portrait',
     videoOrientation: 'portrait',
   },
+  {
+    id: 'two-on-one-ankle-pick',
+    title: 'Two on One Ankle Pick',
+    category: 'Setups and Finishes',
+    instructor: 'Deven Casey',
+    instructorRole: 'UPenn D1 • U23 All-American • 2x State Champion',
+    duration: '1:01',
+    price: '$3.99',
+    description:
+      'Learn how to use a 2-on-1 tie to grab your opponent’s far ankle.',
+    keyPoints: [
+      'Establishing heavy control and leverage with the 2-on-1 (Russian tie)',
+      'Timing the level change and attacking the opponent’s far ankle',
+      'Driving through the position to complete a high-percentage takedown',
+    ],
+    thumbnail: '/two-on-one-ankle-pick.jpg',
+    badge: 'FREE THIS MONTH',
+    status: 'active',
+    stripePaymentLink:
+      (import.meta as any).env?.VITE_STRIPE_VIDEO_ANKLE_PICK || '',
+    promotion: {
+      enabled: true,
+      startDate: '2026-10-14T00:00:00-04:00',
+      endDate: '2026-11-14T23:59:59-05:00',
+      badge: 'FREE THIS MONTH',
+      promotionalPriceLabel: 'FREE FOR A LIMITED TIME',
+      buttonLabel: 'WATCH FREE NOW',
+      originalPrice: '$3.99',
+      youtubeVideoId: '4lCWishM8Xk',
+      youtubeUrl: 'https://youtube.com/shorts/4lCWishM8Xk?feature=share',
+      embedUrl: 'https://www.youtube.com/embed/4lCWishM8Xk',
+    },
+    aspectRatio: 'portrait',
+    videoOrientation: 'portrait',
+  },
 ];
 
 /**
