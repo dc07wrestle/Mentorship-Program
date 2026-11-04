@@ -151,12 +151,13 @@ export const VIDEO_CATALOG: VideoItem[] = [
       'Seamless level changes straight into high single, double leg, or go-behind finishes',
     ],
     thumbnail: '/arm-drag-series.jpg',
-    badge: 'FREE THIS MONTH',
-    status: 'active',
+    badge: 'Featured Release',
+    status: 'available',
     stripePaymentLink:
-      (import.meta as any).env?.VITE_STRIPE_VIDEO_ARM_DRAG || '',
+      (import.meta as any).env?.VITE_STRIPE_VIDEO_ARM_DRAG ||
+      'https://buy.stripe.com/eVqdRa6Bz8I841q2dyeME09',
     promotion: {
-      enabled: true,
+      enabled: false,
       startDate: '2026-10-14T00:00:00-04:00',
       endDate: '2026-11-14T23:59:59-05:00',
       badge: 'FREE THIS MONTH',
