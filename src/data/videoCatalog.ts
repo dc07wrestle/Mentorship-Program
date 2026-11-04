@@ -121,7 +121,7 @@ export const VIDEO_CATALOG: VideoItem[] = [
       (import.meta as any).env?.VITE_STRIPE_VIDEO_SWEEP_SINGLE ||
       'https://buy.stripe.com/dRmbJ2gc9e2s1Ti2dyeME07',
     promotion: {
-      enabled: true,
+      enabled: false,
       startDate: '2026-10-14T00:00:00-04:00',
       endDate: '2026-11-14T23:59:59-05:00', // Nov 14, 2026 11:59 PM Eastern Time
       badge: 'FREE THIS MONTH',
