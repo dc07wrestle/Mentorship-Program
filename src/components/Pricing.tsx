@@ -183,7 +183,7 @@ export default function Pricing() {
             </p>
             <p>
               <span className="font-bold uppercase tracking-widest text-gray-500 block mb-1">Refund Policy</span>
-              Refunds are available within 24 hours after the first session. After that, all sales are final. Sessions must be canceled or rescheduled at least 24 hours in advance.
+              Refunds are only available within 24 hours of purchasing a session. After that 24-hour point, all sales are final and cannot be refunded. Sessions must be canceled or rescheduled at least 24 hours in advance.
             </p>
             <p>
               <span className="font-bold uppercase tracking-widest text-gray-500 block mb-1">Disclaimer</span>
@@ -270,7 +270,7 @@ export default function Pricing() {
                 You'll receive a confirmation email with your session link after booking.
               </p>
               <p className={`text-[9px] text-center italic mt-1 ${plan.highlight ? 'text-blue-300' : 'text-gray-400'}`}>
-                Refunds available within 24h of first session.
+                Refunds available within 24h of purchase only.
               </p>
             </div>
           </div>

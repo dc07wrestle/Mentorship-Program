@@ -74,7 +74,7 @@ export default function Legal() {
               </section>
               <section>
                 <h2 className="text-xl font-bold text-brand-blue mb-3">Refund Eligibility</h2>
-                <p>Refunds are available within 24 hours after the first session. After that, all sales are final. Missed sessions or late cancellations (less than 24 hours notice) are non-refundable. If a mentor needs to cancel, a full refund or a rescheduled session will be provided.</p>
+                <p>Refunds are strictly available only within the 24-hour timeslot of purchasing a session or package. Once that 24-hour window from the time of purchase has passed, all sales are final and cannot be refunded. Missed sessions or late cancellations (less than 24 hours notice) are non-refundable. If a mentor needs to cancel, a full refund or a rescheduled session will be provided.</p>
               </section>
               <section>
                 <h2 className="text-xl font-bold text-brand-blue mb-3">3. Session Packages</h2>
