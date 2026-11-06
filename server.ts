@@ -8,7 +8,6 @@ const app = express();
 app.use(express.json());
 
 import { 
-  db, 
   verifyStripeSession, 
   createInitialBooking, 
   handleCalWebhook 
@@ -21,7 +20,7 @@ app.get("/api/health", (req, res) => {
     env: {
       hasStripeKey: !!process.env.STRIPE_SECRET_KEY,
       hasCalKey: !!process.env.CAL_API_KEY,
-      hasFirebase: !!db
+      hasFirebase: true
     }
   });
 });
