@@ -1,0 +1,50 @@
+{
+  "entities": {
+    "Purchase": {
+      "title": "Purchase",
+      "description": "A verified Stripe package purchase",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "customerName": { "type": "string" },
+        "packageId": { "type": "string" },
+        "totalSessions": { "type": "number" },
+        "initialBookingStatus": { "type": "string", "enum": ["unbooked", "booked", "cancelled"] },
+        "initialBookingUid": { "type": "string" },
+        "initialBookingTime": { "type": "string" },
+        "stripePaymentIntentId": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "customerEmail", "packageId", "totalSessions", "initialBookingStatus", "createdAt"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "A scheduled mentorship session booked through Cal.com",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "purchaseId": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "customerName": { "type": "string" },
+        "startTime": { "type": "string" },
+        "endTime": { "type": "string" },
+        "status": { "type": "string", "enum": ["ACCEPTED", "CANCELLED", "RESCHEDULED"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "purchaseId", "customerEmail", "startTime", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/purchases/{purchaseId}": {
+      "schema": "Purchase",
+      "description": "Collection of verified Stripe purchases and their booking status"
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Collection of booked Cal.com sessions"
+    }
+  }
+}

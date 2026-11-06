@@ -42,7 +42,7 @@ export interface VideoItem {
   promotion?: VideoPromotion;
   aspectRatio?: 'portrait' | 'landscape';
   videoOrientation?: 'landscape' | 'portrait';
-  status?: 'available' | 'coming-soon';
+  status?: 'available' | 'coming-soon' | 'active';
 }
 
 export type VideoCategory =

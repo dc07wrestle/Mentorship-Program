@@ -7,5 +7,5 @@ esbuild.build({
   target: 'node18',
   outfile: 'dist/server.cjs',
   format: 'cjs',
-  external: ['express', 'resend', 'dotenv'],
+  external: ['express', 'resend', 'dotenv', 'stripe', 'firebase', 'firebase/app', 'firebase/firestore'],
 }).catch(() => process.exit(1));

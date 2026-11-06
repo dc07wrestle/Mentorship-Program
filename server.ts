@@ -2,15 +2,17 @@ import express from "express";
 import dotenv from "dotenv";
 import path from "path";
 import fs from "fs";
-import { fileURLToPath } from 'url';
-
 dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(express.json());
+
+import { 
+  db, 
+  verifyStripeSession, 
+  createInitialBooking, 
+  handleCalWebhook 
+} from "./src/lib/serverBookingService";
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
@@ -18,7 +20,8 @@ app.get("/api/health", (req, res) => {
     status: "ok", 
     env: {
       hasStripeKey: !!process.env.STRIPE_SECRET_KEY,
-      hasCalKey: !!process.env.CAL_API_KEY
+      hasCalKey: !!process.env.CAL_API_KEY,
+      hasFirebase: !!db
     }
   });
 });
@@ -72,7 +75,77 @@ app.get("/api/availability", async (req, res) => {
   }
 });
 
-// API routes
+// 1. Verify Stripe Purchase Session & Fetch Booking Status
+app.post("/api/bookings/verify-session", async (req, res) => {
+  try {
+    const { sessionId } = req.body;
+    if (!sessionId) {
+      return res.status(400).json({
+        status: "error",
+        message: "Missing Stripe checkout session ID."
+      });
+    }
+
+    const purchase = await verifyStripeSession(sessionId);
+    return res.json({
+      status: "success",
+      purchase
+    });
+  } catch (error: any) {
+    console.error("[VERIFY_SESSION_ERROR]", error?.message || error);
+    return res.status(400).json({
+      status: "error",
+      message: error?.message || "Unable to verify purchase."
+    });
+  }
+});
+
+// 2. In-App Booking Proxy: Book Initial Session Atomically
+app.post("/api/bookings/create-initial", async (req, res) => {
+  try {
+    const { sessionId, slotTime, attendeeName, attendeeEmail, wrestlerNotes, timeZone } = req.body;
+    
+    if (!sessionId || !slotTime) {
+      return res.status(400).json({
+        status: "error",
+        message: "Session ID and slot time are required."
+      });
+    }
+
+    const result = await createInitialBooking({
+      sessionId,
+      slotTime,
+      attendeeName,
+      attendeeEmail,
+      wrestlerNotes,
+      timeZone: timeZone || "America/New_York"
+    });
+
+    return res.json({
+      status: "success",
+      purchase: result.purchase,
+      booking: result.booking
+    });
+  } catch (error: any) {
+    console.error("[CREATE_INITIAL_BOOKING_ERROR]", error?.message || error);
+    return res.status(400).json({
+      status: "error",
+      message: error?.message || "Failed to schedule initial session."
+    });
+  }
+});
+
+// 3. Cal.com Webhook Endpoint (Cancellations, Rescheduling)
+app.post("/api/webhooks/cal", async (req, res) => {
+  try {
+    const signature = req.headers["x-cal-signature-256"] as string | undefined;
+    await handleCalWebhook(req.body, signature);
+    return res.json({ status: "received" });
+  } catch (error: any) {
+    console.error("[CAL_WEBHOOK_ERROR]", error?.message || error);
+    return res.status(500).json({ error: "Webhook handling error" });
+  }
+});
 // Vite middleware for development / Static serving for production
 async function startServer() {
   if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
