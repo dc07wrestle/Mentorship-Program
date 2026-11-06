@@ -68,9 +68,15 @@ export default function Success() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionId: sessionIdToVerify })
       });
-      const data = await res.json();
-      if (!res.ok || data.status !== 'success') {
-        throw new Error(data.message || 'Could not verify checkout session.');
+      const text = await res.text();
+      let data: any = null;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error('Server returned an unexpected response. Please refresh or contact support.');
+      }
+      if (!res.ok || data?.status !== 'success') {
+        throw new Error(data?.message || 'Could not verify checkout session.');
       }
       setPurchase(data.purchase);
       if (data.purchase?.customerName && !attendeeName) {
@@ -152,9 +158,15 @@ export default function Success() {
         })
       });
 
-      const data = await res.json();
-      if (!res.ok || data.status !== 'success') {
-        throw new Error(data.message || 'Unable to schedule initial session.');
+      const text = await res.text();
+      let data: any = null;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error('Server returned an unexpected response. Please try again.');
+      }
+      if (!res.ok || data?.status !== 'success') {
+        throw new Error(data?.message || 'Unable to schedule initial session.');
       }
 
       // Smoothly update local state with confirmed purchase

@@ -12,7 +12,7 @@ import {
   verifyStripeSession, 
   createInitialBooking, 
   handleCalWebhook 
-} from "./src/lib/serverBookingService";
+} from "./src/lib/serverBookingService.ts";
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {

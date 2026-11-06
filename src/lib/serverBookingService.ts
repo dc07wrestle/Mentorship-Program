@@ -11,14 +11,24 @@ import fs from 'fs';
 import path from 'path';
 
 // Load Firebase configuration
-let firebaseConfig: any = null;
+const DEFAULT_FIREBASE_CONFIG = {
+  projectId: "gen-lang-client-0902787459",
+  appId: "1:833294441273:web:844a211694c2eb71cc66e8",
+  apiKey: "AIzaSyBVXhxNRl2hLE0huqT216oOd93ciVCModY",
+  authDomain: "gen-lang-client-0902787459.firebaseapp.com",
+  firestoreDatabaseId: "ai-studio-matmentors-0dd0d7b9-9716-4f18-891e-c9df84a2a7a4",
+  storageBucket: "gen-lang-client-0902787459.firebasestorage.app",
+  messagingSenderId: "833294441273"
+};
+
+let firebaseConfig: any = DEFAULT_FIREBASE_CONFIG;
 try {
   const configPath = path.join(process.cwd(), 'firebase-applet-config.json');
   if (fs.existsSync(configPath)) {
-    firebaseConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    firebaseConfig = { ...DEFAULT_FIREBASE_CONFIG, ...JSON.parse(fs.readFileSync(configPath, 'utf8')) };
   }
 } catch (e) {
-  console.error('[FIREBASE_CONFIG_LOAD_ERROR]', e);
+  // Use DEFAULT_FIREBASE_CONFIG
 }
 
 const app = getApps().length === 0 && firebaseConfig 
