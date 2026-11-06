@@ -146,33 +146,39 @@ app.post("/api/webhooks/cal", async (req, res) => {
   }
 });
 // Vite middleware for development / Static serving for production
+// Vite middleware for development / Static serving for local production
 async function startServer() {
-  if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
-    // Dynamically import Vite only in development to avoid crashes on Vercel
-    const { createServer: createViteServer } = await import("vite");
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
-    });
-    app.use(vite.middlewares);
-  } else if (!process.env.VERCEL) {
-    // This part only runs in local production mode, not on Vercel
+  if (process.env.NODE_ENV !== "production") {
+    try {
+      const vitePkg = "vite";
+      const { createServer: createViteServer } = await import(/* @vite-ignore */ vitePkg);
+      const vite = await createViteServer({
+        server: { middlewareMode: true },
+        appType: "spa",
+      });
+      app.use(vite.middlewares);
+    } catch (e) {
+      console.warn("[VITE_MIDDLEWARE_SKIPPED]", e);
+    }
+  } else {
     const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
-    });
+    if (fs.existsSync(distPath)) {
+      app.use(express.static(distPath));
+      app.get('*', (req, res) => {
+        res.sendFile(path.join(distPath, 'index.html'));
+      });
+    }
   }
 
-  // Only listen if not running as a Vercel function
-  if (!process.env.VERCEL) {
-    const PORT = 3000;
-    app.listen(PORT, "0.0.0.0", () => {
-      console.log(`[SERVER] Mat Mentors server started on port ${PORT}`);
-    });
-  }
+  const PORT = 3000;
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`[SERVER] Mat Mentors server started on port ${PORT}`);
+  });
 }
 
-startServer();
+// Only start the HTTP listener when NOT running in a Vercel serverless lambda
+if (!process.env.VERCEL) {
+  startServer();
+}
 
 export default app;
