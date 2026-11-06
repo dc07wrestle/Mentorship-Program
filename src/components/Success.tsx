@@ -53,6 +53,7 @@ export default function Success() {
   // Booking Form State
   const [attendeeName, setAttendeeName] = useState<string>('');
   const [attendeeEmail, setAttendeeEmail] = useState<string>('');
+  const [mentorPreference, setMentorPreference] = useState<'either' | 'Davis' | 'Deven'>('either');
   const [wrestlerNotes, setWrestlerNotes] = useState<string>('');
   const [isSubmittingBooking, setIsSubmittingBooking] = useState<boolean>(false);
   const [bookingError, setBookingError] = useState<string | null>(null);
@@ -145,6 +146,10 @@ export default function Success() {
     setBookingError(null);
 
     try {
+      const combinedNotes = mentorPreference !== 'either'
+        ? `[Preferred Mentor: ${mentorPreference === 'Davis' ? 'Davis Motyka' : 'Deven Casey'}]${wrestlerNotes ? ` ${wrestlerNotes}` : ''}`
+        : wrestlerNotes;
+
       const res = await fetch('/api/bookings/create-initial', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -153,7 +158,7 @@ export default function Success() {
           slotTime: selectedSlotTime,
           attendeeName: attendeeName || purchase.customerName,
           attendeeEmail: attendeeEmail || purchase.customerEmail,
-          wrestlerNotes,
+          wrestlerNotes: combinedNotes,
           timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/New_York'
         })
       });
@@ -418,6 +423,17 @@ export default function Success() {
                     {purchase.id.slice(0, 24)}...
                   </p>
                 </div>
+
+                {purchase.wrestlerNotes && (
+                  <div className="sm:col-span-2 pt-2 border-t border-gray-200/60">
+                    <span className="text-xs font-bold uppercase tracking-wider text-gray-400 block mb-1">
+                      Mentor Preference & Athlete Notes
+                    </span>
+                    <p className="text-xs text-gray-700 bg-white p-2.5 rounded-lg border border-gray-200 font-medium">
+                      {purchase.wrestlerNotes}
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Security Gate Notice */}
@@ -658,16 +674,66 @@ export default function Success() {
                       />
                     </div>
 
+                    {/* Mentor Preference (Optional) */}
+                    <div className="bg-blue-50/60 border border-blue-100 rounded-xl p-3">
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="block text-[11px] font-bold text-brand-blue uppercase tracking-wider">
+                          Mentor Preference <span className="text-gray-400 font-normal lowercase">(optional)</span>
+                        </label>
+                        <span className="text-[10px] font-semibold text-brand-blue/80">Davis or Deven</span>
+                      </div>
+                      
+                      <div className="grid grid-cols-3 gap-1.5 mb-2">
+                        <button
+                          type="button"
+                          onClick={() => setMentorPreference('either')}
+                          className={`py-1.5 px-2 rounded-lg text-[11px] font-bold transition-all text-center border cursor-pointer ${
+                            mentorPreference === 'either'
+                              ? 'bg-brand-blue text-white border-brand-blue shadow-xs'
+                              : 'bg-white border-gray-200 text-gray-700 hover:border-gray-300'
+                          }`}
+                        >
+                          First Available
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setMentorPreference('Davis')}
+                          className={`py-1.5 px-2 rounded-lg text-[11px] font-bold transition-all text-center border cursor-pointer ${
+                            mentorPreference === 'Davis'
+                              ? 'bg-brand-blue text-white border-brand-blue shadow-xs'
+                              : 'bg-white border-gray-200 text-gray-700 hover:border-gray-300'
+                          }`}
+                        >
+                          Davis Motyka
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setMentorPreference('Deven')}
+                          className={`py-1.5 px-2 rounded-lg text-[11px] font-bold transition-all text-center border cursor-pointer ${
+                            mentorPreference === 'Deven'
+                              ? 'bg-brand-blue text-white border-brand-blue shadow-xs'
+                              : 'bg-white border-gray-200 text-gray-700 hover:border-gray-300'
+                          }`}
+                        >
+                          Deven Casey
+                        </button>
+                      </div>
+
+                      <p className="text-[10px] text-gray-500 leading-snug">
+                        Have a preference between Davis or Deven? Select a mentor above, or leave on &ldquo;First Available&rdquo; to match with whichever mentor is open first.
+                      </p>
+                    </div>
+
                     <div>
                       <label className="block text-[11px] font-bold text-gray-600 uppercase tracking-wider mb-1">
-                        Wrestler Notes (Grade / Weight / Focus)
+                        Wrestler Notes & Goals <span className="text-gray-400 font-normal lowercase">(optional)</span>
                       </label>
                       <textarea
                         value={wrestlerNotes}
                         onChange={(e) => setWrestlerNotes(e.target.value)}
                         rows={2}
-                        placeholder="Optional: high single defense, mindset, match film questions..."
-                        className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs focus:ring-2 focus:ring-brand-blue focus:outline-none"
+                        placeholder="Optional: match film review, specific positions (e.g. single leg defense), upcoming tournaments, weight/grade..."
+                        className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs focus:ring-2 focus:ring-brand-blue focus:outline-none placeholder:text-gray-400"
                       />
                     </div>
 
