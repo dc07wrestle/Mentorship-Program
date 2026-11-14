@@ -187,10 +187,11 @@ export const VIDEO_CATALOG: VideoItem[] = [
       'Counter-scoring sequence to turn defensive scramble into your points',
     ],
     thumbnail: '/shin-whizzer.jpg',
-    badge: 'FREE THIS MONTH',
+    badge: 'Featured Release',
     status: 'active',
     stripePaymentLink:
-      (import.meta as any).env?.VITE_STRIPE_VIDEO_SHIN_WHIZZER || '',
+      (import.meta as any).env?.VITE_STRIPE_VIDEO_SHIN_WHIZZER ||
+      'https://buy.stripe.com/fZu7sM7FD2jK9lK5pKeME0e',
     promotion: {
       enabled: true,
       startDate: '2026-10-14T00:00:00-04:00',
@@ -222,10 +223,11 @@ export const VIDEO_CATALOG: VideoItem[] = [
       'Driving through the position to complete a high-percentage takedown',
     ],
     thumbnail: '/two-on-one-ankle-pick.jpg',
-    badge: 'FREE THIS MONTH',
+    badge: 'Featured Release',
     status: 'active',
     stripePaymentLink:
-      (import.meta as any).env?.VITE_STRIPE_VIDEO_ANKLE_PICK || '',
+      (import.meta as any).env?.VITE_STRIPE_VIDEO_ANKLE_PICK ||
+      'https://buy.stripe.com/7sYaEY2lj3nO69y5pKeME0f',
     promotion: {
       enabled: true,
       startDate: '2026-10-14T00:00:00-04:00',
@@ -237,6 +239,41 @@ export const VIDEO_CATALOG: VideoItem[] = [
       youtubeVideoId: '4lCWishM8Xk',
       youtubeUrl: 'https://youtube.com/shorts/4lCWishM8Xk?feature=share',
       embedUrl: 'https://www.youtube.com/embed/4lCWishM8Xk',
+    },
+    aspectRatio: 'portrait',
+    videoOrientation: 'portrait',
+  },
+  {
+    id: 'underhook-throw-by',
+    title: 'Underhook Throw-By',
+    category: 'Takedowns',
+    instructor: 'Sean Seefeldt',
+    instructorRole: 'Current #13 Ranked 165lb Wrestler in the NCAA',
+    duration: 'Short',
+    price: '$3.99',
+    description:
+      'Use an underhook to create pressure, throw your opponent’s arm by, and step around for the takedown.',
+    keyPoints: [
+      'Digging a strong underhook and winning head and hip position',
+      'Reading your opponent’s pressure and clearing the arm with the throw-by',
+      'Stepping around behind the hips to secure an immediate takedown finish',
+    ],
+    thumbnail: '/underhook-throw-by.jpg',
+    badge: 'New Release',
+    status: 'active',
+    stripePaymentLink:
+      (import.meta as any).env?.VITE_STRIPE_VIDEO_UNDERHOOK_THROW_BY || '',
+    promotion: {
+      enabled: true,
+      startDate: '2026-11-13T00:00:00-05:00',
+      endDate: '2026-11-20T23:59:59-05:00', // Free for 1 week until Nov 20, 2026 11:59 PM ET
+      badge: 'FREE THIS WEEK',
+      promotionalPriceLabel: 'FREE FOR 1 WEEK',
+      buttonLabel: 'WATCH FREE NOW',
+      originalPrice: '$3.99',
+      youtubeVideoId: 'CTATNcJhkiU',
+      youtubeUrl: 'https://youtube.com/shorts/CTATNcJhkiU?feature=share',
+      embedUrl: 'https://www.youtube.com/embed/CTATNcJhkiU',
     },
     aspectRatio: 'portrait',
     videoOrientation: 'portrait',

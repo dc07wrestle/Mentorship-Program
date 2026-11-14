@@ -57,6 +57,23 @@ export default function InstructionalVideos() {
       ))
     : false;
 
+  const formatPromoEndDate = (endDate?: string) => {
+    if (!endDate) return 'Limited-time free offer';
+    try {
+      const d = new Date(endDate);
+      if (isNaN(d.getTime())) return 'Limited-time free offer';
+      const formatted = d.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        timeZone: 'America/New_York',
+      });
+      return `Free until ${formatted} at 11:59 PM ET`;
+    } catch {
+      return 'Limited-time free offer';
+    }
+  };
+
   const filteredVideos = VIDEO_CATALOG.filter((video) => {
     const matchesCategory =
       selectedCategory === 'All' || video.category === selectedCategory;
@@ -732,7 +749,7 @@ export default function InstructionalVideos() {
                       {isVideoPromotionActive(previewVideo) ? (
                         <div className="bg-emerald-600 text-white text-xs font-extrabold px-3 py-1 rounded flex items-center gap-1 shadow">
                           <Sparkles className="w-3.5 h-3.5" />
-                          <span>FREE THIS MONTH</span>
+                          <span>{previewVideo.promotion?.badge || 'FREE THIS MONTH'}</span>
                         </div>
                       ) : previewVideo.status === 'coming-soon' ? (
                         <div className="bg-amber-500 text-white text-xs font-extrabold px-3 py-1 rounded flex items-center gap-1 shadow">
@@ -893,7 +910,7 @@ export default function InstructionalVideos() {
                 <div className="shrink-0 bg-emerald-950/80 border border-emerald-700/60 rounded-xl sm:rounded-2xl p-3 sm:p-4 text-left md:text-right">
                   <div className="text-[10px] sm:text-[11px] font-extrabold uppercase text-emerald-400 tracking-wider">Limited-Time Promotion</div>
                   <div className="text-lg sm:text-xl font-black text-white">100% Free Access</div>
-                  <div className="text-[11px] text-gray-400 mt-0.5">Free until Nov 14, 2026 at 11:59 PM ET</div>
+                  <div className="text-[11px] text-gray-400 mt-0.5">{formatPromoEndDate(playingVideo.promotion?.endDate)}</div>
                 </div>
               </div>
 
