@@ -249,11 +249,28 @@ app.post("/api/bookings/verify-session", async (req, res) => {
           }
 
           const amount = session.amount_total || 0;
+          const itemDesc = session.line_items?.data?.[0]?.description?.toLowerCase() || '';
           let packageId: '3pack' | '5pack' | '10pack' | '15pack' = '3pack';
           let packageName = '3 Session Pack';
           let totalSessions = 3;
 
-          if (amount >= 30000) {
+          if (itemDesc.includes('15')) {
+            packageId = '15pack';
+            packageName = '15 Session Pack';
+            totalSessions = 15;
+          } else if (itemDesc.includes('10')) {
+            packageId = '10pack';
+            packageName = '10 Session Pack';
+            totalSessions = 10;
+          } else if (itemDesc.includes('5')) {
+            packageId = '5pack';
+            packageName = '5 Session Pack';
+            totalSessions = 5;
+          } else if (itemDesc.includes('3')) {
+            packageId = '3pack';
+            packageName = '3 Session Pack';
+            totalSessions = 3;
+          } else if (amount >= 30000) {
             packageId = '15pack';
             packageName = '15 Session Pack';
             totalSessions = 15;
@@ -261,25 +278,10 @@ app.post("/api/bookings/verify-session", async (req, res) => {
             packageId = '10pack';
             packageName = '10 Session Pack';
             totalSessions = 10;
-          } else if (amount >= 10000) {
+          } else if (amount >= 10000 && amount < 17000) {
             packageId = '5pack';
             packageName = '5 Session Pack';
             totalSessions = 5;
-          } else {
-            const itemDesc = session.line_items?.data?.[0]?.description?.toLowerCase() || '';
-            if (itemDesc.includes('15')) {
-              packageId = '15pack';
-              packageName = '15 Session Pack';
-              totalSessions = 15;
-            } else if (itemDesc.includes('10')) {
-              packageId = '10pack';
-              packageName = '10 Session Pack';
-              totalSessions = 10;
-            } else if (itemDesc.includes('5')) {
-              packageId = '5pack';
-              packageName = '5 Session Pack';
-              totalSessions = 5;
-            }
           }
 
           const customerEmail = session.customer_details?.email || session.customer_email || 'athlete@matmentors.pro';

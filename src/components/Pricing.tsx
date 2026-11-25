@@ -1,83 +1,93 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { Check, Calendar } from 'lucide-react';
+import { Check, Calendar, Copy, Tag } from 'lucide-react';
 import AvailabilityModal from './AvailabilityModal';
 
 export default function Pricing() {
   const [isAvailabilityOpen, setIsAvailabilityOpen] = useState(false);
+  const [copiedCode, setCopiedCode] = useState(false);
+
+  const blackFridayEndMs = new Date('2026-11-29T23:59:59-05:00').getTime();
+  const isBlackFridayActive = Date.now() <= blackFridayEndMs;
+
+  const handleCopyCode = () => {
+    navigator.clipboard?.writeText('BF50').catch(() => {});
+    setCopiedCode(true);
+    setTimeout(() => setCopiedCode(false), 2000);
+  };
 
   const plans = [
     {
       id: "3pack",
       title: "3 Session Pack",
-      totalPrice: "60",
-      originalPrice: "90",
-      perSessionPrice: "30",
+      totalPrice: isBlackFridayActive ? "89" : "179",
+      originalPrice: isBlackFridayActive ? "179" : null,
+      perSessionPrice: isBlackFridayActive ? "29.67" : "59.67",
       description: "Perfect for a focused technical tune-up",
       features: [
-        "First session free included",
+        "3 private 1-on-1 mentorship calls",
         "Personalized guidance",
         "Flexible scheduling",
         "Great for targeted improvement"
       ],
       buttonText: "Book 3 Sessions",
-      link: (import.meta as any).env.VITE_STRIPE_LINK_3PACK || "https://buy.stripe.com/9B6cN6e415vW7dCf0keME0a",
+      link: (import.meta as any).env.VITE_STRIPE_LINK_3PACK || "https://buy.stripe.com/9B6bJ2f85gaA7dC7xSeME0i",
       highlight: false
     },
     {
       id: "5pack",
       title: "5 Session Pack",
-      totalPrice: "108",
-      originalPrice: "135",
-      perSessionPrice: "27",
+      totalPrice: isBlackFridayActive ? "139" : "279",
+      originalPrice: isBlackFridayActive ? "279" : null,
+      perSessionPrice: isBlackFridayActive ? "27.80" : "55.80",
       badge: "Most Popular",
       description: "Best for serious athletes who want consistent improvement",
       features: [
-        "First session free included",
-        "Save compared to single sessions",
+        "5 private 1-on-1 mentorship calls",
+        "Save compared to smaller packs",
         "Consistent support",
         "Strong accountability",
         "Track progress over multiple sessions"
       ],
       buttonText: "Book 5 Sessions",
-      link: (import.meta as any).env.VITE_STRIPE_LINK_5PACK || "https://buy.stripe.com/aFadRa5xv6A069y8BWeME02",
+      link: (import.meta as any).env.VITE_STRIPE_LINK_5PACK || "https://buy.stripe.com/00w8wQ6Bz3nO41qf0keME0j",
       highlight: true
     },
     {
       id: "10pack",
       title: "10 Session Pack",
-      totalPrice: "225",
-      originalPrice: "250",
-      perSessionPrice: "25",
+      totalPrice: isBlackFridayActive ? "249" : "499",
+      originalPrice: isBlackFridayActive ? "499" : null,
+      perSessionPrice: isBlackFridayActive ? "24.90" : "49.90",
       description: "Best value for long-term growth on and off the mat",
       features: [
-        "First session free included",
+        "10 private 1-on-1 mentorship calls",
         "Significant long-term savings",
         "Long-term mentorship",
         "Priority scheduling",
         "Built for committed athletes"
       ],
       buttonText: "Book 10 Sessions",
-      link: (import.meta as any).env.VITE_STRIPE_LINK_10PACK || "https://buy.stripe.com/3cIeVe6Bz9Mc55u19ueME0c",
+      link: (import.meta as any).env.VITE_STRIPE_LINK_10PACK || "https://buy.stripe.com/bJe5kEcZX9Mc7dC05qeME0k",
       highlight: false
     },
     {
       id: "15pack",
       title: "15 Session Pack",
-      totalPrice: "322",
-      originalPrice: "345",
-      perSessionPrice: "23",
+      totalPrice: isBlackFridayActive ? "329" : "659",
+      originalPrice: isBlackFridayActive ? "659" : null,
+      perSessionPrice: isBlackFridayActive ? "21.93" : "43.93",
       badge: "Best Value",
       description: "The ultimate commitment to elite performance",
       features: [
-        "First session free included",
+        "15 private 1-on-1 mentorship calls",
         "Maximum savings",
         "Deep mentor relationship",
         "Comprehensive progress tracking",
         "Priority support"
       ],
       buttonText: "Book 15 Sessions",
-      link: (import.meta as any).env.VITE_STRIPE_LINK_15PACK || "https://buy.stripe.com/dRm9AUbVT4rSeG4bO8eME0d",
+      link: (import.meta as any).env.VITE_STRIPE_LINK_15PACK || "https://buy.stripe.com/8x26oIe410bC41q7xSeME0l",
       highlight: false
     }
   ];
@@ -115,12 +125,42 @@ export default function Pricing() {
             viewport={{ once: true }}
             className="flex flex-col items-center gap-3"
           >
-            <div className="inline-block bg-brand-red/10 text-brand-red px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider border border-brand-red/20">
-              Best Value: Save with 5, 10, or 15 session packages
-            </div>
-            <p className="text-brand-red font-bold text-sm animate-pulse">
-              ⚠️ Limited Time: Free first session deal ends December 1st!
-            </p>
+            {isBlackFridayActive ? (
+              <div className="flex flex-col items-center gap-3">
+                <div className="inline-block bg-brand-red text-white px-5 py-1.5 rounded-full text-sm font-extrabold uppercase tracking-wider shadow-md">
+                  Black Friday Sale • ~50% Off All Bundles
+                </div>
+                <div className="bg-red-50 border-2 border-brand-red/30 rounded-2xl px-6 py-3.5 flex flex-col sm:flex-row items-center gap-3 shadow-sm">
+                  <div className="flex items-center gap-2 text-sm font-bold text-gray-800">
+                    <Tag className="w-4 h-4 text-brand-red shrink-0" />
+                    <span>Enter promo code at Stripe checkout:</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleCopyCode}
+                    className="inline-flex items-center gap-2 bg-white hover:bg-gray-50 border-2 border-dashed border-brand-red px-4 py-1.5 rounded-xl font-mono font-black text-brand-red text-base tracking-wider cursor-pointer transition-all shadow-xs"
+                    title="Click to copy promo code BF50"
+                  >
+                    <span>BF50</span>
+                    {copiedCode ? (
+                      <span className="text-xs font-sans font-bold text-emerald-600 flex items-center gap-1">
+                        <Check className="w-3.5 h-3.5" />
+                        Copied
+                      </span>
+                    ) : (
+                      <Copy className="w-3.5 h-3.5 opacity-75" />
+                    )}
+                  </button>
+                </div>
+                <p className="text-brand-red font-bold text-sm animate-pulse">
+                  Ends Sunday, November 29 at Midnight (11:59 PM ET)
+                </p>
+              </div>
+            ) : (
+              <div className="inline-block bg-brand-red/10 text-brand-red px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider border border-brand-red/20">
+                Best Value: Save with 5, 10, or 15 session packages
+              </div>
+            )}
           </motion.div>
         </div>
 
@@ -218,21 +258,25 @@ export default function Pricing() {
                   {plan.title}
                 </h3>
                 <div className="flex items-baseline gap-2 mb-1">
-                  <span className={`text-xl font-bold line-through ${plan.highlight ? 'text-blue-200/60' : 'text-gray-400'}`}>
-                    ${plan.originalPrice}
-                  </span>
+                  {plan.originalPrice && (
+                    <span className={`text-xl font-bold line-through ${plan.highlight ? 'text-blue-200/60' : 'text-gray-400'}`}>
+                      ${plan.originalPrice}
+                    </span>
+                  )}
                   <span className="text-5xl font-extrabold">${plan.totalPrice}</span>
                   <span className={`text-sm font-medium ${plan.highlight ? 'text-blue-200' : 'text-gray-500'}`}>total</span>
                 </div>
-                <p className={`text-sm font-bold mb-4 ${plan.highlight ? 'text-red-300' : 'text-brand-red'}`}>
-                  First session free included
-                </p>
+                {isBlackFridayActive && (
+                  <p className={`text-sm font-bold mb-4 ${plan.highlight ? 'text-red-300' : 'text-brand-red'}`}>
+                    Black Friday Sale — Ends Sunday Midnight
+                  </p>
+                )}
                 <div className={`text-xs font-bold py-1.5 px-3 rounded-lg uppercase tracking-wider inline-block border-2 ${
                   plan.highlight 
                     ? 'bg-white/20 text-white border-white/30' 
                     : 'bg-brand-red/10 text-brand-red border-brand-red/20'
                 }`}>
-                  Valued at ${plan.perSessionPrice}/session
+                  {isBlackFridayActive ? `Sale: $${plan.perSessionPrice}/session` : `$${plan.perSessionPrice}/session`}
                 </div>
                 <p className={`mt-4 text-sm leading-relaxed ${plan.highlight ? 'text-blue-100' : 'text-gray-600'}`}>
                   {plan.description}
@@ -249,9 +293,32 @@ export default function Pricing() {
               </ul>
 
           <div className="space-y-4">
+            {isBlackFridayActive && (
+              <div
+                onClick={handleCopyCode}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleCopyCode();
+                  }
+                }}
+                className={`rounded-xl px-3 py-2 text-center text-xs font-bold border cursor-pointer transition-all flex items-center justify-center gap-1.5 ${
+                  plan.highlight
+                    ? 'bg-white/10 border-white/25 text-white hover:bg-white/15'
+                    : 'bg-red-50 border-brand-red/30 text-brand-red hover:bg-red-100/70'
+                }`}
+              >
+                <Tag className="w-3.5 h-3.5 shrink-0" />
+                <span>
+                  Use code <span className="font-mono font-black underline decoration-dotted">BF50</span> at checkout
+                </span>
+              </div>
+            )}
             <button
               onClick={() => handleCheckout(plan.link)}
-              className={`w-full py-4 rounded-xl font-bold text-center transition-all flex items-center justify-center gap-2 ${
+              className={`w-full py-4 rounded-xl font-bold text-center transition-all flex items-center justify-center gap-2 cursor-pointer ${
                 plan.highlight
                   ? 'bg-brand-red hover:bg-red-700 text-white shadow-lg shadow-red-900/40'
                   : 'bg-brand-blue hover:bg-blue-900 text-white'

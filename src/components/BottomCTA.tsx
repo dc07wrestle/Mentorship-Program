@@ -2,6 +2,8 @@ import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 
 export default function BottomCTA() {
+  const isBlackFridayActive = Date.now() <= new Date('2026-11-29T23:59:59-05:00').getTime();
+
   return (
     <section className="py-24 bg-brand-blue text-white overflow-hidden relative">
       <div className="absolute inset-0 opacity-10">
@@ -35,9 +37,15 @@ export default function BottomCTA() {
               Book Your Session Now
               <ArrowRight className="w-6 h-6" />
             </a>
-            <p className="text-sm text-blue-200 font-medium">
-              Limited weekly slots available.
-            </p>
+            {isBlackFridayActive ? (
+              <p className="text-sm text-red-200 font-bold">
+                Black Friday Sale: Use code <span className="font-mono bg-white text-brand-red px-2 py-0.5 rounded font-black">BF50</span> at checkout — ends Sunday at midnight!
+              </p>
+            ) : (
+              <p className="text-sm text-blue-200 font-medium">
+                Limited weekly slots available.
+              </p>
+            )}
           </div>
         </motion.div>
       </div>

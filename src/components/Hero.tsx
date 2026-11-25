@@ -6,6 +6,8 @@ import AvailabilityModal from './AvailabilityModal';
 export default function Hero() {
   const [isAvailabilityOpen, setIsAvailabilityOpen] = useState(false);
 
+  const isBlackFridayActive = Date.now() <= new Date('2026-11-29T23:59:59-05:00').getTime();
+
   return (
     <>
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-brand-blue text-white">
@@ -26,6 +28,20 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
+              {isBlackFridayActive && (
+                <div className="mb-5">
+                  <a
+                    href="#book-now"
+                    className="inline-flex flex-wrap items-center justify-center gap-2 py-1.5 px-4 rounded-full bg-brand-red text-white text-xs sm:text-sm font-extrabold tracking-wide uppercase shadow-lg shadow-red-950/40 border border-red-400/50 hover:bg-red-700 transition-colors"
+                  >
+                    <span>Black Friday Sale: ~50% Off All Bundles</span>
+                    <span className="bg-white text-brand-red font-mono px-2 py-0.5 rounded font-black text-xs">
+                      CODE: BF50
+                    </span>
+                    <span className="text-red-100 font-semibold text-xs normal-case">• Ends Sunday Midnight</span>
+                  </a>
+                </div>
+              )}
               <div className="flex flex-wrap justify-center gap-3 mb-6">
                 <span className="inline-block py-1 px-3 rounded-full bg-brand-red/20 text-red-300 text-sm font-semibold tracking-wider uppercase border border-brand-red/30">
                   University of Pennsylvania Student-Athletes
