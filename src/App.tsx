@@ -10,18 +10,17 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Problem from './components/Problem';
 import Solution from './components/Solution';
-import Differentiator from './components/Differentiator';
-import Benefits from './components/Benefits';
 import HowItWorks from './components/HowItWorks';
 import Pricing from './components/Pricing';
-import Mentors from './components/Mentors';
-import WhatYouGet from './components/WhatYouGet';
-import FAQ from './components/FAQ';
 import BottomCTA from './components/BottomCTA';
 import Footer from './components/Footer';
 import Success from './components/Success';
 import Legal from './components/Legal';
 import InstructionalVideos from './components/InstructionalVideos';
+import MentorsPage from './components/MentorsPage';
+import ComprehensiveGrowthPage from './components/ComprehensiveGrowthPage';
+import FAQPage from './components/FAQPage';
+import WhyUsPage from './components/WhyUsPage';
 
 function ScrollToHashElement() {
   const location = useLocation();
@@ -47,12 +46,7 @@ function HomePage() {
       <Hero />
       <Problem />
       <Solution />
-      <Differentiator />
-      <Benefits />
-      <WhatYouGet />
       <HowItWorks />
-      <Mentors />
-      <FAQ />
       <Pricing />
       <BottomCTA />
       <Footer />
@@ -70,6 +64,46 @@ function InstructionalVideosPage() {
   );
 }
 
+function MeetMentorsRoutePage() {
+  return (
+    <>
+      <Navbar />
+      <MentorsPage />
+      <Footer />
+    </>
+  );
+}
+
+function ComprehensiveGrowthRoutePage() {
+  return (
+    <>
+      <Navbar />
+      <ComprehensiveGrowthPage />
+      <Footer />
+    </>
+  );
+}
+
+function FAQRoutePage() {
+  return (
+    <>
+      <Navbar />
+      <FAQPage />
+      <Footer />
+    </>
+  );
+}
+
+function WhyUsRoutePage() {
+  return (
+    <>
+      <Navbar />
+      <WhyUsPage />
+      <Footer />
+    </>
+  );
+}
+
 export default function App() {
   return (
     <Router>
@@ -77,8 +111,14 @@ export default function App() {
       <main className="min-h-screen bg-gray-50 font-sans selection:bg-brand-red selection:text-white">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/mentors" element={<MeetMentorsRoutePage />} />
+          <Route path="/comprehensive-growth" element={<ComprehensiveGrowthRoutePage />} />
+          <Route path="/growth" element={<ComprehensiveGrowthRoutePage />} />
+          <Route path="/why-us" element={<WhyUsRoutePage />} />
+          <Route path="/what-makes-us-different" element={<WhyUsRoutePage />} />
           <Route path="/videos" element={<InstructionalVideosPage />} />
           <Route path="/academy" element={<InstructionalVideosPage />} />
+          <Route path="/faq" element={<FAQRoutePage />} />
           <Route path="/success" element={<Success />} />
           <Route path="/terms" element={<Legal />} />
           <Route path="/privacy" element={<Legal />} />

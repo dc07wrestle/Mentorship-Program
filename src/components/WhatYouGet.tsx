@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
-import { Video, Target, Brain, MessageSquare } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Video, Target, Brain, MessageSquare, ArrowRight } from 'lucide-react';
 
 export default function WhatYouGet() {
   const items = [
@@ -66,6 +67,16 @@ export default function WhatYouGet() {
               </p>
             </motion.div>
           ))}
+        </div>
+
+        <div className="mt-10 text-center">
+          <Link
+            to="/comprehensive-growth"
+            className="inline-flex items-center gap-2 text-brand-blue font-bold hover:text-brand-red transition-colors"
+          >
+            <span>See Full Program &amp; Age-Tailored Breakdown</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     </section>

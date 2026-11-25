@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
-import { Dumbbell, Brain, Clock, Target, BookOpen, Compass, Video } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Dumbbell, Brain, Clock, BookOpen, Compass, Video, ArrowRight } from 'lucide-react';
 
 export default function Benefits() {
   const athleticBenefits = [
@@ -96,6 +97,16 @@ export default function Benefits() {
               ))}
             </div>
           </motion.div>
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link
+            to="/comprehensive-growth"
+            className="inline-flex items-center gap-2 px-7 py-3.5 bg-brand-blue hover:bg-blue-900 text-white rounded-xl font-bold transition-all shadow-md"
+          >
+            <span>Explore Comprehensive Growth &amp; What You Get</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     </section>

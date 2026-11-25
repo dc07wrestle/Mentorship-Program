@@ -78,7 +78,7 @@ export default function Pricing() {
   };
 
   return (
-    <section id="pricing" className="py-24 bg-white">
+    <section id="pricing" className="py-24 bg-gray-50">
       <div className="container mx-auto px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.h2 
@@ -145,7 +145,7 @@ export default function Pricing() {
         </div>
 
         <motion.div 
-          className="mb-16 max-w-2xl mx-auto bg-gray-50 rounded-2xl p-8 border border-gray-100"
+          className="mb-16 max-w-2xl mx-auto bg-white rounded-2xl p-8 border border-gray-200 shadow-sm"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

@@ -1,4 +1,6 @@
 import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
 export default function Mentors() {
   const mentors = [
@@ -89,18 +91,29 @@ export default function Mentors() {
                   </p>
                 </div>
 
-                <a 
-                  href="#book-now" 
+                <Link 
+                  to="/#book-now" 
                   className="block w-full py-3 bg-brand-blue hover:bg-blue-900 text-white text-center rounded-xl font-bold transition-all shadow-md"
                 >
                   Book with {mentor.name.split(' ')[0]}
-                </a>
+                </Link>
               </div>
             </motion.div>
           ))}
         </div>
+
+        <div className="mt-10 text-center">
+          <Link
+            to="/mentors"
+            className="inline-flex items-center gap-2 text-brand-blue font-bold hover:text-brand-red transition-colors"
+          >
+            <span>Explore Full Mentor Profiles &amp; Coaching Philosophy</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+
         <motion.p 
-          className="mt-12 text-center text-gray-500 text-sm"
+          className="mt-6 text-center text-gray-500 text-sm"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

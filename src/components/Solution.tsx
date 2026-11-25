@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { CheckCircle2 } from 'lucide-react';
 
 export default function Solution() {
@@ -65,12 +66,20 @@ export default function Solution() {
               ))}
             </ul>
 
-            <a 
-              href="#apply" 
-              className="inline-flex px-8 py-4 bg-brand-blue hover:bg-blue-900 text-white rounded-lg font-bold text-lg transition-all shadow-lg"
-            >
-              Meet Our Mentors
-            </a>
+            <div className="flex flex-wrap gap-4">
+              <Link 
+                to="/mentors" 
+                className="inline-flex px-8 py-4 bg-brand-blue hover:bg-blue-900 text-white rounded-lg font-bold text-lg transition-all shadow-lg"
+              >
+                Meet Our Mentors
+              </Link>
+              <Link 
+                to="/comprehensive-growth" 
+                className="inline-flex px-7 py-4 bg-white hover:bg-gray-100 text-brand-blue border border-gray-300 rounded-lg font-bold text-lg transition-all"
+              >
+                See What You Get
+              </Link>
+            </div>
           </motion.div>
         </div>
       </div>
