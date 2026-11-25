@@ -19,76 +19,56 @@ export default function Pricing() {
   const plans = [
     {
       id: "3pack",
-      title: "3 Session Pack",
-      totalPrice: isBlackFridayActive ? "89" : "179",
+      title: "3-Call Package",
+      subtitle: "Get to Know Mat Mentors",
+      totalPrice: isBlackFridayActive ? "89.50" : "179",
       originalPrice: isBlackFridayActive ? "179" : null,
-      perSessionPrice: isBlackFridayActive ? "29.67" : "59.67",
-      description: "Perfect for a focused technical tune-up",
-      features: [
-        "3 private 1-on-1 mentorship calls",
-        "Personalized guidance",
-        "Flexible scheduling",
-        "Great for targeted improvement"
-      ],
-      buttonText: "Book 3 Sessions",
+      perCallPrice: isBlackFridayActive ? "29.83" : "59.67",
+      description:
+        "A great starting point for wrestlers who want to experience our mentorship and see what we can offer.",
+      buttonText: "Book 3 Calls",
       link: "https://buy.stripe.com/14AcN69NL1fGdC05pKeME0m",
-      highlight: false
+      popular: false
     },
     {
       id: "5pack",
-      title: "5 Session Pack",
-      totalPrice: isBlackFridayActive ? "139" : "279",
+      title: "5-Call Package",
+      subtitle: "Navigate the Tournament Season",
+      totalPrice: isBlackFridayActive ? "139.50" : "279",
       originalPrice: isBlackFridayActive ? "279" : null,
-      perSessionPrice: isBlackFridayActive ? "27.80" : "55.80",
-      badge: "Most Popular",
-      description: "Best for serious athletes who want consistent improvement",
-      features: [
-        "5 private 1-on-1 mentorship calls",
-        "Save compared to smaller packs",
-        "Consistent support",
-        "Strong accountability",
-        "Track progress over multiple sessions"
-      ],
-      buttonText: "Book 5 Sessions",
+      perCallPrice: isBlackFridayActive ? "27.90" : "55.80",
+      description:
+        "Designed for wrestlers looking for guidance through a challenging stretch of tournaments.",
+      buttonText: "Book 5 Calls",
       link: "https://buy.stripe.com/aFa6oI0db3nObtSbO8eME0n",
-      highlight: true
+      popular: false
     },
     {
       id: "10pack",
-      title: "10 Session Pack",
-      totalPrice: isBlackFridayActive ? "249" : "499",
+      title: "10-Call Package",
+      subtitle: "Build Momentum This Season",
+      totalPrice: isBlackFridayActive ? "249.50" : "499",
       originalPrice: isBlackFridayActive ? "499" : null,
-      perSessionPrice: isBlackFridayActive ? "24.90" : "49.90",
-      description: "Best value for long-term growth on and off the mat",
-      features: [
-        "10 private 1-on-1 mentorship calls",
-        "Significant long-term savings",
-        "Long-term mentorship",
-        "Priority scheduling",
-        "Built for committed athletes"
-      ],
-      buttonText: "Book 10 Sessions",
+      perCallPrice: isBlackFridayActive ? "24.95" : "49.90",
+      badge: "Most Popular",
+      description:
+        "Best suited for wrestlers looking to make meaningful progress throughout the remainder of their season.",
+      buttonText: "Book 10 Calls",
       link: "https://buy.stripe.com/5kQ6oI7FD2jKfK88BWeME0o",
-      highlight: false
+      popular: true
     },
     {
       id: "15pack",
-      title: "15 Session Pack",
-      totalPrice: isBlackFridayActive ? "329" : "659",
+      title: "15-Call Package",
+      subtitle: "Develop All Year Long",
+      totalPrice: isBlackFridayActive ? "329.50" : "659",
       originalPrice: isBlackFridayActive ? "659" : null,
-      perSessionPrice: isBlackFridayActive ? "21.93" : "43.93",
-      badge: "Best Value",
-      description: "The ultimate commitment to elite performance",
-      features: [
-        "15 private 1-on-1 mentorship calls",
-        "Maximum savings",
-        "Deep mentor relationship",
-        "Comprehensive progress tracking",
-        "Priority support"
-      ],
-      buttonText: "Book 15 Sessions",
+      perCallPrice: isBlackFridayActive ? "21.97" : "43.93",
+      description:
+        "Our most comprehensive mentorship option for wrestlers committed to developing throughout the season and offseason.",
+      buttonText: "Book 15 Calls",
       link: "https://buy.stripe.com/dRm8wQaRPcYo55u5pKeME0p",
-      highlight: false
+      popular: false
     }
   ];
 
@@ -128,7 +108,7 @@ export default function Pricing() {
             {isBlackFridayActive ? (
               <div className="flex flex-col items-center gap-3">
                 <div className="inline-block bg-brand-red text-white px-5 py-1.5 rounded-full text-sm font-extrabold uppercase tracking-wider shadow-md">
-                  Black Friday Sale • ~50% Off All Bundles
+                  Black Friday Sale • 50% Off All Bundles
                 </div>
                 <div className="bg-red-50 border-2 border-brand-red/30 rounded-2xl px-6 py-3.5 flex flex-col sm:flex-row items-center gap-3 shadow-sm">
                   <div className="flex items-center gap-2 text-sm font-bold text-gray-800">
@@ -232,115 +212,80 @@ export default function Pricing() {
           </div>
         </motion.div>
 
-        <div id="book-now" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            {plans.map((plan, index) => (
+        <div id="book-now" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto items-stretch">
+          {plans.map((plan, index) => (
             <motion.div
-              key={index}
-              className={`relative flex flex-col p-8 rounded-2xl transition-all duration-300 ${
-                plan.highlight 
-                  ? 'bg-brand-blue text-white shadow-2xl scale-105 z-10 border-2 border-brand-red' 
-                  : 'bg-gray-50 text-gray-900 border border-gray-200 hover:shadow-xl'
+              key={plan.id}
+              className={`flex flex-col justify-between bg-white rounded-2xl p-6 sm:p-7 transition-all duration-200 ${
+                plan.popular
+                  ? 'border-2 border-brand-blue shadow-lg'
+                  : 'border border-gray-200 hover:border-gray-300 hover:shadow-md'
               }`}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -5 }}
+              transition={{ duration: 0.4, delay: index * 0.06 }}
             >
-              {plan.badge && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-red text-white px-4 py-1 rounded-full text-sm font-bold tracking-wide uppercase shadow-lg">
-                  {plan.badge}
-                </div>
-              )}
-
-              <div className="mb-8">
-                <h3 className={`text-xl font-bold mb-4 ${plan.highlight ? 'text-white' : 'text-brand-blue'}`}>
-                  {plan.title}
-                </h3>
-                <div className="flex items-baseline gap-2 mb-1">
-                  {plan.originalPrice && (
-                    <span className={`text-xl font-bold line-through ${plan.highlight ? 'text-blue-200/60' : 'text-gray-400'}`}>
-                      ${plan.originalPrice}
+              <div>
+                <div className="flex items-start justify-between gap-2 mb-1">
+                  <h3 className="text-lg font-bold text-gray-900 leading-snug">
+                    {plan.title}
+                  </h3>
+                  {plan.badge && (
+                    <span className="shrink-0 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-bold px-2.5 py-0.5 rounded-full">
+                      {plan.badge}
                     </span>
                   )}
-                  <span className="text-5xl font-extrabold">${plan.totalPrice}</span>
-                  <span className={`text-sm font-medium ${plan.highlight ? 'text-blue-200' : 'text-gray-500'}`}>total</span>
                 </div>
-                {isBlackFridayActive && (
-                  <p className={`text-sm font-bold mb-4 ${plan.highlight ? 'text-red-300' : 'text-brand-red'}`}>
-                    Black Friday Sale — Ends Sunday Midnight
-                  </p>
-                )}
-                <div className={`text-xs font-bold py-1.5 px-3 rounded-lg uppercase tracking-wider inline-block border-2 ${
-                  plan.highlight 
-                    ? 'bg-white/20 text-white border-white/30' 
-                    : 'bg-brand-red/10 text-brand-red border-brand-red/20'
-                }`}>
-                  {isBlackFridayActive ? `Sale: $${plan.perSessionPrice}/session` : `$${plan.perSessionPrice}/session`}
+                <p className="text-xs font-medium text-gray-500 mb-5">
+                  {plan.subtitle}
+                </p>
+
+                <div className="mb-5 pb-5 border-b border-gray-100">
+                  <div className="flex items-baseline gap-2">
+                    {plan.originalPrice && (
+                      <span className="text-base font-semibold line-through text-gray-400">
+                        ${plan.originalPrice}
+                      </span>
+                    )}
+                    <span className="text-3xl sm:text-4xl font-extrabold text-brand-blue tracking-tight">
+                      ${plan.totalPrice}
+                    </span>
+                  </div>
+                  <div className="mt-1 flex items-center gap-2 text-xs text-gray-500">
+                    <span className="font-semibold text-gray-700">${plan.perCallPrice} / call</span>
+                    {isBlackFridayActive && (
+                      <span className="text-brand-red font-bold">• 50% off</span>
+                    )}
+                  </div>
                 </div>
-                <p className={`mt-4 text-sm leading-relaxed ${plan.highlight ? 'text-blue-100' : 'text-gray-600'}`}>
+
+                <p className="text-sm text-gray-600 leading-relaxed">
                   {plan.description}
                 </p>
               </div>
 
-              <ul className="space-y-4 mb-8 flex-grow">
-                {plan.features.map((feature, fIndex) => (
-                  <li key={fIndex} className="flex items-start gap-3 text-sm">
-                    <Check className={`w-5 h-5 shrink-0 ${plan.highlight ? 'text-red-400' : 'text-brand-red'}`} />
-                    <span className={plan.highlight ? 'text-blue-50' : 'text-gray-700'}>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-          <div className="space-y-4">
-            {isBlackFridayActive && (
-              <div
-                onClick={handleCopyCode}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleCopyCode();
-                  }
-                }}
-                className={`rounded-xl px-3 py-2 text-center text-xs font-bold border cursor-pointer transition-all flex items-center justify-center gap-1.5 ${
-                  plan.highlight
-                    ? 'bg-white/10 border-white/25 text-white hover:bg-white/15'
-                    : 'bg-red-50 border-brand-red/30 text-brand-red hover:bg-red-100/70'
-                }`}
-              >
-                <Tag className="w-3.5 h-3.5 shrink-0" />
-                <span>
-                  Use code <span className="font-mono font-black underline decoration-dotted">BF50</span> at checkout
-                </span>
+              <div className="mt-7 pt-5 border-t border-gray-100 space-y-2.5">
+                <button
+                  onClick={() => handleCheckout(plan.link)}
+                  className={`w-full py-3.5 rounded-xl font-bold text-sm text-center transition-all cursor-pointer ${
+                    plan.popular
+                      ? 'bg-brand-red hover:bg-red-700 text-white shadow-sm'
+                      : 'bg-brand-blue hover:bg-blue-900 text-white'
+                  }`}
+                >
+                  {plan.buttonText}
+                </button>
+                <p className="text-[11px] text-center text-gray-500">
+                  {isBlackFridayActive ? (
+                    <>
+                      Use code <span className="font-mono font-bold text-brand-red">BF50</span> at checkout • Instant scheduling
+                    </>
+                  ) : (
+                    'Instant scheduling after checkout'
+                  )}
+                </p>
               </div>
-            )}
-            <button
-              onClick={() => handleCheckout(plan.link)}
-              className={`w-full py-4 rounded-xl font-bold text-center transition-all flex items-center justify-center gap-2 cursor-pointer ${
-                plan.highlight
-                  ? 'bg-brand-red hover:bg-red-700 text-white shadow-lg shadow-red-900/40'
-                  : 'bg-brand-blue hover:bg-blue-900 text-white'
-              }`}
-            >
-              {plan.buttonText}
-            </button>
-            <div className="space-y-1">
-              <p className={`text-[10px] text-center uppercase tracking-wider font-bold ${plan.highlight ? 'text-red-300' : 'text-brand-red'}`}>
-                Pay to secure your session, then instantly choose your time.
-              </p>
-              <p className={`text-[10px] text-center font-bold uppercase tracking-widest ${plan.highlight ? 'text-white' : 'text-brand-red'}`}>
-                Only 10 sessions available per week — book early.
-              </p>
-              <p className={`text-[10px] text-center font-medium ${plan.highlight ? 'text-blue-200' : 'text-gray-500'}`}>
-                You'll receive a confirmation email with your session link after booking.
-              </p>
-              <p className={`text-[9px] text-center italic mt-1 ${plan.highlight ? 'text-blue-300' : 'text-gray-400'}`}>
-                Refunds available within 24h of purchase only.
-              </p>
-            </div>
-          </div>
             </motion.div>
           ))}
         </div>

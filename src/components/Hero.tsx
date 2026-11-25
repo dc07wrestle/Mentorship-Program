@@ -34,7 +34,7 @@ export default function Hero() {
                     href="#book-now"
                     className="inline-flex flex-wrap items-center justify-center gap-2 py-1.5 px-4 rounded-full bg-brand-red text-white text-xs sm:text-sm font-extrabold tracking-wide uppercase shadow-lg shadow-red-950/40 border border-red-400/50 hover:bg-red-700 transition-colors"
                   >
-                    <span>Black Friday Sale: ~50% Off All Bundles</span>
+                    <span>Black Friday Sale: 50% Off All Bundles</span>
                     <span className="bg-white text-brand-red font-mono px-2 py-0.5 rounded font-black text-xs">
                       CODE: BF50
                     </span>
