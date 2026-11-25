@@ -31,7 +31,7 @@ export default function Pricing() {
         "Great for targeted improvement"
       ],
       buttonText: "Book 3 Sessions",
-      link: (import.meta as any).env.VITE_STRIPE_LINK_3PACK || "https://buy.stripe.com/9B6bJ2f85gaA7dC7xSeME0i",
+      link: "https://buy.stripe.com/14AcN69NL1fGdC05pKeME0m",
       highlight: false
     },
     {
@@ -50,7 +50,7 @@ export default function Pricing() {
         "Track progress over multiple sessions"
       ],
       buttonText: "Book 5 Sessions",
-      link: (import.meta as any).env.VITE_STRIPE_LINK_5PACK || "https://buy.stripe.com/00w8wQ6Bz3nO41qf0keME0j",
+      link: "https://buy.stripe.com/aFa6oI0db3nObtSbO8eME0n",
       highlight: true
     },
     {
@@ -68,7 +68,7 @@ export default function Pricing() {
         "Built for committed athletes"
       ],
       buttonText: "Book 10 Sessions",
-      link: (import.meta as any).env.VITE_STRIPE_LINK_10PACK || "https://buy.stripe.com/bJe5kEcZX9Mc7dC05qeME0k",
+      link: "https://buy.stripe.com/5kQ6oI7FD2jKfK88BWeME0o",
       highlight: false
     },
     {
@@ -87,7 +87,7 @@ export default function Pricing() {
         "Priority support"
       ],
       buttonText: "Book 15 Sessions",
-      link: (import.meta as any).env.VITE_STRIPE_LINK_15PACK || "https://buy.stripe.com/8x26oIe410bC41q7xSeME0l",
+      link: "https://buy.stripe.com/dRm8wQaRPcYo55u5pKeME0p",
       highlight: false
     }
   ];
